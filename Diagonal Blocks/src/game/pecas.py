@@ -237,17 +237,32 @@ for coordenada in cordenadas:
 for row in tabuleiro:
     print(row)
 
-
-
-    
+VERMELHO = (255, 0, 0)
+PRETO = (0, 0, 0)
+TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
 
 def desenhar_tabuleiro(screen):
-    for x in range(NUM_CELULAS):
-        for y in range(NUM_CELULAS):
-            cor = (255, 255, 255)  # cor branca para células vazias
-            pygame.draw.rect(screen, cor, pygame.Rect(
-                x * TAMANHO_CELULA, y * TAMANHO_CELULA, TAMANHO_CELULA, TAMANHO_CELULA), 1)
+    # desenhar células vazias em branco
+    for i in range(NUM_CELULAS):
+        for j in range(NUM_CELULAS):
+            x = j * TAMANHO_CELULA
+            y = i * TAMANHO_CELULA
+            branco = (255, 255, 255)
+            pygame.draw.rect(screen, branco, (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
 
+    # desenhar linhas verticais
+    for i in range(0, TAMANHO_TABULEIRO, TAMANHO_CELULA):
+        pygame.draw.line(screen, PRETO, (i, 0), (i, TAMANHO_TABULEIRO), 1)
+
+    # desenhar linhas horizontais
+    for j in range(0, TAMANHO_TABULEIRO, TAMANHO_CELULA):
+        pygame.draw.line(screen, PRETO, (0, j), (TAMANHO_TABULEIRO, j), 1)
+
+    # desenhar células ocupadas em vermelho
+    for i, j in cordenadas:
+        x = j * TAMANHO_CELULA
+        y = i * TAMANHO_CELULA
+        pygame.draw.rect(screen, VERMELHO, (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
 
 def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
     """
