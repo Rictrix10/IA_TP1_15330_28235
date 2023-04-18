@@ -232,3 +232,5 @@ for row in tabuleiro:
     print(row)
 
     #TRABALHO IA
+
+    #TESTE
