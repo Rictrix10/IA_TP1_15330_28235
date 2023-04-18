@@ -1,3 +1,9 @@
+import pygame
+LARGURA_TELA = 400
+ALTURA_TELA = 400
+TAMANHO_CELULA = 20
+NUM_CELULAS = 20
+
 num_peca = int(input("Escolha uma peça: "))
 
 i = int(input("Escolha a linha: ")) - 1
@@ -231,6 +237,64 @@ for coordenada in cordenadas:
 for row in tabuleiro:
     print(row)
 
-    #TRABALHO IA
 
-    #TESTE
+
+    
+
+def desenhar_tabuleiro(screen):
+    for x in range(NUM_CELULAS):
+        for y in range(NUM_CELULAS):
+            cor = (255, 255, 255)  # cor branca para células vazias
+            pygame.draw.rect(screen, cor, pygame.Rect(
+                x * TAMANHO_CELULA, y * TAMANHO_CELULA, TAMANHO_CELULA, TAMANHO_CELULA), 1)
+
+
+def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
+    """
+    Verifica se a posição da célula superior esquerda da peça está dentro do tabuleiro.
+    posicao: tupla (x,y) com as coordenadas da célula superior esquerda da peça.
+    tam_tabuleiro: inteiro com o tamanho do tabuleiro (largura e altura iguais).
+    tam_peca: inteiro com o tamanho da peça (largura e altura iguais).
+    Retorna True se a posição está dentro do tabuleiro e False caso contrário.
+    """
+    x, y = posicao
+    if x < 0 or y < 0:
+        return False
+    if x + TAMANHO_CELULA > NUM_CELULAS or y + TAMANHO_CELULA > NUM_CELULAS:
+        return False
+    return True
+
+
+def main():
+    pygame.init()
+
+    # Criar a janela do jogo
+    screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+    pygame.display.set_caption('Diagonal Blocks')
+
+    # Desenhar o tabuleiro
+    desenhar_tabuleiro(screen)
+
+
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Obter as coordenadas do mouse
+                pos = pygame.mouse.get_pos()
+
+                # Converter as coordenadas do mouse para coordenadas de célula
+                x = pos[0] // TAMANHO_CELULA
+                y = pos[1] // TAMANHO_CELULA
+
+                # Imprimir as coordenadas da célula clicada
+                print(f"Célula selecionada: ({x}, {y})")
+
+        pygame.display.flip()
+
+
+if __name__ == '__main__':
+    main()
