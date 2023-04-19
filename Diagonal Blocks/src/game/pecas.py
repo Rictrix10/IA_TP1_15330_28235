@@ -14,6 +14,8 @@ tabuleiro = [[0] * 20 for _ in range(20)]
 
 
 lista_pecas = []
+
+listas_pecas = [[] for i in range(2)] # dois conjuntos de peças para dois jogadores
 pecas_disponivies = []
 
 peca1 = [[(i, j)]]
@@ -216,7 +218,7 @@ lista_pecas.append(peca21)
 
 for x in range(len(lista_pecas[num_peca-1])):
     print("Posição " + str(x+1))
-    print(lista_pecas[num_peca-1][x])
+    print(lista_pecas[num_peca-1][x])    
 
 
 num_posicao = int(input("Escolha a posição: "))
