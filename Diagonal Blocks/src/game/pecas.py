@@ -16,7 +16,7 @@ tabuleiro = [[0] * 20 for _ in range(20)]
 lista_pecas = []
 pecas_disponivies = []
 
-peca1 = (i, j)
+peca1 = [[(i, j)]]
 
 peca2 = [[(i, j), (i, j+1)],
          [(i, j), (i, j-1)],
@@ -170,7 +170,7 @@ peca18 = [[(i, j), (i, j+1), (i-1, j+1), (i-1, j+2), (i-2, j+2)],
           ]
 
 
-peca19 = [(i, j), (i, j+1), (i, j+2), (i+1, j+1), (i-1, j+1)]
+peca19 = [[(i, j), (i, j+1), (i, j+2), (i+1, j+1), (i-1, j+1)]]
 
 
 peca20 = [[(i, j), (i, j+1), (i, j+2), (i-1, j+1), (i-2, j+1)],
