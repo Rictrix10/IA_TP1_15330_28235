@@ -3,9 +3,13 @@ LARGURA_TELA = 400
 ALTURA_TELA = 400
 TAMANHO_CELULA = 20
 NUM_CELULAS = 20
+VERMELHO = (255, 0, 0)
+AZUL = (0, 0, 255)
+PRETO = (0, 0, 0)
+BRANCO = (255, 255, 255)
+TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
 
 num_peca = int(input("Escolha uma peça: "))
-
 i = int(input("Escolha a linha: ")) - 1
 j = int(input("Escolha a coluna: ")) - 1
 
@@ -13,9 +17,7 @@ j = int(input("Escolha a coluna: ")) - 1
 tabuleiro = [[0] * 20 for _ in range(20)]
 
 
-lista_pecas = []
-
-listas_pecas = [[] for i in range(2)] # dois conjuntos de peças para dois jogadores
+# listas_pecas = [[] for i in range(2)] # dois conjuntos de peças para dois jogadores
 pecas_disponivies = []
 
 peca1 = [[(i, j)]]
@@ -194,42 +196,23 @@ peca21 = [[(i, j), (i, j+1), (i-1, j+1), (i-2, j+1), (i-1, j+2)],
           [(i, j), (i+1, j), (i+1, j-1), (i+1, j-2), (i+2, j-1)]
           ]
 
-lista_pecas.append(peca1)
-lista_pecas.append(peca2)
-lista_pecas.append(peca3)
-lista_pecas.append(peca4)
-lista_pecas.append(peca5)
-lista_pecas.append(peca6)
-lista_pecas.append(peca7)
-lista_pecas.append(peca8)
-lista_pecas.append(peca9)
-lista_pecas.append(peca10)
-lista_pecas.append(peca11)
-lista_pecas.append(peca12)
-lista_pecas.append(peca13)
-lista_pecas.append(peca14)
-lista_pecas.append(peca15)
-lista_pecas.append(peca16)
-lista_pecas.append(peca17)
-lista_pecas.append(peca18)
-lista_pecas.append(peca19)
-lista_pecas.append(peca20)
-lista_pecas.append(peca21)
+lista_pecas1 = [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
+                peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
+lista_pecas2 = [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
+                peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
 
-for x in range(len(lista_pecas[num_peca-1])):
+
+for x in range(len(lista_pecas1[num_peca-1])):
     print("Posição " + str(x+1))
-    print(lista_pecas[num_peca-1][x])    
+    print(lista_pecas1[num_peca-1][x])
 
 
 num_posicao = int(input("Escolha a posição: "))
-print(lista_pecas[num_peca-1][num_posicao-1])
+print(lista_pecas1[num_peca-1][num_posicao-1])
 
-cordenadas = lista_pecas[num_peca-1][num_posicao-1]
+cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
 
-#def verificacao():
-    
 
-    
 for coordenada in cordenadas:
     j = coordenada[0]
     i = coordenada[1]
@@ -239,9 +222,24 @@ for coordenada in cordenadas:
 for row in tabuleiro:
     print(row)
 
-VERMELHO = (255, 0, 0)
-PRETO = (0, 0, 0)
-TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
+'''
+def escolher_peca():
+    num_peca = int(input("Escolha uma peça: "))
+    i = int(input("Escolha a linha: ")) - 1
+    j = int(input("Escolha a coluna: ")) - 1
+    for x in range(len(lista_pecas1[num_peca-1])):
+        print("Posição " + str(x+1))
+        print(lista_pecas1[num_peca-1][x])
+num_posicao = int(input("Escolha a posição: "))
+print(lista_pecas1[num_peca-1][num_posicao-1])
+cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
+
+for coordenada in cordenadas:
+    j = coordenada[0]
+    i = coordenada[1]
+    tabuleiro[i][j] = 1
+'''
+
 
 def desenhar_tabuleiro(screen):
     # desenhar células vazias em branco
@@ -249,8 +247,8 @@ def desenhar_tabuleiro(screen):
         for j in range(NUM_CELULAS):
             x = j * TAMANHO_CELULA
             y = i * TAMANHO_CELULA
-            branco = (255, 255, 255)
-            pygame.draw.rect(screen, branco, (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
+            pygame.draw.rect(
+                screen, BRANCO, (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
 
     # desenhar linhas verticais
     for i in range(0, TAMANHO_TABULEIRO, TAMANHO_CELULA):
@@ -264,8 +262,10 @@ def desenhar_tabuleiro(screen):
     for i, j in cordenadas:
         x = j * TAMANHO_CELULA
         y = i * TAMANHO_CELULA
-        pygame.draw.rect(screen, VERMELHO, (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
+        pygame.draw.rect(screen, VERMELHO,
+                         (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
 
+'''
 def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
     """
     Verifica se a posição da célula superior esquerda da peça está dentro do tabuleiro.
@@ -280,6 +280,7 @@ def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
     if x + TAMANHO_CELULA > NUM_CELULAS or y + TAMANHO_CELULA > NUM_CELULAS:
         return False
     return True
+'''
 
 
 def main():
@@ -291,8 +292,6 @@ def main():
 
     # Desenhar o tabuleiro
     desenhar_tabuleiro(screen)
-
-
 
     while True:
         for event in pygame.event.get():
