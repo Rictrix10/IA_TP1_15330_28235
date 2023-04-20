@@ -222,25 +222,6 @@ for coordenada in cordenadas:
 for row in tabuleiro:
     print(row)
 
-'''
-def escolher_peca():
-    num_peca = int(input("Escolha uma peça: "))
-    i = int(input("Escolha a linha: ")) - 1
-    j = int(input("Escolha a coluna: ")) - 1
-    for x in range(len(lista_pecas1[num_peca-1])):
-        print("Posição " + str(x+1))
-        print(lista_pecas1[num_peca-1][x])
-num_posicao = int(input("Escolha a posição: "))
-print(lista_pecas1[num_peca-1][num_posicao-1])
-cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
-
-for coordenada in cordenadas:
-    j = coordenada[0]
-    i = coordenada[1]
-    tabuleiro[i][j] = 1
-'''
-
-
 def desenhar_tabuleiro(screen):
     # desenhar células vazias em branco
     for i in range(NUM_CELULAS):
