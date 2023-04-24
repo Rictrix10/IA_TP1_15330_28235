@@ -39,7 +39,7 @@ for row in tabuleiro:
 '''
 
 
-def escolher_peca():
+def escolher_peca(round):
     global num_peca, i, j
     num_peca = int(input("Escolha uma peça: "))
     i = int(input("Escolha a linha: ")) - 1
@@ -206,21 +206,35 @@ def escolher_peca():
                     peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
     lista_pecas2 = [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
                     peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
+    if round % 2 == 0 :
+        for x in range(len(lista_pecas1[num_peca-1])):
+            print("Posição " + str(x+1))
+            print(lista_pecas1[num_peca-1][x])
+        num_posicao = int(input("Escolha a posição: "))
+        print(lista_pecas1[num_peca-1][num_posicao-1])
+        cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
+        for coordenada in cordenadas:
+            j = coordenada[0]
+            i = coordenada[1]
+            tabuleiro[i][j] = 1
+        return cordenadas
 
-    for x in range(len(lista_pecas1[num_peca-1])):
-        print("Posição " + str(x+1))
-        print(lista_pecas1[num_peca-1][x])
-    num_posicao = int(input("Escolha a posição: "))
-    print(lista_pecas1[num_peca-1][num_posicao-1])
-    cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
-    for coordenada in cordenadas:
-        j = coordenada[0]
-        i = coordenada[1]
-        tabuleiro[i][j] = 1
-    return cordenadas
+    else:
+        for x in range(len(lista_pecas2[num_peca-1])):
+            print("Posição " + str(x+1))
+            print(lista_pecas2[num_peca-1][x])
+        num_posicao = int(input("Escolha a posição: "))
+        print(lista_pecas2[num_peca-1][num_posicao-1])
+        cordenadas = lista_pecas2[num_peca-1][num_posicao-1]
+        for coordenada in cordenadas:
+            j = coordenada[0]
+            i = coordenada[1]
+            tabuleiro[i][j] = 1
+        return cordenadas
 
 
-def desenhar_tabuleiro(screen, cordenadas):
+
+def desenhar_tabuleiro(screen, cordenadas, round):
     # desenhar células vazias em branco
     for i in range(NUM_CELULAS):
         for j in range(NUM_CELULAS):
@@ -237,12 +251,15 @@ def desenhar_tabuleiro(screen, cordenadas):
     for j in range(0, TAMANHO_TABULEIRO, TAMANHO_CELULA):
         pygame.draw.line(screen, PRETO, (0, j), (TAMANHO_TABULEIRO, j), 1)
 
-    # desenhar células ocupadas em vermelho
     for i, j in cordenadas:
-        x = j * TAMANHO_CELULA
-        y = i * TAMANHO_CELULA
-        pygame.draw.rect(screen, VERMELHO,
-                         (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
+            x = j * TAMANHO_CELULA
+            y = i * TAMANHO_CELULA
+            if round % 2 == 0 :
+                pygame.draw.rect(screen, VERMELHO,
+                            (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
+            else:
+                pygame.draw.rect(screen, AZUL,
+                            (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
 
 
 def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
@@ -253,16 +270,30 @@ def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
         return False
     return True
 
+def atualizar_tabuleiro(screen, cordenadas, round):
+    for i, j in cordenadas:
+        x = j * TAMANHO_CELULA
+        y = i * TAMANHO_CELULA
+        if round % 2 == 0 :
+            pygame.draw.rect(screen, VERMELHO,
+                            (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
+        else:
+            pygame.draw.rect(screen, AZUL,
+                            (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
+        pygame.display.update()
 
 def main():
     pygame.init()
-
-    # escolher_peca(lista_pecas1)
-    cordenadas = escolher_peca()
+    round = 0
+    cordenadas = escolher_peca(round)
     # Criar a janela do jogo
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption('Diagonal Blocks')
-    desenhar_tabuleiro(screen, cordenadas)
+    desenhar_tabuleiro(screen, cordenadas, round)
+    round = 1
+    cordenadas = escolher_peca(round)
+    atualizar_tabuleiro(screen, cordenadas, round)
+    
 
     while True:
         for event in pygame.event.get():
