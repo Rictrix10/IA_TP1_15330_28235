@@ -58,7 +58,7 @@ def escolher_peca(round):
              [(i, j), (i+1, j), (i+2, j)]
              ]
 
-    peca4 = [[(i, j), (i+1, j), (i-1, j+1)],
+    peca4 = [[(i, j), (i, j+1), (i-1, j+1)],
              [(i, j), (i, j-1), (i-1, j-1)],
              [(i, j), (i, j+1), (i+1, j+1)],
              [(i, j), (i, j-1), (i+1, j-1)]
@@ -261,6 +261,17 @@ def desenhar_tabuleiro(screen, cordenadas, round):
                 pygame.draw.rect(screen, AZUL,
                             (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
 
+def printTabuleiro():
+    pygame.init()
+    screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+    pygame.display.set_caption('Diagonal Blocks')
+    screen.fill(BRANCO)
+    for i in range(0, LARGURA_TELA, TAMANHO_CELULA):
+        pygame.draw.line(screen, PRETO, (i, 0), (i, ALTURA_TELA))
+    for i in range(0, ALTURA_TELA, TAMANHO_CELULA):
+        pygame.draw.line(screen, PRETO, (0, i), (LARGURA_TELA, i))
+    pygame.display.flip()
+
 
 def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
     x, y = posicao
@@ -283,16 +294,19 @@ def atualizar_tabuleiro(screen, cordenadas, round):
         pygame.display.update()
 
 def main():
+    '''
     pygame.init()
-    round = 0
-    cordenadas = escolher_peca(round)
-    # Criar a janela do jogo
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption('Diagonal Blocks')
-    desenhar_tabuleiro(screen, cordenadas, round)
-    round = 1
-    cordenadas = escolher_peca(round)
-    atualizar_tabuleiro(screen, cordenadas, round)
+    print_tabuleiro(screen)
+    '''
+    screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+    printTabuleiro()
+
+    for round in range(4):
+        cordenadas = escolher_peca(round)
+        atualizar_tabuleiro(screen, cordenadas, round)
+    
     
 
     while True:
