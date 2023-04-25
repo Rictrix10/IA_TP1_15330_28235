@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from games.state import State
+from game.state import State
 
 
 class Player(ABC):

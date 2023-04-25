@@ -1,18 +1,18 @@
 from random import randint
 
-from games.connect4.action import Connect4Action
-from games.connect4.player import Connect4Player
-from games.connect4.state import Connect4State
-from games.state import State
+from game.diagonalblocks.action import DiagonalBlocksAction
+from game.diagonalblocks.player import DiagonalBlocksPlayer
+from game.diagonalblocks.state import DiagonalBlocksState
+from game.state import State
 
 
-class RandomConnect4Player(Connect4Player):
+class RandomDiagonalBlocksPlayer(DiagonalBlocksPlayer):
 
     def __init__(self, name):
         super().__init__(name)
 
-    def get_action(self, state: Connect4State):
-        return Connect4Action(randint(0, state.get_num_cols()))
+    def get_action(self, state: DiagonalBlocksState):
+        return DiagonalBlocksAction(randint(0, state.get_num_cols()))
 
     def event_action(self, pos: int, action, new_state: State):
         # ignore
