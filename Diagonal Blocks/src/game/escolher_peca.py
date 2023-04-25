@@ -9,6 +9,8 @@ PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)
 TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
 
+pecas_escolhidas1 = []
+pecas_escolhidas2 = []
 
 def criar_peca(i, j):
     peca1 = [[(i, j)]]
@@ -193,6 +195,7 @@ def escolher_peca(round):
         num_posicao = int(input("Escolha a posição: "))
         print(lista_pecas1[num_peca-1][num_posicao-1])
         cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
+        pecas_escolhidas1.append(num_peca)
         return cordenadas
 
     else:
@@ -202,6 +205,7 @@ def escolher_peca(round):
         num_posicao = int(input("Escolha a posição: "))
         print(lista_pecas2[num_peca-1][num_posicao-1])
         cordenadas = lista_pecas2[num_peca-1][num_posicao-1]
+        pecas_escolhidas2.append(num_peca)
         return cordenadas
 
 
@@ -250,7 +254,9 @@ def main():
     for round in range(4):
         cordenadas = escolher_peca(round)
         atualizar_tabuleiro(screen, cordenadas, round)
-    
+
+    print(pecas_escolhidas1)
+    print(pecas_escolhidas2)
     
 
     while True:
