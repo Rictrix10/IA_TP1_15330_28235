@@ -11,6 +11,7 @@ TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
 
 pecas_escolhidas1 = []
 pecas_escolhidas2 = []
+tabuleiro = [[0] * 20 for _ in range(20)]
 
 def criar_peca(i, j):
     peca1 = [[(i, j)]]
@@ -196,6 +197,10 @@ def escolher_peca(round):
         print(lista_pecas1[num_peca-1][num_posicao-1])
         cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
         pecas_escolhidas1.append(num_peca)
+        for coordenada in cordenadas:
+            i = coordenada[0]
+            j = coordenada[1]
+            tabuleiro[i][j] = 1
         return cordenadas
 
     else:
@@ -206,6 +211,10 @@ def escolher_peca(round):
         print(lista_pecas2[num_peca-1][num_posicao-1])
         cordenadas = lista_pecas2[num_peca-1][num_posicao-1]
         pecas_escolhidas2.append(num_peca)
+        for coordenada in cordenadas:
+            i = coordenada[0]
+            j = coordenada[1]
+            tabuleiro[i][j] = 2
         return cordenadas
 
 
@@ -257,7 +266,9 @@ def main():
 
     print(pecas_escolhidas1)
     print(pecas_escolhidas2)
-    
+
+    for row in tabuleiro:
+        print(row)
 
     while True:
         for event in pygame.event.get():
