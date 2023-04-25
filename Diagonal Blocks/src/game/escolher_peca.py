@@ -10,8 +10,6 @@ BRANCO = (255, 255, 255)
 TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
 
 
-tabuleiro = [[0] * 20 for _ in range(20)]
-
 def criar_peca(i, j):
     peca1 = [[(i, j)]]
 
@@ -187,170 +185,7 @@ def escolher_peca(round):
     j = int(input("Escolha a coluna: ")) - 1
     lista_pecas1 = criar_peca(i,j)
     lista_pecas2 = criar_peca(i,j)
-    '''
-    peca1 = [[(i, j)]]
 
-    peca2 = [[(i, j), (i, j+1)],
-             [(i, j), (i, j-1)],
-             [(i, j), (i-1, j)],
-             [(i, j), (i+1, j)]
-             ]
-
-    peca3 = [[(i, j), (i, j+1), (i, j+2)],
-             [(i, j), (i, j-1), (i, j-2)],
-             [(i, j), (i-1, j), (i-2, j)],
-             [(i, j), (i+1, j), (i+2, j)]
-             ]
-
-    peca4 = [[(i, j), (i, j+1), (i-1, j+1)],
-             [(i, j), (i, j-1), (i-1, j-1)],
-             [(i, j), (i, j+1), (i+1, j+1)],
-             [(i, j), (i, j-1), (i+1, j-1)]
-             ]
-
-    peca5 = [[(i, j), (i, j+1), (i, j+2), (i, j+3)],
-             [(i, j), (i, j-1), (i, j-2), (i, j-3)],
-             [(i, j), (i-1, j), (i-2, j), (i-3, j)],
-             [(i, j), (i+1, j), (i+2, j), (i+3, j)]
-             ]
-
-    peca6 = [[(i, j), (i, j+1), (i, j+2), (i-1, j+2)],
-             [(i, j), (i, j+1), (i, j+2), (i+1, j+2)],
-             [(i, j), (i, j-1), (i, j-2), (i+1, j-2)],
-             [(i, j), (i, j-1), (i, j-2), (i-1, j-2)],
-             [(i, j), (i-1, j), (i-2, j), (i-2, j-1)],
-             [(i, j), (i-1, j), (i-2, j), (i-2, j+1)],
-             [(i, j), (i+1, j), (i+2, j), (i+2, j+1)],
-             [(i, j), (i+1, j), (i+2, j), (i+2, j-1)]
-             ]
-
-    peca7 = [[(i, j), (i, j+1), (i, j+2), (i-1, j+1)],
-             [(i, j), (i, j-1), (i, j-2), (i+1, j-1)],
-             [(i, j), (i-1, j), (i-2, j), (i-1, j-1)],
-             [(i, j), (i+1, j), (i+2, j), (i+1, j+1)]
-             ]
-
-    peca8 = [[(i, j), (i, j+1), (i-1, j+1), (i-1, j+2)],
-             [(i, j), (i, j+1), (i+1, j+1), (i+1, j+2)],
-             [(i, j), (i-1, j), (i-1, j+1), (i-2, j+1)],
-             [(i, j), (i+1, j), (i+1, j+1), (i+2, j+1)]
-             ]
-
-    peca9 = [[(i, j), (i, j+1), (i-1, j), (i-1, j+1)],
-             [(i, j), (i+1, j), (i+1, j-1), (i, j-1)],
-             [(i, j), (i, j-1), (i-1, j-1), (i+1, j)],
-             [(i, j), (i, j+1), (i+1, j+1), (i+1, j)]
-             ]
-
-    peca10 = [[(i, j), (i, j+1), (i, j+2), (i, j+3), (i, j+4)],
-              [(i, j), (i, j-1), (i, j-2), (i, j-3), (i, j-4)],
-              [(i, j), (i+1, j), (i+2, j), (i+3, j), (i+4, j)],
-              [(i, j), (i-1, j), (i-2, j), (i-3, j), (i-4, j)]
-              ]
-
-    peca11 = [[(i, j), (i, j+1), (i, j+2), (i, j+3), (i-1, j+3)],
-              [(i, j), (i, j-1), (i, j-2), (i, j-3), (i-1, j-3)],
-              [(i, j), (i, j+1), (i, j+2), (i, j+3), (i+1, j+3)],
-              [(i, j), (i, j-1), (i, j-2), (i, j-3), (i+1, j-3)],
-              [(i, j), (i+1, j), (i+2, j), (i+3, j), (i+3, j+1)],
-              [(i, j), (i+1, j), (i+2, j), (i+3, j), (i+3, j-1)],
-              [(i, j), (i-1, j), (i-2, j), (i-3, j), (i-3, j-1)],
-              [(i, j), (i-1, j), (i-2, j), (i-3, j), (i-3, j+1)]
-              ]
-
-    peca12 = [[(i, j), (i, j+1), (i, j+2), (i, j+3), (i-1, j+2)],
-              [(i, j), (i, j+1), (i, j+2), (i, j+3), (i+1, j+2)],
-              [(i, j), (i+1, j), (i+2, j), (i+3, j), (i+2, j-1)],
-              [(i, j), (i+1, j), (i+2, j), (i+3, j), (i+2, j+1)],
-              [(i, j), (i, j-1), (i, j-2), (i, j-3), (i+1, j-2)],
-              [(i, j), (i, j-1), (i, j-2), (i, j-3), (i-1, j-2)],
-              [(i, j), (i-1, j), (i-2, j), (i-3, j), (i-2, j-1)],
-              [(i, j), (i-1, j), (i-2, j), (i-3, j), (i-2, j+1)]
-              ]
-
-    peca13 = [[(i, j), (i, j+1), (i, j+2), (i-1, j+1), (i-2, j+2)],
-              [(i, j), (i, j-1), (i, j-2), (i+1, j-1), (i+1, j-2)],
-              [(i, j), (i, j+1), (i, j+2), (i+1, j+1), (i+1, j+2)],
-              [(i, j), (i, j-1), (i, j-2), (i-1, j-1), (i+1, j-2)],
-              [(i, j), (i+1, j), (i+2, j), (i+1, j+1), (i+2, j+1)],
-              [(i, j), (i-1, j), (i-2, j), (i-1, j-1), (i-2, j-1)],
-              [(i, j), (i+1, j), (i+2, j), (i+1, j-1), (i+2, j-1)],
-              [(i, j), (i-1, j), (i-2, j), (i-1, j+1), (i-2, j+1)]
-              ]
-
-    peca14 = [[(i, j), (i, j+1), (i, j+2), (i-1, j+2), (i-1, j+3)],
-              [(i, j), (i+1, j), (i+2, j), (i+2, j+1), (i+3, j+1)],
-              [(i, j), (i, j-1), (i, j-2), (i+1, j-2), (i+1, j-3)],
-              [(i, j), (i-1, j), (i-2, j), (i-2, j-1), (i-3, j-1)],
-              [(i, j), (i, j+1), (i, j+2), (i+1, j+2), (i+1, j+3)],
-              [(i, j), (i-1, j), (i-2, j), (i-2, j+1), (i-3, j+1)],
-              [(i, j), (i, j-1), (i, j-2), (i-1, j-2), (i-1, j-3)],
-              [(i, j), (i+1, j), (i+2, j), (i+2, j-1), (i+3, j-1)]
-              ]
-
-    peca15 = [[(i, j), (i, j+1), (i, j+2), (i-1, j+2), (i-2, j+2)],
-              [(i, j), (i+1, j), (i+2, j), (i+2, j+1), (i+2, j+2)],
-              [(i, j), (i, j-1), (i, j-2), (i+1, j-2), (i+2, j-2)],
-              [(i, j), (i-1, j), (i-2, j), (i-2, j-1), (i-2, j-2)],
-              [(i, j), (i-1, j), (i-2, j), (i-2, j-1), (i-2, j-2)],
-              [(i, j), (i, j-1), (i, j-2), (i+1, j-2), (i+2, j-2)],
-              [(i, j), (i+1, j), (i+2, j), (i+2, j+1), (i+2, j+2)],
-              [(i, j), (i, j+1), (i, j+2), (i-1, j+2), (i-2, j+2)]
-              ]
-
-    peca16 = [[(i, j), (i, j+1), (i-1, j+1), (i-2, j+1), (i-2, j+2)],
-              [(i, j), (i+1, j), (i+1, j+1), (i+1, j+2), (i+2, j+2)],
-              [(i, j), (i, j+1), (i-1, j+1), (i-2, j+1), (i-2, j+2)],
-              [(i, j), (i+1, j), (i+1, j+1), (i+1, j+2), (i+2, j+2)],
-              [(i, j), (i, j+1), (i+1, j+1), (i+2, j+1), (i+2, j+2)],
-              [(i, j), (i-1, j), (i-1, j+1), (i-1, j+2), (i-2, j+2)],
-              [(i, j), (i, j+1), (i+1, j+1), (i+2, j+1), (i+2, j+2)],
-              [(i, j), (i-1, j), (i-1, j+1), (i-1, j+2), (i-2, j+2)]
-              ]
-
-    peca17 = [[(i, j), (i, j+1), (i-1, j+1), (i-2, j+1), (i-2, j)],
-              [(i, j), (i+1, j), (i+1, j+1), (i+1, j+2), (i, j+2)],
-              [(i, j), (i, j-1), (i+1, j-1), (i+2, j-1), (i+2, j)],
-              [(i, j), (i-1, j), (i-1, j-1), (i-1, j-2), (i, j-2)],
-              [(i, j), (i-1, j), (i-1, j-1), (i-1, j-2), (i, j-2)],
-              [(i, j), (i+1, j), (i+1, j+1), (i+1, j+2), (i, j+2)]
-              ]
-
-    peca18 = [[(i, j), (i, j+1), (i-1, j+1), (i-1, j+2), (i-2, j+2)],
-              [(i, j), (i+1, j), (i+1, j+1), (i+2, j+1), (i+2, j+2)],
-              [(i, j), (i, j-1), (i+1, j-1), (i+1, j-2), (i+2, j-2)],
-              [(i, j), (i-1, j), (i-1, j-1), (i-2, j-1), (i-2, j-2)],
-              [(i, j), (i-1, j), (i-1, j-1), (i-2, j-1), (i-2, j-2)],
-              [(i, j), (i, j-1), (i+1, j-1), (i+1, j-2), (i+2, j-2)],
-              [(i, j), (i+1, j), (i+1, j+1), (i+2, j+1), (i+2, j+2)],
-              [(i, j), (i, j+1), (i-1, j+1), (i-1, j+2), (i-2, j+2)]
-              ]
-
-    peca19 = [[(i, j), (i, j+1), (i, j+2), (i+1, j+1), (i-1, j+1)]]
-
-    peca20 = [[(i, j), (i, j+1), (i, j+2), (i-1, j+1), (i-2, j+1)],
-              [(i, j), (i+1, j), (i+2, j), (i+1, j+1), (i+1, j+2)],
-              [(i, j), (i, j-1), (i, j-2), (i+1, j-1), (i+2, j-1)],
-              [(i, j), (i-1, j-1), (i-1, j-2), (i-1, j), (i-2, j)],
-              [(i, j), (i, j-1), (i, j-2), (i+1, j-1), (i+2, j-1)],
-              [(i, j), (i, j+1), (i, j+2), (i-1, j+1), (i-2, j+1)]
-              ]
-
-    peca21 = [[(i, j), (i, j+1), (i-1, j+1), (i-2, j+1), (i-1, j+2)],
-              [(i, j), (i+1, j), (i+1, j+1), (i+1, j+2), (i+3, j+1)],
-              [(i, j), (i, j-1), (i+1, j-1), (i+1, j-2), (i+2, j-1)],
-              [(i, j), (i-1, j), (i-1, j-1), (i-1, j-2), (i-2, j-1)],
-              [(i, j), (i, j+1), (i+1, j+1), (i+2, j+1), (i+1, j+2)],
-              [(i, j), (i-1, j), (i-1, j+1), (i-1, j+2), (i-1, j+1)],
-              [(i, j), (i, j-1), (i-1, j-1), (i-2, j-1), (i-1, j-2)],
-              [(i, j), (i+1, j), (i+1, j-1), (i+1, j-2), (i+2, j-1)]
-              ]
-
-    lista_pecas1 = [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
-                    peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
-    lista_pecas2 = [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
-                    peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
-    '''
     if round % 2 == 0 :
         for x in range(len(lista_pecas1[num_peca-1])):
             print("Posição " + str(x+1))
@@ -358,10 +193,6 @@ def escolher_peca(round):
         num_posicao = int(input("Escolha a posição: "))
         print(lista_pecas1[num_peca-1][num_posicao-1])
         cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
-        for coordenada in cordenadas:
-            j = coordenada[0]
-            i = coordenada[1]
-            tabuleiro[i][j] = 1
         return cordenadas
 
     else:
@@ -371,40 +202,8 @@ def escolher_peca(round):
         num_posicao = int(input("Escolha a posição: "))
         print(lista_pecas2[num_peca-1][num_posicao-1])
         cordenadas = lista_pecas2[num_peca-1][num_posicao-1]
-        for coordenada in cordenadas:
-            j = coordenada[0]
-            i = coordenada[1]
-            tabuleiro[i][j] = 1
         return cordenadas
 
-
-
-def desenhar_tabuleiro(screen, cordenadas, round):
-    # desenhar células vazias em branco
-    for i in range(NUM_CELULAS):
-        for j in range(NUM_CELULAS):
-            x = j * TAMANHO_CELULA
-            y = i * TAMANHO_CELULA
-            pygame.draw.rect(
-                screen, BRANCO, (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
-
-    # desenhar linhas verticais
-    for i in range(0, TAMANHO_TABULEIRO, TAMANHO_CELULA):
-        pygame.draw.line(screen, PRETO, (i, 0), (i, TAMANHO_TABULEIRO), 1)
-
-    # desenhar linhas horizontais
-    for j in range(0, TAMANHO_TABULEIRO, TAMANHO_CELULA):
-        pygame.draw.line(screen, PRETO, (0, j), (TAMANHO_TABULEIRO, j), 1)
-
-    for i, j in cordenadas:
-            x = j * TAMANHO_CELULA
-            y = i * TAMANHO_CELULA
-            if round % 2 == 0 :
-                pygame.draw.rect(screen, VERMELHO,
-                            (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
-            else:
-                pygame.draw.rect(screen, AZUL,
-                            (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
 
 def printTabuleiro():
     pygame.init()
