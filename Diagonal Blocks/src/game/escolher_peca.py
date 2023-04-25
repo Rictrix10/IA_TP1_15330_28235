@@ -9,34 +9,9 @@ PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)
 TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
 
-# num_peca = int(input("Escolha uma peça: "))
-# i = int(input("Escolha a linha: ")) - 1
-# j = int(input("Escolha a coluna: ")) - 1
-
 
 tabuleiro = [[0] * 20 for _ in range(20)]
 
-'''
-for x in range(len(lista_pecas1[num_peca-1])):
-    print("Posição " + str(x+1))
-    print(lista_pecas1[num_peca-1][x])
-
-
-num_posicao = int(input("Escolha a posição: "))
-print(lista_pecas1[num_peca-1][num_posicao-1])
-
-cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
-
-
-for coordenada in cordenadas:
-    j = coordenada[0]
-    i = coordenada[1]
-    tabuleiro[i][j] = 1
-
-
-for row in tabuleiro:
-    print(row)
-'''
 
 
 def escolher_peca(round):
