@@ -13,7 +13,9 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
         while True:
             # noinspection PyBroadException
             try:
-                return DiagonalBlocksAction(int(input(f"Player {state.get_acting_player()}, choose a column: ")))
+                row = (int(input(f"Player {state.get_acting_player()}, Escolha a linha: ")))
+                col = (int(input(f"Player {state.get_acting_player()}, Escolha a coluna: ")))
+                return DiagonalBlocksAction(row, col)
             except Exception:
                 continue
 

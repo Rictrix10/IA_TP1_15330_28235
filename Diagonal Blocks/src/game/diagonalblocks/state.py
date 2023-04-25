@@ -1,3 +1,4 @@
+import itertools
 from typing import Optional
 
 from game.diagonalblocks.action import DiagonalBlocksAction
@@ -8,13 +9,13 @@ from game.state import State
 class DiagonalBlocksState(State):
     EMPTY_CELL = -1
 
-    def __init__(self, num_rows: int = 6, num_cols: int = 7):
+    def __init__(self, num_rows: int = 20, num_cols: int = 20):
         super().__init__()
 
-        if num_rows < 4:
-            raise Exception("the number of rows must be 4 or over")
-        if num_cols < 4:
-            raise Exception("the number of cols must be 4 or over")
+        if num_rows != 20:
+            raise Exception("O número de linhas tem de ser igual a 20")
+        if num_cols != 20:
+            raise Exception("O número de colunas tem de ser igual a 20")
 
         """
         the dimensions of the board
@@ -88,25 +89,34 @@ class DiagonalBlocksState(State):
         return 2
 
     def validate_action(self, action: DiagonalBlocksAction) -> bool:
+        row = action.get_row()
         col = action.get_col()
 
+        # valid row
+        if row < 0 or col >= self.__num_rows:
+            return False
+        
         # valid column
         if col < 0 or col >= self.__num_cols:
             return False
 
         # full column
-        if self.__grid[0][col] != DiagonalBlocksState.EMPTY_CELL:
+        if self.__grid[row][col] != DiagonalBlocksState.EMPTY_CELL:
             return False
 
         return True
 
     def update(self, action: DiagonalBlocksAction):
+        row = action.get_row()
         col = action.get_col()
+
+        # player play
+        self.grid[row][col] = self.__acting_player
 
         # drop the checker
         for row in range(self.__num_rows - 1, -1, -1):
             if self.__grid[row][col] < 0:
-                self.__grid[row][col] = self.__acting_player
+                self.grid[row][col] = self.__acting_player
                 break
 
         # determine if there is a winner
@@ -122,17 +132,17 @@ class DiagonalBlocksState(State):
                   0: 'R',
                   1: 'B',
                   DiagonalBlocksState.EMPTY_CELL: ' '
-              }[self.__grid[row][col]], end="")
+              }[self.grid[row][col]], end="")
 
     def __display_numbers(self):
-        for col in range(0, self.__num_cols):
+        for col in range(0, self.num_cols):
             if col < 10:
                 print(' ', end="")
             print(col, end="")
         print("")
 
     def __display_separator(self):
-        for col in range(0, self.__num_cols):
+        for col in range(0, self.num_cols):
             print("--", end="")
         print("-")
 
@@ -165,9 +175,9 @@ class DiagonalBlocksState(State):
         cloned_state.__turns_count = self.__turns_count
         cloned_state.__acting_player = self.__acting_player
         cloned_state.__has_winner = self.__has_winner
-        for row in range(0, self.__num_rows):
-            for col in range(0, self.__num_cols):
-                cloned_state.__grid[row][col] = self.__grid[row][col]
+        for row in range(0, self.num_rows):
+            for col in range(0, self.num_cols):
+                cloned_state.__grid[row][col] = self.grid[row][col]
         return cloned_state
 
     def get_result(self, pos) -> Optional[DiagonalBlocksResult]:
@@ -190,8 +200,10 @@ class DiagonalBlocksState(State):
         return list(filter(
             lambda action: self.validate_action(action),
             map(
-                lambda pos: DiagonalBlocksAction(pos),
-                range(0, self.get_num_cols()))
+                lambda pos: DiagonalBlocksAction(pos[0], pos[1]),
+                itertools.product(range(0, self.get_num_rows()),
+                                  range(0, self.get_num_cols())))
+                
         ))
 
     def sim_play(self, action):
