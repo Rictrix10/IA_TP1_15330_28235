@@ -1,12 +1,12 @@
 import itertools
 from typing import Optional
 
-from games.diagonalblocks.action import TicTacToeAction
-from games.diagonalblocks.result import TicTacToeResult
+from games.diagonalblocks.action import DiagonalBlocksAction
+from games.diagonalblocks.result import DiagonalBlocksResult
 from games.state import State
 
 
-class TicTacToeState(State):
+class DiagonalBlocksState(State):
     EMPTY_CELL = -1
 
     def __init__(self, size: int = 3):
@@ -28,7 +28,7 @@ class TicTacToeState(State):
         """
         the grid
         """
-        self.grid = [[TicTacToeState.EMPTY_CELL for _i in range(self.num_cols)] for _j in range(self.num_rows)]
+        self.grid = [[DiagonalBlocksState.EMPTY_CELL for _i in range(self.num_cols)] for _j in range(self.num_rows)]
 
         """
         counts the number of turns in the current game
@@ -79,7 +79,7 @@ class TicTacToeState(State):
     def get_num_players(self):
         return 2
 
-    def validate_action(self, action: TicTacToeAction) -> bool:
+    def validate_action(self, action: DiagonalBlocksAction) -> bool:
         col = action.get_col()
         row = action.get_row()
 
@@ -93,12 +93,12 @@ class TicTacToeState(State):
             return False
 
         # full column
-        if self.grid[row][col] != TicTacToeState.EMPTY_CELL:
+        if self.grid[row][col] != DiagonalBlocksState.EMPTY_CELL:
             return False
 
         return True
 
-    def update(self, action: TicTacToeAction):
+    def update(self, action: DiagonalBlocksAction):
         col = action.get_col()
         row = action.get_row()
 
@@ -117,7 +117,7 @@ class TicTacToeState(State):
         print({
                   0: 'X',
                   1: 'O',
-                  TicTacToeState.EMPTY_CELL: ' '
+                  DiagonalBlocksState.EMPTY_CELL: ' '
               }[self.grid[row][col]], end="")
 
     def __display_numbers(self):
@@ -157,7 +157,7 @@ class TicTacToeState(State):
         return self.__acting_player
 
     def clone(self):
-        cloned_state = TicTacToeState(self.num_rows)
+        cloned_state = DiagonalBlocksState(self.num_rows)
         cloned_state.__turns_count = self.__turns_count
         cloned_state.__acting_player = self.__acting_player
         cloned_state.__has_winner = self.__has_winner
@@ -166,11 +166,11 @@ class TicTacToeState(State):
                 cloned_state.grid[row][col] = self.grid[row][col]
         return cloned_state
 
-    def get_result(self, pos) -> Optional[TicTacToeResult]:
+    def get_result(self, pos) -> Optional[DiagonalBlocksResult]:
         if self.__has_winner:
-            return TicTacToeResult.LOOSE if pos == self.__acting_player else TicTacToeResult.WIN
+            return DiagonalBlocksResult.LOOSE if pos == self.__acting_player else DiagonalBlocksResult.WIN
         if self.__is_full():
-            return TicTacToeResult.DRAW
+            return DiagonalBlocksResult.DRAW
         return None
 
     def get_num_rows(self):
@@ -186,7 +186,7 @@ class TicTacToeState(State):
         return list(filter(
             lambda action: self.validate_action(action),
             map(
-                lambda position: TicTacToeAction(position[0], position[1]),
+                lambda position: DiagonalBlocksAction(position[0], position[1]),
                 itertools.product(range(0, self.get_num_rows()),
                                   range(0, self.get_num_cols())))
         ))

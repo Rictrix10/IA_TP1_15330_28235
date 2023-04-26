@@ -1,24 +1,24 @@
-from games.diagonalblocks.player import TicTacToePlayer
-from games.diagonalblocks.state import TicTacToeState
+from games.diagonalblocks.player import DiagonalBlocksPlayer
+from games.diagonalblocks.state import DiagonalBlocksState
 from games.game_simulator import GameSimulator
 
 
-class TicTacToeSimulator(GameSimulator):
+class DiagonalBlocksSimulator(GameSimulator):
 
-    def __init__(self, player1: TicTacToePlayer, player2: TicTacToePlayer, size: int = 3):
-        super(TicTacToeSimulator, self).__init__([player1, player2])
+    def __init__(self, player1: DiagonalBlocksPlayer, player2: DiagonalBlocksPlayer, size: int = 3):
+        super(DiagonalBlocksSimulator, self).__init__([player1, player2])
         """
         the number of rows and cols from the tictactoe grid
         """
         self.__num_rows = size
 
     def init_game(self):
-        return TicTacToeState(self.__num_rows)
+        return DiagonalBlocksState(self.__num_rows)
 
-    def before_end_game(self, state: TicTacToeState):
+    def before_end_game(self, state: DiagonalBlocksState):
         # ignored for this simulator
         pass
 
-    def end_game(self, state: TicTacToeState):
+    def end_game(self, state: DiagonalBlocksState):
         # ignored for this simulator
         pass

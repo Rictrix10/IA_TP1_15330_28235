@@ -1,23 +1,23 @@
 from random import choice
-from games.diagonalblocks.action import TicTacToeAction
-from games.diagonalblocks.player import TicTacToePlayer
-from games.diagonalblocks.state import TicTacToeState
+from games.diagonalblocks.action import DiagonalBlocksAction
+from games.diagonalblocks.player import DiagonalBlocksPlayer
+from games.diagonalblocks.state import DiagonalBlocksState
 from games.state import State
 
 
-class GreedyTicTacToePlayer(TicTacToePlayer):
+class GreedyDiagonalBlocksPlayer(DiagonalBlocksPlayer):
 
     def __init__(self, name):
         super().__init__(name)
 
-    def get_action(self, state: TicTacToeState):
+    def get_action(self, state: DiagonalBlocksState):
         grid = state.get_grid()
 
         selected_col = None
         max_count = 0
 
         for col in range(0, state.get_num_cols()):
-            if not state.validate_action(TicTacToeAction(col)):
+            if not state.validate_action(DiagonalBlocksAction(col)):
                 continue
 
             count = 0
@@ -33,7 +33,7 @@ class GreedyTicTacToePlayer(TicTacToePlayer):
         if selected_col is None:
             raise Exception("There is no valid action")
 
-        return TicTacToeAction(selected_col)
+        return DiagonalBlocksAction(selected_col)
 
     def event_action(self, pos: int, action, new_state: State):
         # ignore
