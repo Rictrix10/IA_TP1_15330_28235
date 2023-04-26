@@ -1,12 +1,11 @@
-from game.diagonalblocks.players.greedy import DiagonalBlocksPlayer
-from game.diagonalblocks.players.minimax import DiagonalBlocksPlayer
-from game.diagonalblocks.players.random import DiagonalBlocksPlayer
-from game.diagonalblocks.players.human import HumanDiagonalBlocksPlayer
-from game.diagonalblocks.simulator import DiagonalBlocksSimulator
-from game.game_simulator import GameSimulator
-
-
-
+from games.tictactoe.players.defensivegreedy import DefensiveGreedyPlayer
+from games.tictactoe.players.minimax import OffensiveMinimaxPlayer
+from games.tictactoe.players.defensiveminimax import DefensiveMinimaxPlayer
+from games.tictactoe.players.human import HumanTicTacToePlayer
+from games.tictactoe.players.offensivegreedy import OffensiveGreedyPlayer
+from games.tictactoe.players.random import RandomTicTacToePlayer
+from games.tictactoe.simulator import TicTacToeSimulator
+from games.game_simulator import GameSimulator
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")
 
@@ -14,58 +13,51 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
         simulator.change_player_positions()
         simulator.run_simulation()
 
-    print("Results for the game:")
-    simulator.print_stats()
+        print("Results for the game:")
+        simulator.print_stats()
 
 
 def main():
-    print("ESTG IA Games Simulator")
+    print("TicTacToe Simulator")
 
-    num_iterations = 3
+    num_iterations = 1
 
-    diagonalblocks_simulations = [
-
-        { 
-             "name": "DiagonalBlocks - Human VS Human",
-            "player1": HumanDiagonalBlocksPlayer("Human"),
-           "player2": HumanDiagonalBlocksPlayer("Human")
-        }
-    ]
-
-    '''
-    diagonalblocks_othersimulations = [
+    tictactoe_simulations = [
         {
-            "name": "DiagonalBlocks - Human VS Random",
-            "player1": HumanDiagonalBlocksPlayer("Human"),
-           "player2": DiagonalBlocksPlayer("Minimax")
+            "name": "TicTacToe - Human VS Human",
+            "player1": HumanTicTacToePlayer("Human"),
+            "player2": HumanTicTacToePlayer("Human")
+        },
+        {
+            "name": "TicTacToe - Human VS Random",
+            "player1": HumanTicTacToePlayer("Human"),
+            "player2": DefensiveMinimaxPlayer("Minimax")
         },
         {
             "name": "TicTacToe - Random VS Random",
-            "player1": DiagonalBlocksPlayer("Random 1"),
-            "player2": DiagonalBlocksPlayer("Random 2")
+            "player1": RandomTicTacToePlayer("Random 1"),
+            "player2": RandomTicTacToePlayer("Random 2")
         },
         {
             "name": "TicTacToe - Greedy VS Random",
-            "player1": DiagonalBlocksPlayer("Greedy"),
-            "player2": DiagonalBlocksPlayer("Random")
+            "player1": OffensiveGreedyPlayer("Greedy"),
+            "player2": RandomTicTacToePlayer("Random")
         },
         {
             "name": "Minimax VS Random",
-            "player1": DiagonalBlocksPlayer("Minimax"),
-            "player2": DiagonalBlocksPlayer("Random")
+            "player1": OffensiveMinimaxPlayer("Minimax"),
+            "player2": RandomTicTacToePlayer("Random")
         },
         {
             "name": "Minimax VS Greedy",
-            "player1": DiagonalBlocksPlayer("Minimax"),
-            "player2": DiagonalBlocksPlayer("Greedy")
+            "player1": DefensiveMinimaxPlayer("Minimax"),
+            "player2": DefensiveGreedyPlayer("Greedy")
         }
     ]
-    '''
 
-    for sim in diagonalblocks_simulations:
-        run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"], 3), num_iterations)
+    for sim in tictactoe_simulations:
+        run_simulation(sim["name"], TicTacToeSimulator(sim["player1"], sim["player2"], 3), num_iterations)
 
 
 if __name__ == "__main__":
     main()
-
