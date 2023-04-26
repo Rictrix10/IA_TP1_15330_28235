@@ -1,5 +1,5 @@
-from games.tictactoe.player import TicTacToePlayer
-from games.tictactoe.state import TicTacToeState
+from games.diagonalblocks.player import TicTacToePlayer
+from games.diagonalblocks.state import TicTacToeState
 from games.game_simulator import GameSimulator
 
 

@@ -1,10 +1,10 @@
-from games.tictactoe.players.defensivegreedy import DefensiveGreedyPlayer
-from games.tictactoe.players.minimax import OffensiveMinimaxPlayer
-from games.tictactoe.players.defensiveminimax import DefensiveMinimaxPlayer
-from games.tictactoe.players.human import HumanTicTacToePlayer
-from games.tictactoe.players.offensivegreedy import OffensiveGreedyPlayer
-from games.tictactoe.players.random import RandomTicTacToePlayer
-from games.tictactoe.simulator import TicTacToeSimulator
+from games.diagonalblocks.players.defensivegreedy import DefensiveGreedyPlayer
+from games.diagonalblocks.players.minimax import OffensiveMinimaxPlayer
+from games.diagonalblocks.players.defensiveminimax import DefensiveMinimaxPlayer
+from games.diagonalblocks.players.human import HumanTicTacToePlayer
+from games.diagonalblocks.players.offensivegreedy import OffensiveGreedyPlayer
+from games.diagonalblocks.players.random import RandomTicTacToePlayer
+from games.diagonalblocks.simulator import TicTacToeSimulator
 from games.game_simulator import GameSimulator
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")

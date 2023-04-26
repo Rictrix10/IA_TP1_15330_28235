@@ -1,8 +1,8 @@
 import math
 
-from games.tictactoe.player import TicTacToePlayer
-from games.tictactoe.result import TicTacToeResult
-from games.tictactoe.state import TicTacToeState
+from games.diagonalblocks.player import TicTacToePlayer
+from games.diagonalblocks.result import TicTacToeResult
+from games.diagonalblocks.state import TicTacToeState
 from games.state import State
 
 

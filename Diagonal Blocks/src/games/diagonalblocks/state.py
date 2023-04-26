@@ -1,8 +1,8 @@
 import itertools
 from typing import Optional
 
-from games.tictactoe.action import TicTacToeAction
-from games.tictactoe.result import TicTacToeResult
+from games.diagonalblocks.action import TicTacToeAction
+from games.diagonalblocks.result import TicTacToeResult
 from games.state import State
 
 

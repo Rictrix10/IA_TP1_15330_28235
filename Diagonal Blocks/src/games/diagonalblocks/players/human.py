@@ -1,6 +1,6 @@
-from games.tictactoe.action import TicTacToeAction
-from games.tictactoe.player import TicTacToePlayer
-from games.tictactoe.state import TicTacToeState
+from games.diagonalblocks.action import TicTacToeAction
+from games.diagonalblocks.player import TicTacToePlayer
+from games.diagonalblocks.state import TicTacToeState
 
 
 class HumanTicTacToePlayer(TicTacToePlayer):

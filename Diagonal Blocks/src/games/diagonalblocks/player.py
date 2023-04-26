@@ -1,6 +1,6 @@
 from abc import ABC
 
-from games.tictactoe.result import TicTacToeResult
+from games.diagonalblocks.result import TicTacToeResult
 from games.player import Player
 
 
