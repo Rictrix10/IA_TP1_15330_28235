@@ -5,7 +5,7 @@ from games.game_simulator import GameSimulator
 
 class DiagonalBlocksSimulator(GameSimulator):
 
-    def __init__(self, player1: DiagonalBlocksPlayer, player2: DiagonalBlocksPlayer, size: int = 3):
+    def __init__(self, player1: DiagonalBlocksPlayer, player2: DiagonalBlocksPlayer, size: int = 20):
         super(DiagonalBlocksSimulator, self).__init__([player1, player2])
         """
         the number of rows and cols from the tictactoe grid

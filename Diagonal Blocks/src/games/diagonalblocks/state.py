@@ -1,4 +1,5 @@
 import itertools
+import pygame
 from typing import Optional
 
 from games.diagonalblocks.action import DiagonalBlocksAction
@@ -9,13 +10,13 @@ from games.state import State
 class DiagonalBlocksState(State):
     EMPTY_CELL = -1
 
-    def __init__(self, size: int = 3):
+    def __init__(self, size: int = 20):
         super().__init__()
 
 
 
-        if size < 3:
-            raise Exception("the number of rows must be 3")
+        if size < 20:
+            raise Exception("the number of rows must be 20")
 
 
         """
@@ -28,6 +29,7 @@ class DiagonalBlocksState(State):
         """
         the grid
         """
+
         self.grid = [[DiagonalBlocksState.EMPTY_CELL for _i in range(self.num_cols)] for _j in range(self.num_rows)]
 
         """
@@ -120,9 +122,10 @@ class DiagonalBlocksState(State):
                   DiagonalBlocksState.EMPTY_CELL: ' '
               }[self.grid[row][col]], end="")
 
+    
     def __display_numbers(self):
         for col in range(0, self.num_cols):
-            if col < 10:
+            if col < 20:
                 print(' ', end="")
             print(col, end="")
         print("")
@@ -131,7 +134,7 @@ class DiagonalBlocksState(State):
         for col in range(0, self.num_cols):
             print("--", end="")
         print("-")
-
+    
     def display(self):
         self.__display_numbers()
         self.__display_separator()
@@ -146,7 +149,7 @@ class DiagonalBlocksState(State):
 
         self.__display_numbers()
         print("")
-
+    
     def __is_full(self):
         return self.__turns_count > (self.num_cols * self.num_rows)
 

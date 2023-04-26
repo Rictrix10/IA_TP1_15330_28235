@@ -1,3 +1,4 @@
+import pygame
 from games.diagonalblocks.players.defensivegreedy import DefensiveGreedyPlayer
 from games.diagonalblocks.players.minimax import OffensiveMinimaxPlayer
 from games.diagonalblocks.players.defensiveminimax import DefensiveMinimaxPlayer
@@ -18,7 +19,26 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
 
 
 def main():
-    print("TicTacToe Simulator")
+    print("Diagonal Blocks")
+    LARGURA_TELA = 400
+    ALTURA_TELA = 400
+    TAMANHO_CELULA = 20
+    NUM_CELULAS = 20
+    VERMELHO = (255, 0, 0)
+    AZUL = (0, 0, 255)
+    PRETO = (0, 0, 0)
+    BRANCO = (255, 255, 255)
+    TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
+    
+    pygame.init()
+    screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+    pygame.display.set_caption('Diagonal Blocks')
+    screen.fill(BRANCO)
+    for i in range(0, LARGURA_TELA, TAMANHO_CELULA):
+        pygame.draw.line(screen, PRETO, (i, 0), (i, ALTURA_TELA))
+    for i in range(0, ALTURA_TELA, TAMANHO_CELULA):
+        pygame.draw.line(screen, PRETO, (0, i), (LARGURA_TELA, i))
+    pygame.display.flip()
 
     num_iterations = 1
 
@@ -56,7 +76,7 @@ def main():
     ]
 
     for sim in diagonalblocks_simulations:
-        run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"], 3), num_iterations)
+        run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"], 20), num_iterations)
 
 
 if __name__ == "__main__":
