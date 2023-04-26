@@ -1,6 +1,7 @@
 from game.diagonalblocks.players.greedy import DiagonalBlocksPlayer
 from game.diagonalblocks.players.minimax import DiagonalBlocksPlayer
 from game.diagonalblocks.players.random import DiagonalBlocksPlayer
+from game.diagonalblocks.players.human import HumanDiagonalBlocksPlayer
 from game.diagonalblocks.simulator import DiagonalBlocksSimulator
 from game.game_simulator import GameSimulator
 
@@ -26,18 +27,18 @@ def main():
 
         { 
              "name": "DiagonalBlocks - Human VS Human",
-            "player1": DiagonalBlocksPlayer("Human"),
-           "player2": DiagonalBlocksPlayer("Human")
-        }, 
-        {
-            "name": "DiagonalBlocks - Human VS Random",
-            "player1": DiagonalBlocksPlayer("Human"),
-           "player2": DiagonalBlocksPlayer("Minimax")
+            "player1": HumanDiagonalBlocksPlayer("Human"),
+           "player2": HumanDiagonalBlocksPlayer("Human")
         }
     ]
 
+    '''
     diagonalblocks_othersimulations = [
-        
+        {
+            "name": "DiagonalBlocks - Human VS Random",
+            "player1": HumanDiagonalBlocksPlayer("Human"),
+           "player2": DiagonalBlocksPlayer("Minimax")
+        },
         {
             "name": "TicTacToe - Random VS Random",
             "player1": DiagonalBlocksPlayer("Random 1"),
@@ -59,10 +60,10 @@ def main():
             "player2": DiagonalBlocksPlayer("Greedy")
         }
     ]
-
+    '''
 
     for sim in diagonalblocks_simulations:
-        run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"]), num_iterations)
+        run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"], 3), num_iterations)
 
 
 if __name__ == "__main__":

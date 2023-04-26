@@ -5,7 +5,7 @@ from game.game_simulator import GameSimulator
 
 class DiagonalBlocksSimulator(GameSimulator):
 
-    def __init__(self, player1: DiagonalBlocksPlayer, player2: DiagonalBlocksPlayer, num_rows: int = 6, num_cols: int = 7):
+    def __init__(self, player1: DiagonalBlocksPlayer, player2: DiagonalBlocksPlayer, num_rows: int = 20, num_cols: int = 20):
         super(DiagonalBlocksSimulator, self).__init__([player1, player2])
         """
         the number of rows and cols from the connect4 grid
