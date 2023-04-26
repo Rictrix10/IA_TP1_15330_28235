@@ -115,8 +115,8 @@ class DiagonalBlocksState(State):
 
     def __display_cell(self, row, col):
         print({
-                  0: 'X',
-                  1: 'O',
+                  0: 'R',
+                  1: 'B',
                   DiagonalBlocksState.EMPTY_CELL: ' '
               }[self.grid[row][col]], end="")
 

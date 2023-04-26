@@ -22,7 +22,7 @@ def main():
 
     num_iterations = 1
 
-    tictactoe_simulations = [
+    diagonalblocks_simulations = [
         {
             "name": "TicTacToe - Human VS Human",
             "player1": HumanDiagonalBlocksPlayer("Human"),
@@ -55,7 +55,7 @@ def main():
         }
     ]
 
-    for sim in tictactoe_simulations:
+    for sim in diagonalblocks_simulations:
         run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"], 3), num_iterations)
 
 
