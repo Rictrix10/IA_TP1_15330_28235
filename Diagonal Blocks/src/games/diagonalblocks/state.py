@@ -29,6 +29,25 @@ class DiagonalBlocksState(State):
         """
         the grid
         """
+        LARGURA_TELA = 400
+        ALTURA_TELA = 400
+        TAMANHO_CELULA = 20
+        NUM_CELULAS = 20
+        VERMELHO = (255, 0, 0)
+        AZUL = (0, 0, 255)
+        PRETO = (0, 0, 0)
+        BRANCO = (255, 255, 255)
+        TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
+
+        pygame.init()
+        self.screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+        pygame.display.set_caption('Diagonal Blocks')
+        self.screen.fill(BRANCO)
+        for i in range(0, LARGURA_TELA, TAMANHO_CELULA):
+            pygame.draw.line(self.screen, PRETO, (i, 0), (i, ALTURA_TELA))
+        for i in range(0, ALTURA_TELA, TAMANHO_CELULA):
+            pygame.draw.line(self.screen, PRETO, (0, i), (LARGURA_TELA, i))
+        pygame.display.flip()
 
         self.grid = [[DiagonalBlocksState.EMPTY_CELL for _i in range(self.num_cols)] for _j in range(self.num_rows)]
 
