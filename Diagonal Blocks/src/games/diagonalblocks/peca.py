@@ -122,5 +122,12 @@ class Peca:
             for j in range(n_rows):
                 new_cfg[i][j] = old_cfg[n_rows-j-1][i]
 
-        self.__cfg = new_cfg
+            self.__cfg = new_cfg
+    
+    def validar_proxima_jogada(self):
+        for linha in self.__cfg:
+            for caractere in linha:
+                if caractere != 'o':
+                    return False
+        return True
 
