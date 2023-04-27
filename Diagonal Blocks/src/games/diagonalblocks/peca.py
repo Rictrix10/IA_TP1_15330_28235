@@ -131,5 +131,5 @@ class Peca:
                     return False
         return True
     
-    print("Teste")
+
 
