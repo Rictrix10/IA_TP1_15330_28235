@@ -63,17 +63,64 @@ def main():
     for sim in diagonalblocks_simulations:
         run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"], 20), num_iterations)
 
+def print_all_pieces(pieces):
+        pieces = Peca.get_all()
+        for piece in pieces:
+            piece.print()
+            print("")
+
+def select_piece(pieces):
+        num_peca = int(input("Escolha uma peça: "))
+        return pieces[num_peca - 1]
+    
+def get_user_choice():
+        print("Opções:")
+        print("1 - Selecionar peça")
+        print("2 - Virar horizontalmente")
+        print("3 - Virar verticalmente")
+        print("4 - Rodar 90º")
+        return int(input("Escolha uma opção: "))
+
+
 
 if __name__ == "__main__":
     #main()
     places = Board.get_all()
-
     for place in places:
         place.print()
-        
-        
 
     pieces = Peca.get_all()
+    print_all_pieces(pieces)
+    place_piece = select_piece(pieces)
+    print("Peça selecionada:")
+    place_piece.print()
+
+    while True:
+        opcao = get_user_choice()
+        if opcao == 1:
+            #place_piece = select_piece(pieces)
+            print("Peça selecionada:")
+            place_piece.print()
+            break
+        elif opcao == 2:
+            place_piece.flip_hor()
+        elif opcao == 3:
+            place_piece.flip_ver()
+        elif opcao == 4:
+            place_piece.rotate90()
+
+        print("Peça atual:")
+        place_piece.print()
+
+    
+    
+    
+    
+    
+
+    '''
+    pieces = Peca.get_all()
+
 
     for piece in pieces: 
         piece.print()
@@ -88,3 +135,6 @@ if __name__ == "__main__":
         piece.rotate90()
         piece.print()
         print("")
+    '''
+
+
