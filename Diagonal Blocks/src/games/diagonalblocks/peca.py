@@ -101,3 +101,5 @@ class Peca:
             self.__cfg.append(new_row)
 
 
+print ("tesgte")
+
