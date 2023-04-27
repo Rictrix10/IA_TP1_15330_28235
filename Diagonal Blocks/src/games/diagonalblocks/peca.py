@@ -20,7 +20,9 @@ class Peca:
                     [o, _, o]
                 ]),
                 Peca([
-                    [X, X]
+                    [o, _, _, o],
+                    [_, X, X, _],
+                    [o, _, _, o]
                 ]),
 
                 Peca([
