@@ -7,6 +7,7 @@ from games.diagonalblocks.players.offensivegreedy import OffensiveGreedyPlayer
 from games.diagonalblocks.players.random import RandomDiagonalBlocksPlayer
 from games.diagonalblocks.simulator import DiagonalBlocksSimulator
 from games.game_simulator import GameSimulator
+from games.diagonalblocks.peca import Peca
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")
 
@@ -62,4 +63,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    #main()
+    pieces = Peca.get_all()
+
+    for piece in pieces: 
+        piece.print()
+        print("")
+        piece.flip_hor()
+        piece.print()
+        print("")
