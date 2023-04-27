@@ -101,4 +101,26 @@ class Peca:
             self.__cfg.append(new_row)
 
 
-    print("teste")
+    def flip_ver(self):
+        old_cfg = self.__cfg
+
+        self.__cfg = []
+        for col in range(len(old_cfg[0])):
+            new_col = []
+            for col_idx in range(len(old_cfg) - 1, -1, -1):
+                new_col.append(old_cfg[col_idx][col])
+            self.__cfg.append(new_col)
+
+
+    def rotate90(self):
+        old_cfg = self.__cfg
+        n_rows = len(old_cfg)
+        n_cols = len(old_cfg[0])
+
+        new_cfg = [[0] * n_rows for _ in range(n_cols)]
+        for i in range(n_cols):
+            for j in range(n_rows):
+                new_cfg[i][j] = old_cfg[n_rows-j-1][i]
+
+        self.__cfg = new_cfg
+
