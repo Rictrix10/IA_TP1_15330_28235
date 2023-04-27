@@ -132,4 +132,3 @@ class Peca:
         return True
     
 
-

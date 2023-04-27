@@ -8,6 +8,8 @@ from games.diagonalblocks.players.random import RandomDiagonalBlocksPlayer
 from games.diagonalblocks.simulator import DiagonalBlocksSimulator
 from games.game_simulator import GameSimulator
 from games.diagonalblocks.peca import Peca
+from games.diagonalblocks.board import Board
+
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")
 
@@ -64,6 +66,13 @@ def main():
 
 if __name__ == "__main__":
     #main()
+    places = Board.get_all()
+
+    for place in places:
+        place.print()
+        
+        
+
     pieces = Peca.get_all()
 
     for piece in pieces: 
@@ -74,6 +83,7 @@ if __name__ == "__main__":
         print("")
         piece.flip_ver()
         piece.print()
+        
         print("")
         piece.rotate90()
         piece.print()
