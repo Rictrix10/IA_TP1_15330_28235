@@ -130,4 +130,6 @@ class Peca:
                 if caractere != 'o':
                     return False
         return True
+    
+    print("teste")
 
