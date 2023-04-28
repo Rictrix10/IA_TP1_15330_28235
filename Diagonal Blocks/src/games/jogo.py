@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 LARGURA_TELA = 400
 ALTURA_TELA = 400
 TAMANHO_CELULA = 20
@@ -114,6 +115,7 @@ def printTabuleiro():
     pygame.display.flip()
 
 
+
 def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
     x, y = posicao
     if x < 0 or y < 0:
@@ -133,6 +135,7 @@ def atualizar_tabuleiro(screen, cordenadas, round):
             pygame.draw.rect(screen, AZUL,
                             (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
         pygame.display.update()
+
 
 def main():
     '''

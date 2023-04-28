@@ -68,7 +68,7 @@ def print_all_pieces(pieces):
         pieces = Peca.get_all()
         for piece in pieces:
             piece.print()
-            print("")
+            #print("")
 
 def select_piece(pieces):
         num_peca = int(input("Escolha uma peça: "))
@@ -86,6 +86,8 @@ def get_user_choice():
 
 if __name__ == "__main__":
     #main()
+
+
     places = Board.get_all()
     for place in places:
         place.print()
@@ -95,6 +97,7 @@ if __name__ == "__main__":
     place_piece = select_piece(pieces)
     print("Peça selecionada:")
     place_piece.print()
+
 
     while True:
         opcao = get_user_choice()

@@ -1,7 +1,6 @@
 
-
 class Piece:
-
+    
     @staticmethod
     def get_all(i, j):
         try:
@@ -55,10 +54,23 @@ class Piece:
                 ]
             
         return Piece.__all_pieces
+    
 
     def __init__(self, cfg):
         self.__cfg = cfg
 
+    '''
+    def print(self):
+        for row in self.__cfg:
+            for place in row:
+                if place == EMPTY_CELL or place == CONNECTING_CELL:
+                    print(" ", end="")
+                elif place == PLAYANLE_CELL:
+                    print("▮", end="")
+                else:
+                    raise ValueError("Invalid piece definition")
+            print("")
+    '''
     
     def flip_hor(self):
         old_cfg = self.__cfg
