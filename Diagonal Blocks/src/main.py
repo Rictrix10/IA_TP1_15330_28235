@@ -7,7 +7,7 @@ from games.diagonalblocks.players.offensivegreedy import OffensiveGreedyPlayer
 from games.diagonalblocks.players.random import RandomDiagonalBlocksPlayer
 from games.diagonalblocks.simulator import DiagonalBlocksSimulator
 from games.game_simulator import GameSimulator
-from games.diagonalblocks.peca import Peca
+from games.diagonalblocks.piece import Piece
 from games.diagonalblocks.board import Board
 
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
@@ -64,7 +64,7 @@ def main():
         run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"], 20), num_iterations)
 
 def print_all_pieces(pieces):
-        pieces = Peca.get_all()
+        pieces = Piece.get_all()
         for piece in pieces:
             piece.print()
             print("")
@@ -83,18 +83,60 @@ def get_user_choice():
 
 
 
+
+
 if __name__ == "__main__":
     #main()
     places = Board.get_all()
+
+  
+
     for place in places:
         place.print()
 
-    pieces = Peca.get_all()
+    pieces = Piece.get_all()
     print_all_pieces(pieces)
     place_piece = select_piece(pieces)
     print("Peça selecionada:")
     place_piece.print()
 
+
+    players = [1, 2]
+    current_player = 1
+    moves_left = 21
+
+    """
+    
+    while moves_left > 0:
+        print(f"Jogador {current_player}, é a sua vez!")
+        Board.get_all()
+        
+        valid_input = False
+        while not valid_input:
+            coordinates = input("Digite as coordenadas para colocar a peça (no formato linha,coluna): ")
+            coordinates = coordinates.split(",")
+            row, col = int(coordinates[0]), int(coordinates[1])
+            if Board.is_valid_move(place_piece, row, col):
+                Board.draw_piece(place_piece, row, col)
+                player1_pieces.remove_piece(place_piece)
+                valid_input = True
+        
+            if current_player == 1:
+                player1_pieces = pieces.get_all()    
+
+            if current_player == 2:
+                player2_pieces = pieces.get_all()         
+        
+            moves_left -= 1
+        
+            if current_player == 1:
+                current_player = 2
+            else:
+                current_player = 1
+            
+    print("Fim de jogo!")
+
+    """
     while True:
         opcao = get_user_choice()
         if opcao == 1:
@@ -111,7 +153,8 @@ if __name__ == "__main__":
 
         print("Peça atual:")
         place_piece.print()
-
+    
+    
     
     
     

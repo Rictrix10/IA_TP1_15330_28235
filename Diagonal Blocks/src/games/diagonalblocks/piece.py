@@ -2,64 +2,67 @@ EMPTY_CELL = -1
 PLAYANLE_CELL = 0
 CONNECTING_CELL = 1
 
-class Peca:
+class Piece:
 
     @staticmethod
     def get_all():
         try:
-            Peca.__all_pieces
+            Piece.__all_pieces
         except AttributeError:
             _ = EMPTY_CELL
             o = CONNECTING_CELL
             X = PLAYANLE_CELL
             
-            Peca.__all_pieces = [
-                Peca([
+            Piece.__all_pieces = [
+                Piece([
                     [o, _, o],
                     [_, X, _],
                     [o, _, o]
                 ]),
-                Peca([
+                Piece([
                     [o, _, _, o],
                     [_, X, X, _],
                     [o, _, _, o]
                 ]),
 
-                Peca([
+                Piece([
                     [o, _, _, _, o],
                     [_, X, X, X, _],
                     [o, _, _, _, o]
                 ]),
 
-                Peca([
+                Piece([
                     [_, o, _, o],
                     [o, _, X, _],
                     [_, X, X, _],
                     [o, _, _, o]
                 ]),
 
-                Peca([
+                Piece([
                     [o, _, _, _, _, o],
                     [_, X, X, X, X, _],
                     [o, _, _, _, _, o]
                 ]),
 
-                Peca([
+                Piece([
                     [_, _, o, _, o],
                     [o, _, _, X, _],
                     [_, X, X, X, _],
                     [o, _, _, _, o]
                 ]),
 
-                Peca([
+                Piece([
                     [_, o, _, o, _],
                     [o, _, X, _, o],
                     [_, X, X, X, _],
                     [o, _, _, _, o]
                 ])
             ]
-        return Peca.__all_pieces
-
+        return Piece.__all_pieces
+    
+   # player1_pieces = get_all()
+   # player2_pieces = get_all()
+    
     def __init__(self, cfg):
         self.__cfg = cfg
 
@@ -89,6 +92,9 @@ class Peca:
                 else:
                     raise ValueError("Invalid piece definition")
             print("")
+
+
+   
     
     def flip_hor(self):
         old_cfg = self.__cfg
