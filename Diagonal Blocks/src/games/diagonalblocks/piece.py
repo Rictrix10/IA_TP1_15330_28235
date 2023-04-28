@@ -88,7 +88,7 @@ class Piece:
                 if place == EMPTY_CELL or place == CONNECTING_CELL:
                     print(" ", end="")
                 elif place == PLAYANLE_CELL:
-                    print("▮", end="")
+                    print("■", end="")
                 else:
                     raise ValueError("Invalid piece definition")
             print("")

@@ -9,7 +9,7 @@ from games.diagonalblocks.simulator import DiagonalBlocksSimulator
 from games.game_simulator import GameSimulator
 from games.diagonalblocks.piece import Piece
 from games.diagonalblocks.board import Board
-from games.diagonalblocks.pieces import Piece
+from games.diagonalblocks.piece import Piece
 
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")
@@ -85,15 +85,11 @@ def get_user_choice():
 
 
 
-
 if __name__ == "__main__":
     #main()
 
 
     places = Board.get_all()
-
-  
-
     for place in places:
         place.print()
 
@@ -103,12 +99,10 @@ if __name__ == "__main__":
     print("Peça selecionada:")
     place_piece.print()
 
+    #Board.print()
 
 
-    players = [1, 2]
-    current_player = 1
-    moves_left = 21
-
+  
     """
     
     while moves_left > 0:
@@ -154,12 +148,39 @@ if __name__ == "__main__":
             place_piece.flip_ver()
         elif opcao == 4:
             place_piece.rotate90()
-
+        
         print("Peça atual:")
         place_piece.print()
     
     
+    def create_board():
+        board = []
+        for i in range(20):
+            row = []
+            for j in range(21):
+                if i == 0:
+                    if j == 0:
+                        row.append(" ")
+                    else:
+                       
+                        row.append(f"{j:2}")
+                        
+                elif j == 0:
+                    row.append(f"{i:2} ")   
+                    #row.append(f"{chr(i+64):2}")
+                else:
+                    row.append("  ")
+            board.append(row)
+        return board
+
+board = create_board()
+
+for row in board:
     
+    print("□".join(row))
+
+    
+   
     
     
     

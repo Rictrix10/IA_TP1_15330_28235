@@ -19,6 +19,8 @@ def criar_peca(i, j):
 
     peca2 = [[(i, j), (i, j+1)]]
 
+    diagpeca2 = [[(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
+
     peca3 = [[(i, j), (i, j+1), (i, j+2)]]
 
     peca4 = [[(i, j), (i, j+1), (i-1, j+1)]]
@@ -62,7 +64,7 @@ def criar_peca(i, j):
     lista_pecas2 = [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
                         peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
     '''
-    return [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
+    return [peca1, peca2, diagpeca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
                         peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
 
 
@@ -147,7 +149,7 @@ def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     printTabuleiro()
 
-    for round in range(4):
+    for round in range(2):
         cordenadas = escolher_peca(round)
         atualizar_tabuleiro(screen, cordenadas, round)
 
