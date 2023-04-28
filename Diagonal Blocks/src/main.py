@@ -9,6 +9,7 @@ from games.diagonalblocks.simulator import DiagonalBlocksSimulator
 from games.game_simulator import GameSimulator
 from games.diagonalblocks.peca import Peca
 from games.diagonalblocks.board import Board
+from games.diagonalblocks.pieces import Piece
 
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")
