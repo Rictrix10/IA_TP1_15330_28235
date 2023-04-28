@@ -9,6 +9,7 @@ from games.diagonalblocks.simulator import DiagonalBlocksSimulator
 from games.game_simulator import GameSimulator
 from games.diagonalblocks.piece import Piece
 from games.diagonalblocks.board import Board
+from games.diagonalblocks.pieces import Piece
 
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")
@@ -67,7 +68,7 @@ def print_all_pieces(pieces):
         pieces = Piece.get_all()
         for piece in pieces:
             piece.print()
-            print("")
+            #print("")
 
 def select_piece(pieces):
         num_peca = int(input("Escolha uma peça: "))
@@ -87,6 +88,8 @@ def get_user_choice():
 
 if __name__ == "__main__":
     #main()
+
+
     places = Board.get_all()
 
   
@@ -99,6 +102,7 @@ if __name__ == "__main__":
     place_piece = select_piece(pieces)
     print("Peça selecionada:")
     place_piece.print()
+
 
 
     players = [1, 2]
