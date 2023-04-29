@@ -68,6 +68,30 @@ def criar_peca(i, j):
                         peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
 
 
+peca2 = [[(i, j), (i, j+1)],
+[(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
+
+    # Translada a peça para baixo
+def translacao(peca2):
+        nova_peca = []
+        nova_peca = peca2
+        for bloco in peca2:
+            novo_bloco = [(bloco[0][0]+1, bloco[0][1]), (bloco[1][0]+1, bloco[1][1])]
+            if len(bloco) > 2:
+                novo_bloco.append((bloco[2][0]+1, bloco[2][1]))
+                novo_bloco.append((bloco[3][0]+1, bloco[3][1]))
+            nova_peca.append(novo_bloco)
+        return nova_peca
+    
+def rotate_piece(peca2):
+    # Transpõe a matriz
+    rotated_piece = list(zip(*peca2[::-1]))
+    # Converte as tuplas em listas
+    rotated_piece = [list(row) for row in rotated_piece]
+    return rotated_piece
+
+
+
 def escolher_peca(round):
     global num_peca, i, j
     num_peca = int(input("Escolha uma peça: "))
