@@ -5,7 +5,9 @@ ALTURA_TELA = 400
 TAMANHO_CELULA = 20
 NUM_CELULAS = 20
 VERMELHO = (255, 0, 0)
+red = (255, 225, 225)
 AZUL = (0, 0, 255)
+blue = (225, 225, 255)
 PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)
 TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
@@ -100,7 +102,7 @@ def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
         return False
     return True
 
-def atualizar_tabuleiro(screen, cordenadas, round):
+def atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round):
     for i, j in cordenadas:
         x = j * TAMANHO_CELULA
         y = i * TAMANHO_CELULA
@@ -110,7 +112,16 @@ def atualizar_tabuleiro(screen, cordenadas, round):
         else:
             pygame.draw.rect(screen, AZUL,
                             (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
-        pygame.display.update()
+    for i, j in diagonais_peca:
+        x = j * TAMANHO_CELULA
+        y = i * TAMANHO_CELULA
+        if round % 2 == 0:
+            pygame.draw.rect(screen, red, 
+                             (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
+        else:
+            pygame.draw.rect(screen, blue,
+                            (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
+    pygame.display.update()
 
 '''
 def escolher_peca(round):
@@ -168,11 +179,10 @@ def main():
             for x in range(len(lista_pecas1[num_peca-1])):
                 print(lista_pecas1[num_peca-1][0])
             cordenadas = lista_pecas1[num_peca-1][0]
-            atualizar_tabuleiro(screen, cordenadas, round)
             for x in range(len(diagonais1[num_peca-1])):
                 print(diagonais1[num_peca-1][0])
             diagonais_peca = diagonais1[num_peca-1][0]
-
+            atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
                 j = coordenada[1]
@@ -189,11 +199,11 @@ def main():
             for x in range(len(lista_pecas2[num_peca-1])):
                 print(lista_pecas2[num_peca-1][0])
             cordenadas = lista_pecas2[num_peca-1][0]
-            atualizar_tabuleiro(screen, cordenadas, round)
+            #atualizar_tabuleiro(screen, cordenadas, round)
             for x in range(len(diagonais2[num_peca-1])):
                 print(diagonais2[num_peca-1][0])
             diagonais_peca = diagonais2[num_peca-1][0]
-
+            atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
                 j = coordenada[1]
