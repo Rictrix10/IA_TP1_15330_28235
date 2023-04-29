@@ -127,44 +127,14 @@ def atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round):
                             (x, y, TAMANHO_CELULA, TAMANHO_CELULA))
     pygame.display.update()
 
-'''
-def escolher_peca(round):
-    global num_peca, i, j
-    num_peca = int(input("Escolha uma peça: "))
-    i = int(input("Escolha a linha: ")) - 1
-    j = int(input("Escolha a coluna: ")) - 1
-    lista_pecas1 = criar_peca(i,j)
-    lista_pecas2 = criar_peca(i,j)
-
-
-    if round % 2 == 0 :
-        for x in range(len(lista_pecas1[num_peca-1])):
-            print("Posição " + str(x+1))
-            print(lista_pecas1[num_peca-1][x])
-        num_posicao = int(input("Escolha a posição: "))
-        print(lista_pecas1[num_peca-1][num_posicao-1])
-        cordenadas = lista_pecas1[num_peca-1][num_posicao-1]
-        pecas_escolhidas1.append(num_peca)
-        for coordenada in cordenadas:
-            i = coordenada[0]
-            j = coordenada[1]
-            tabuleiro[i][j] = 1
-        return cordenadas
-
+def validar_jogada(num_peca, i, j):
+    if 1 > num_peca > 21:
+        print("Essa peça não existe")
     else:
-        for x in range(len(lista_pecas2[num_peca-1])):
-            print("Posição " + str(x+1))
-            print(lista_pecas2[num_peca-1][x])
-        num_posicao = int(input("Escolha a posição: "))
-        print(lista_pecas2[num_peca-1][num_posicao-1])
-        cordenadas = lista_pecas2[num_peca-1][num_posicao-1]
-        pecas_escolhidas2.append(num_peca)
-        for coordenada in cordenadas:
-            i = coordenada[0]
-            j = coordenada[1]
-            tabuleiro[i][j] = 2
-        return cordenadas
-'''
+        if 1 > i > 20:
+            print("Linha inválida")
+        if 1 > j > 20:
+            print("Coluna inválida")
 
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
