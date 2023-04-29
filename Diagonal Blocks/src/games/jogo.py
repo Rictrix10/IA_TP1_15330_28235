@@ -68,8 +68,8 @@ def criar_peca(i, j):
                         peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
 
 
-peca2 = [[(i, j), (i, j+1)],
-[(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
+#peca2 = [[(i, j), (i, j+1)],
+#[(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
 
     # Translada a peça para baixo
 def translacao(peca2):
