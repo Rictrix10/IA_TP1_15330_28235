@@ -16,6 +16,17 @@ pecas_escolhidas1 = []
 pecas_escolhidas2 = []
 tabuleiro = [[0] * 20 for _ in range(20)]
 
+def printTabuleiro():
+    pygame.init()
+    screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+    pygame.display.set_caption('Diagonal Blocks')
+    screen.fill(BRANCO)
+    for i in range(0, LARGURA_TELA, TAMANHO_CELULA):
+        pygame.draw.line(screen, PRETO, (i, 0), (i, ALTURA_TELA))
+    for i in range(0, ALTURA_TELA, TAMANHO_CELULA):
+        pygame.draw.line(screen, PRETO, (0, i), (LARGURA_TELA, i))
+    pygame.display.flip()
+
 def criar_peca(i, j):
     peca1 = [[(i, j)]]
 
@@ -58,14 +69,21 @@ def criar_peca(i, j):
     peca20 = [[(i, j), (i, j+1), (i, j+2), (i-1, j+1), (i-2, j+1)]]
 
     peca21 = [[(i, j), (i, j+1), (i-1, j+1), (i-2, j+1), (i-1, j+2)]]
-    '''
-    lista_pecas1 = [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
-                        peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
-    lista_pecas2 = [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
-                        peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
-    '''
+
     return [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
                         peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
+
+def pecas_diagonais(i, j):
+
+    peca1 = [ [(i, j)], [(i-1, j-1), (i+1, j-1), (i-1, j+1), (i+1, j+1)] ]
+
+    peca2 = [ [(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)] ]
+
+    peca3 = [ [(i, j), (i, j+1), (i, j+2)], [(i-1, j-1), (i+1, j-1), (i-1, j+3), (i+1, j+3)]]
+
+    peca4 = [ [(i, j), (i, j+1), (i-1, j+1)], [(i-1, j-1), (i+1, j-1), (i-2, j), (i-2, j+2), (i+1, j+2)]]
+
+    return [peca1, peca2, peca3, peca4]
 
 def criar_diagonal(i, j):
 
@@ -78,20 +96,6 @@ def criar_diagonal(i, j):
     PECA4 = [[(i-1, j-1), (i+1, j-1), (i-2, j), (i-2, j+2), (i+1, j+2)]]
 
     return [PECA1, PECA2, PECA3, PECA4]
-
-
-
-def printTabuleiro():
-    pygame.init()
-    screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-    pygame.display.set_caption('Diagonal Blocks')
-    screen.fill(BRANCO)
-    for i in range(0, LARGURA_TELA, TAMANHO_CELULA):
-        pygame.draw.line(screen, PRETO, (i, 0), (i, ALTURA_TELA))
-    for i in range(0, ALTURA_TELA, TAMANHO_CELULA):
-        pygame.draw.line(screen, PRETO, (0, i), (LARGURA_TELA, i))
-    pygame.display.flip()
-
 
 
 def dentro_do_tabuleiro(posicao, NUM_CELULAS, TAMANHO_CELULA):
@@ -171,16 +175,52 @@ def main():
         num_peca = int(input("Escolha uma peça: "))
         i = int(input("Escolha a linha: ")) - 1
         j = int(input("Escolha a coluna: ")) - 1
-        
-        if round % 2 == 0 :
+
+        '''  Peças e Diagonais numa lista só
+        if round % 2 == 0:
+            pieces1 = pecas_diagonais(i, j)
+
+            print(pieces1[num_peca-1][0])
+            cordenadas = pieces1[num_peca-1][0]
+            print(pieces1[num_peca-1][1])
+            diagonais_peca = pieces1[num_peca-1][1]
+            atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
+            for coordenada in cordenadas:
+                i = coordenada[0]
+                j = coordenada[1]
+                tabuleiro[i][j] = 1
+            for diagonal in diagonais_peca:
+                i = diagonal[0]
+                j = diagonal[1]
+                tabuleiro[i][j] = 2
+
+        else:
+            pieces2 = pecas_diagonais(i, j)
+
+            print(pieces2[num_peca-1][0])
+            cordenadas = pieces2[num_peca-1][0]
+            print(pieces2[num_peca-1][1])
+            diagonais_peca = pieces2[num_peca-1][1]
+            atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
+            for coordenada in cordenadas:
+                i = coordenada[0]
+                j = coordenada[1]
+                tabuleiro[i][j] = 3
+            for diagonal in diagonais_peca:
+                i = diagonal[0]
+                j = diagonal[1]
+                tabuleiro[i][j] = 4
+        '''
+
+
+        #'''  Peças e diagonais em listas separadas
+        if round % 2 == 0 :   # jogador 1
             lista_pecas1 = criar_peca(i,j)
             diagonais1 = criar_diagonal(i, j)
 
-            for x in range(len(lista_pecas1[num_peca-1])):
-                print(lista_pecas1[num_peca-1][0])
+            print(lista_pecas1[num_peca-1][0])
             cordenadas = lista_pecas1[num_peca-1][0]
-            for x in range(len(diagonais1[num_peca-1])):
-                print(diagonais1[num_peca-1][0])
+            print(diagonais1[num_peca-1][0])
             diagonais_peca = diagonais1[num_peca-1][0]
             atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
@@ -192,16 +232,13 @@ def main():
                 j = diagonal[1]
                 tabuleiro[i][j] = 2
             
-        else:
+        else:                 # jogador 2
             lista_pecas2 = criar_peca(i,j)
             diagonais2 = criar_diagonal(i, j)
 
-            for x in range(len(lista_pecas2[num_peca-1])):
-                print(lista_pecas2[num_peca-1][0])
+            print(lista_pecas2[num_peca-1][0])
             cordenadas = lista_pecas2[num_peca-1][0]
-            #atualizar_tabuleiro(screen, cordenadas, round)
-            for x in range(len(diagonais2[num_peca-1])):
-                print(diagonais2[num_peca-1][0])
+            print(diagonais2[num_peca-1][0])
             diagonais_peca = diagonais2[num_peca-1][0]
             atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
@@ -212,15 +249,10 @@ def main():
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = 4
+        #'''
 
 
 
-
-        '''
-    for round in range(2):
-        cordenadas = escolher_peca(round)
-        atualizar_tabuleiro(screen, cordenadas, round)
-        '''
 
     for row in tabuleiro:
         print(row)
