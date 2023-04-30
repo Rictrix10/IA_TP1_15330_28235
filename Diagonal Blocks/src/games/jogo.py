@@ -157,7 +157,6 @@ def rotate_piece(peca2):
     return rotated_piece
 
 
-
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     printTabuleiro()
@@ -169,8 +168,8 @@ def main():
         j = int(input("Escolha a coluna: ")) - 1
         
 
-        peca2 = [[(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
-        #peca2 = [[(i, j), (i, j+1)]]
+        #peca2 = [[(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
+        peca2 = [[(i, j), (i, j+1)]]
         #peca2 = [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]
 
 
@@ -184,7 +183,7 @@ def main():
             diagonais_peca = pieces1[num_peca-1][1]
             if num_peca == 2:
                 rodada = rotate_piece(peca2)
-                print("Peça rodada: ", rodada)  
+                print("Peça rodada: ", rodada) 
             atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
