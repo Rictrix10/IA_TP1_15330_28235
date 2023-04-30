@@ -139,7 +139,7 @@ def validar_jogada(num_peca, i, j):
     peca2 = [[(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
 
 def translacao(peca2):
-        nova_peca = []
+        #nova_peca = []
         nova_peca = peca2
         for bloco in peca2:
             novo_bloco = [(bloco[0][0]+1, bloco[0][1]), (bloco[1][0]+1, bloco[1][1])]
@@ -156,6 +156,8 @@ def rotate_piece(peca2):
     rotated_piece = [list(row) for row in rotated_piece]
     return rotated_piece
 
+
+
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     printTabuleiro()
@@ -168,7 +170,8 @@ def main():
         
 
         peca2 = [[(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
-
+        #peca2 = [[(i, j), (i, j+1)]]
+        #peca2 = [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]
 
 
         #'''  Peças e Diagonais numa lista só
@@ -181,7 +184,7 @@ def main():
             diagonais_peca = pieces1[num_peca-1][1]
             if num_peca == 2:
                 rodada = rotate_piece(peca2)
-                print("Peça rodada: ", rodada)      
+                print("Peça rodada: ", rodada)  
             atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
