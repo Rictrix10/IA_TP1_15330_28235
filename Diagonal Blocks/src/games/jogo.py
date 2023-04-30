@@ -260,3 +260,6 @@ def rotate_piece(peca2):
     # Converte as tuplas em listas
     rotated_piece = [list(row) for row in rotated_piece]
     return rotated_piece
+
+
+
