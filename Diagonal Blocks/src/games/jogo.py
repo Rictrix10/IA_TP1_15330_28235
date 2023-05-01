@@ -72,7 +72,17 @@ def criar_peca(i, j):
 
     return [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
                         peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
+def pecas_diagonais(i, j):
 
+    peca1 = [ [(i, j)], [(i-1, j-1), (i+1, j-1), (i-1, j+1), (i+1, j+1)] ]
+
+    peca2 = [ [(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)] ]
+
+    peca3 = [ [(i, j), (i, j+1), (i, j+2)], [(i-1, j-1), (i+1, j-1), (i-1, j+3), (i+1, j+3)]]
+
+    peca4 = [ [(i, j), (i, j+1), (i-1, j+1)], [(i-1, j-1), (i+1, j-1), (i-2, j), (i-2, j+2), (i+1, j+2)]]
+
+    return [peca1, peca2, peca3, peca4]
 
 def criar_diagonal(i, j):
 
@@ -125,17 +135,45 @@ def validar_jogada(num_peca, i, j):
         if 1 > j > 20:
             print("Coluna inválida")
 
+            
+    peca2 = [[(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
+
+def translacao(peca2):
+        #nova_peca = []
+        nova_peca = peca2
+        for bloco in peca2:
+            novo_bloco = [(bloco[0][0]+1, bloco[0][1]), (bloco[1][0]+1, bloco[1][1])]
+            if len(bloco) > 2:
+                novo_bloco.append((bloco[2][0]+1, bloco[2][1]))
+                novo_bloco.append((bloco[3][0]+1, bloco[3][1]))
+            nova_peca.append(novo_bloco)
+        return nova_peca
+    
+def rotate_piece(peca2):
+    # Transpõe a matriz
+    rotated_piece = list(zip(*peca2[::-1]))
+    # Converte as tuplas em listas
+    rotated_piece = [list(row) for row in rotated_piece]
+    return rotated_piece
+
+
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     printTabuleiro()
 
-    for round in range(2):
+    for round in range(1):
         global num_peca, i, j
         num_peca = int(input("Escolha uma peça: "))
         i = int(input("Escolha a linha: ")) - 1
         j = int(input("Escolha a coluna: ")) - 1
+        
 
-        '''  Peças e Diagonais numa lista só
+        #peca2 = [[(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
+        peca2 = [[(i, j), (i, j+1)]]
+        #peca2 = [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]
+
+
+        #'''  Peças e Diagonais numa lista só
         if round % 2 == 0:
             pieces1 = pecas_diagonais(i, j)
 
@@ -143,6 +181,9 @@ def main():
             cordenadas = pieces1[num_peca-1][0]
             print(pieces1[num_peca-1][1])
             diagonais_peca = pieces1[num_peca-1][1]
+            if num_peca == 2:
+                rodada = rotate_piece(peca2)
+                print("Peça rodada: ", rodada) 
             atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
@@ -169,10 +210,10 @@ def main():
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = 4
-        '''
+        #'''
 
 
-        #'''  Peças e diagonais em listas separadas
+        '''  Peças e diagonais em listas separadas
         if round % 2 == 0 :   # jogador 1
             lista_pecas1 = criar_peca(i,j)
             diagonais1 = criar_diagonal(i, j)
@@ -180,7 +221,7 @@ def main():
             print(lista_pecas1[num_peca-1][0])
             cordenadas = lista_pecas1[num_peca-1][0]
             print(diagonais1[num_peca-1][0])
-            diagonais_peca = diagonais1[num_peca-1][0]
+            diagonais_peca = diagonais1[num_peca-1][0]   
             atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
@@ -208,7 +249,7 @@ def main():
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = 4
-        #'''
+        '''
 
 
 
@@ -243,23 +284,7 @@ peca2 = [[(i, j), (i, j+1)],
 [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
 
     # Translada a peça para baixo
-def translacao(peca2):
-        nova_peca = []
-        nova_peca = peca2
-        for bloco in peca2:
-            novo_bloco = [(bloco[0][0]+1, bloco[0][1]), (bloco[1][0]+1, bloco[1][1])]
-            if len(bloco) > 2:
-                novo_bloco.append((bloco[2][0]+1, bloco[2][1]))
-                novo_bloco.append((bloco[3][0]+1, bloco[3][1]))
-            nova_peca.append(novo_bloco)
-        return nova_peca
-    
-def rotate_piece(peca2):
-    # Transpõe a matriz
-    rotated_piece = list(zip(*peca2[::-1]))
-    # Converte as tuplas em listas
-    rotated_piece = [list(row) for row in rotated_piece]
-    return rotated_piece
+
 
 
 
