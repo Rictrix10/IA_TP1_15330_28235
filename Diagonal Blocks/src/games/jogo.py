@@ -156,12 +156,29 @@ def rotate_piece(peca2):
     rotated_piece = [list(row) for row in rotated_piece]
     return rotated_piece
 
+def rotacionar_peca(peca3):
+    nova_peca = []
+    for coord in peca3:
+        i, j = coord
+        # Rotaciona a peça em 90 graus
+        nova_i = -j
+        nova_j = i
+        nova_peca.append((nova_i, nova_j))
+    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+    min_i = min(i for i, j in nova_peca)
+    min_j = min(j for i, j in nova_peca)
+    nova_peca = [(i - min_i, j - min_j) for i, j in nova_peca]
+    # Ordena a lista de coordenadas para que a ordem seja consistente
+    nova_peca = sorted(nova_peca)
+    return nova_peca
 
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     printTabuleiro()
 
     for round in range(1):
+
+
         global num_peca, i, j
         num_peca = int(input("Escolha uma peça: "))
         i = int(input("Escolha a linha: ")) - 1
@@ -171,9 +188,13 @@ def main():
         #peca2 = [[(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
         peca2 = [[(i, j), (i, j+1)]]
         #peca2 = [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]
+        peca3 = [[(i, j), (i, j+1), (i, j+2)]]
 
+        nova_peca = rotacionar_peca(peca3[0])
 
-        #'''  Peças e Diagonais numa lista só
+        print(nova_peca) 
+
+        '''  Peças e Diagonais numa lista só
         if round % 2 == 0:
             pieces1 = pecas_diagonais(i, j)
 
@@ -210,10 +231,10 @@ def main():
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = 4
-        #'''
+        '''
 
 
-        '''  Peças e diagonais em listas separadas
+        #'''  Peças e diagonais em listas separadas
         if round % 2 == 0 :   # jogador 1
             lista_pecas1 = criar_peca(i,j)
             diagonais1 = criar_diagonal(i, j)
@@ -221,7 +242,8 @@ def main():
             print(lista_pecas1[num_peca-1][0])
             cordenadas = lista_pecas1[num_peca-1][0]
             print(diagonais1[num_peca-1][0])
-            diagonais_peca = diagonais1[num_peca-1][0]   
+            
+            diagonais_peca = diagonais1[num_peca-1][0]  
             atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
@@ -249,7 +271,7 @@ def main():
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = 4
-        '''
+        #'''
 
 
 
