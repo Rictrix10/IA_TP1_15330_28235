@@ -73,7 +73,17 @@ def print_all_pieces(pieces):
 def select_piece(pieces):
         num_peca = int(input("Escolha uma peça: "))
         return pieces[num_peca - 1]
+
+def select_row(pieces):
+        x = int(input("Escolha uma linha: ")) 
+        return x 
+
+def select_column(pieces):
+    y = int(input("Escolha uma coluna: "))
+    return y
     
+     
+
 def get_user_choice():
         print("Opções:")
         print("1 - Selecionar peça")
@@ -96,6 +106,8 @@ if __name__ == "__main__":
     pieces = Piece.get_all()
     print_all_pieces(pieces)
     place_piece = select_piece(pieces)
+    x = select_row(pieces)
+    y = select_column(pieces)
     print("Peça selecionada:")
     place_piece.print()
 
