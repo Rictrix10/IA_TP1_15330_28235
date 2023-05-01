@@ -156,18 +156,51 @@ def rotate_piece(peca2):
     rotated_piece = [list(row) for row in rotated_piece]
     return rotated_piece
 
-def rotacionar_peca(peca3):
+def rotacionar_peca(i, j, peca_selecionada):
     nova_peca = []
-    for coord in peca3:
-        i, j = coord
+    for coord in peca_selecionada:
+        x, y = coord
         # Rotaciona a peça em 90 graus
-        nova_i = -j
-        nova_j = i
-        nova_peca.append((nova_i, nova_j))
+        nova_x = -y
+        nova_y = x
+        nova_peca.append((nova_x, nova_y))
     # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
-    min_i = min(i for i, j in nova_peca)
-    min_j = min(j for i, j in nova_peca)
-    nova_peca = [(i - min_i, j - min_j) for i, j in nova_peca]
+    min_x = min(x for x, y in nova_peca)
+    min_y = min(y for x, y in nova_peca)
+    nova_peca = [(x - min_x + i, y - min_y + j) for x, y in nova_peca]
+    # Ordena a lista de coordenadas para que a ordem seja consistente
+    nova_peca = sorted(nova_peca)
+    return nova_peca
+
+def rotacionar_diagonais(i, j, diagonais_peca):
+    nova_peca = []
+    for coord in diagonais_peca:
+        x, y = coord
+        # Rotaciona a peça em 90 graus
+        nova_x = -y
+        nova_y = x
+        nova_peca.append((nova_x, nova_y))
+    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+    min_x = min(x for x, y in nova_peca)
+    min_y = min(y for x, y in nova_peca)
+    nova_peca = [(x - min_x + i-1, y - min_y + j-1) for x, y in nova_peca]
+    # Ordena a lista de coordenadas para que a ordem seja consistente
+    nova_peca = sorted(nova_peca)
+    return nova_peca
+
+
+def rotacionar_tudo(i, j, conjunto):
+    nova_peca = []
+    for coord in conjunto:
+        x, y = coord
+        # Rotaciona a peça em 90 graus
+        nova_x = -y
+        nova_y = x
+        nova_peca.append((nova_x, nova_y))
+    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+    min_x = min(x for x, y in nova_peca)
+    min_y = min(y for x, y in nova_peca)
+    nova_peca = [(x - min_x + i, y - min_y + j) for x, y in nova_peca]
     # Ordena a lista de coordenadas para que a ordem seja consistente
     nova_peca = sorted(nova_peca)
     return nova_peca
@@ -185,32 +218,32 @@ def main():
         j = int(input("Escolha a coluna: ")) - 1
         
 
-        #peca2 = [[(i, j), (i, j+1)], [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
-        peca2 = [[(i, j), (i, j+1)]]
-        #peca2 = [(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]
-        peca3 = [[(i, j), (i, j+1), (i, j+2)]]
 
-        nova_peca = rotacionar_peca(peca3[0])
-
-        print(nova_peca) 
 
         '''  Peças e Diagonais numa lista só
         if round % 2 == 0:
             pieces1 = pecas_diagonais(i, j)
+            conjunto = pieces1[num_peca-1]
 
-            print(pieces1[num_peca-1][0])
-            cordenadas = pieces1[num_peca-1][0]
-            print(pieces1[num_peca-1][1])
+            peca_selecionada = pieces1[num_peca-1][0]
+            print("Peça selecionada: ", peca_selecionada)
+
             diagonais_peca = pieces1[num_peca-1][1]
-            if num_peca == 2:
-                rodada = rotate_piece(peca2)
-                print("Peça rodada: ", rodada) 
-            atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
+            print("Diagonais da peça: ", diagonais_peca)
+
+            cordenadas = peca_selecionada
+            diagonais = diagonais_peca
+
+            nova_peca = rotacionar_tudo(i, j, conjunto)
+            cordenadas = nova_peca[0]
+            diagonais = nova_peca[1]
+            
+            atualizar_tabuleiro(screen, cordenadas, diagonais, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
                 j = coordenada[1]
                 tabuleiro[i][j] = 1
-            for diagonal in diagonais_peca:
+            for diagonal in diagonais:
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = 2
@@ -239,17 +272,27 @@ def main():
             lista_pecas1 = criar_peca(i,j)
             diagonais1 = criar_diagonal(i, j)
 
-            print(lista_pecas1[num_peca-1][0])
-            cordenadas = lista_pecas1[num_peca-1][0]
-            print(diagonais1[num_peca-1][0])
-            
+            peca_selecionada = lista_pecas1[num_peca-1][0]
             diagonais_peca = diagonais1[num_peca-1][0]  
-            atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round)
+            print("Peça selecionada: ", peca_selecionada)
+            print("Diagonais da peça: ", diagonais_peca)
+            cordenadas = peca_selecionada
+            diagonais = diagonais_peca
+
+            # Rodar
+            nova_peca = rotacionar_peca(i, j, peca_selecionada) 
+            novas_diagonais = rotacionar_diagonais(i, j, diagonais_peca)
+            print("Peça rodada: ", nova_peca) 
+            print("Diagonais rodadas: ", novas_diagonais)
+            cordenadas = nova_peca
+            diagonais = novas_diagonais
+
+            atualizar_tabuleiro(screen, cordenadas, diagonais, round)
             for coordenada in cordenadas:
                 i = coordenada[0]
                 j = coordenada[1]
                 tabuleiro[i][j] = 1
-            for diagonal in diagonais_peca:
+            for diagonal in diagonais:
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = 2
