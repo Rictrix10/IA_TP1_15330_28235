@@ -1,7 +1,7 @@
 EMPTY_CELL = -1
 PLAYANLE_CELL = 0
 CONNECTING_CELL = 1
-
+FIXED_CELL = 10
 class Piece:
 
     @staticmethod
@@ -12,49 +12,50 @@ class Piece:
             _ = EMPTY_CELL
             o = CONNECTING_CELL
             X = PLAYANLE_CELL
+            Y = FIXED_CELL
             
             Piece.__all_pieces = [
                 Piece([
                     [o, _, o],
-                    [_, X, _],
+                    [_, Y, _],
                     [o, _, o]
                 ]),
                 Piece([
                     [o, _, _, o],
-                    [_, X, X, _],
+                    [_, Y, X, _],
                     [o, _, _, o]
                 ]),
 
                 Piece([
                     [o, _, _, _, o],
-                    [_, X, X, X, _],
+                    [_, Y, X, X, _],
                     [o, _, _, _, o]
                 ]),
 
                 Piece([
                     [_, o, _, o],
                     [o, _, X, _],
-                    [_, X, X, _],
+                    [_, Y, X, _],
                     [o, _, _, o]
                 ]),
 
                 Piece([
                     [o, _, _, _, _, o],
-                    [_, X, X, X, X, _],
+                    [_, Y, X, X, X, _],
                     [o, _, _, _, _, o]
                 ]),
 
                 Piece([
                     [_, _, o, _, o],
                     [o, _, _, X, _],
-                    [_, X, X, X, _],
+                    [_, Y, X, X, _],
                     [o, _, _, _, o]
                 ]),
 
                 Piece([
                     [_, o, _, o, _],
                     [o, _, X, _, o],
-                    [_, X, X, X, _],
+                    [_, Y, X, X, _],
                     [o, _, _, _, o]
                 ])
             ]
@@ -87,11 +88,16 @@ class Piece:
             for place in row:
                 if place == EMPTY_CELL or place == CONNECTING_CELL:
                     print(" ", end="")
-                elif place == PLAYANLE_CELL:
+                elif place == PLAYANLE_CELL or place == FIXED_CELL:
                     print("■", end="")
                 else:
                     raise ValueError("Invalid piece definition")
             print("")
+
+    
+
+                
+                 
 
 
    
