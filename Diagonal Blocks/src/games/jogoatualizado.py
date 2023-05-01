@@ -108,7 +108,7 @@ def atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round):
     pygame.display.update()
 
 
-def rotacionar_peca(i, j, peca_selecionada):
+def roda_peca_contra_relogio(i, j, peca_selecionada):
     nova_peca = []
     for coord in peca_selecionada:
         x, y = coord
@@ -124,7 +124,7 @@ def rotacionar_peca(i, j, peca_selecionada):
     nova_peca = sorted(nova_peca)
     return nova_peca
 
-def rotacionar_diagonais(i, j, diagonais_peca):
+def roda_diagonais_contra_relogio(i, j, diagonais_peca):
     nova_peca = []
     for coord in diagonais_peca:
         x, y = coord
@@ -140,6 +140,46 @@ def rotacionar_diagonais(i, j, diagonais_peca):
     nova_peca = sorted(nova_peca)
     return nova_peca
 
+def roda_peca_relogio(i, j, peca_selecionada):
+    nova_peca = []
+    for coord in peca_selecionada:
+        x, y = coord
+        # Rotaciona a peça em 90 graus no sentido contrário
+        nova_x = y
+        nova_y = -x
+        nova_peca.append((nova_x, nova_y))
+    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+    min_x = min(x for x, y in nova_peca)
+    min_y = min(y for x, y in nova_peca)
+    nova_peca = [(x - min_x + i, y - min_y + j) for x, y in nova_peca]
+    # Ordena a lista de coordenadas para que a ordem seja consistente
+    nova_peca = sorted(nova_peca)
+    return nova_peca
+
+
+def roda_diagonais_relogio(i, j, diagonais_peca):
+    nova_peca = []
+    for coord in diagonais_peca:
+        x, y = coord
+        # Rotaciona a peça em 90 graus no sentido contrário
+        nova_x = y
+        nova_y = -x
+        nova_peca.append((nova_x, nova_y))
+    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+    min_x = min(x for x, y in nova_peca)
+    min_y = min(y for x, y in nova_peca)
+    nova_peca = [(x - min_x + i-1, y - min_y + j-1) for x, y in nova_peca]
+    # Ordena a lista de coordenadas para que a ordem seja consistente
+    nova_peca = sorted(nova_peca)
+    return nova_peca
+
+def get_user_choice():
+        print("Opções:")
+        print("1 - Selecionar peça")
+        print("2 - Virar horizontalmente")
+        print("3 - Virar verticalmente")
+        print("4 - Rodar 90º")
+        return int(input("Escolha uma opção: "))
 
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
@@ -167,8 +207,10 @@ def main():
             diagonais = diagonais_peca
 
             # Rodar
-            nova_peca = rotacionar_peca(i, j, peca_selecionada) 
-            novas_diagonais = rotacionar_diagonais(i, j, diagonais_peca)
+            #nova_peca = roda_peca_contra_relogio(i, j, peca_selecionada) 
+            #novas_diagonais = roda_diagonais_contra_relogio(i, j, diagonais_peca)
+            nova_peca = roda_peca_relogio(i, j, peca_selecionada) 
+            novas_diagonais = roda_diagonais_relogio(i, j, diagonais_peca)
             print("Peça rodada: ", nova_peca) 
             print("Diagonais rodadas: ", novas_diagonais)
             cordenadas = nova_peca
