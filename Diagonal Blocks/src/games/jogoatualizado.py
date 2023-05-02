@@ -14,7 +14,7 @@ TAMANHO_TABULEIRO = NUM_CELULAS * TAMANHO_CELULA
 
 pecas_escolhidas1 = []
 pecas_escolhidas2 = []
-tabuleiro = [[0] * 20 for _ in range(20)]
+tabuleiro = [['0'] * 20 for _ in range(20)]
 
 def printTabuleiro():
     pygame.init()
@@ -181,10 +181,29 @@ def get_user_choice():
         print("4 - Rodar 90º")
         return int(input("Escolha uma opção: "))
 
+def validate_play(num_peca, i, j, pecas_jogadas):
+    if not (1 <= num_peca <= 21):
+        print("Essa peça não existe")
+        return False
+        
+    if num_peca in pecas_jogadas:
+        print("Essa peça já foi jogada")
+        return False
+    
+    if not (1 <= i <= 20):
+        print("Essa linha não existe")
+        return False
+    
+    if not (1 <= j <= 20):
+        print("Essa coluna não existe")
+        return False
+    
+    return True
+
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     printTabuleiro()
-
+    pecas_jogadas = []
     for round in range(1):
 
 
@@ -192,6 +211,10 @@ def main():
         num_peca = int(input("Escolha uma peça: "))
         i = int(input("Escolha a linha: ")) - 1
         j = int(input("Escolha a coluna: ")) - 1
+        validacao = validate_play(num_peca, i, j, pecas_jogadas)
+        print(validacao)
+
+
 
 
         #'''  Peças e diagonais em listas separadas
@@ -217,16 +240,22 @@ def main():
             diagonais = novas_diagonais
 
             atualizar_tabuleiro(screen, cordenadas, diagonais, round)
+            pecas_jogadas.append(num_peca)
+            print("Peças jogadas: ", pecas_jogadas)
+
             for coordenada in cordenadas:
                 i = coordenada[0]
                 j = coordenada[1]
-                tabuleiro[i][j] = 1
+                tabuleiro[i][j] = 'R'
             for diagonal in diagonais:
                 i = diagonal[0]
                 j = diagonal[1]
-                tabuleiro[i][j] = 2
+                tabuleiro[i][j] = '1'
             
-        else:                 # jogador 2
+                for row in tabuleiro:
+                    print(row)
+            
+        else:                 # jogador 2    - falta adaptar para aqui
             lista_pecas2 = criar_peca(i,j)
             diagonais2 = criar_diagonal(i, j)
 
@@ -238,35 +267,19 @@ def main():
             for coordenada in cordenadas:
                 i = coordenada[0]
                 j = coordenada[1]
-                tabuleiro[i][j] = 3
+                tabuleiro[i][j] = 'B'
             for diagonal in diagonais_peca:
                 i = diagonal[0]
                 j = diagonal[1]
-                tabuleiro[i][j] = 4
+                tabuleiro[i][j] = '2'
         #'''
 
-
-
-
-    for row in tabuleiro:
-        print(row)
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                # Obter as coordenadas do mouse
-                pos = pygame.mouse.get_pos()
-
-                # Converter as coordenadas do mouse para coordenadas de célula
-                x = pos[0] // TAMANHO_CELULA
-                y = pos[1] // TAMANHO_CELULA
-
-                # Imprimir as coordenadas da célula clicada
-                print(f"Célula selecionada: ({x}, {y})")
-
         pygame.display.flip()
 
 
@@ -274,8 +287,4 @@ if __name__ == '__main__':
     main()
 
 
-peca2 = [[(i, j), (i, j+1)],
-[(i-1, j-1), (i+1, j-1), (i+1, j+2), (i-1, j+2)]]
-
-    # Translada a peça para baixo
 
