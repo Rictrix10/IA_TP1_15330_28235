@@ -221,10 +221,7 @@ def main():
         i = int(input("Escolha a linha: ")) - 1
         j = int(input("Escolha a coluna: ")) - 1
         validacao = validate_play(num_peca, i, j, pecas_jogadas, round)
-        print(validacao)
-
-
-
+        print("Jogada permitida: ", validacao)
 
         #'''  Peças e diagonais em listas separadas
         if round % 2 == 0 :   # jogador 1
@@ -261,11 +258,9 @@ def main():
                 j = diagonal[1]
                 tabuleiro[i][j] = '1'
             
-                for row in tabuleiro:
-                    print(row)
-            
             locais = jogadas_possiveis(tabuleiro)
             print("Jogadas possíveis: ", locais)
+    
             
         else:                 # jogador 2    - falta adaptar para aqui
             lista_pecas2 = criar_peca(i,j)
@@ -285,7 +280,8 @@ def main():
                 j = diagonal[1]
                 tabuleiro[i][j] = '2'
         #'''
-
+        for row in tabuleiro:
+            print(row)
 
     while True:
         for event in pygame.event.get():
