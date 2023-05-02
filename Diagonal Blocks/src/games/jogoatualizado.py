@@ -181,7 +181,7 @@ def get_user_choice():
         print("4 - Rodar 90º")
         return int(input("Escolha uma opção: "))
 
-def validate_play(num_peca, i, j, pecas_jogadas):
+def validate_play(num_peca, i, j, pecas_jogadas, round):
     if not (1 <= num_peca <= 21):
         print("Essa peça não existe")
         return False
@@ -200,6 +200,15 @@ def validate_play(num_peca, i, j, pecas_jogadas):
     
     return True
 
+def jogadas_possiveis(tabuleiro):
+    places = []
+    for x in range(20):
+        for y in range(20):
+            if tabuleiro[x][y] == '1':
+                places.append((x,y))
+    return places
+
+
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     printTabuleiro()
@@ -211,7 +220,7 @@ def main():
         num_peca = int(input("Escolha uma peça: "))
         i = int(input("Escolha a linha: ")) - 1
         j = int(input("Escolha a coluna: ")) - 1
-        validacao = validate_play(num_peca, i, j, pecas_jogadas)
+        validacao = validate_play(num_peca, i, j, pecas_jogadas, round)
         print(validacao)
 
 
@@ -254,6 +263,9 @@ def main():
             
                 for row in tabuleiro:
                     print(row)
+            
+            locais = jogadas_possiveis(tabuleiro)
+            print("Jogadas possíveis: ", locais)
             
         else:                 # jogador 2    - falta adaptar para aqui
             lista_pecas2 = criar_peca(i,j)
