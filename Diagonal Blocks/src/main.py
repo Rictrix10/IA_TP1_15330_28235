@@ -24,6 +24,11 @@ def main():
     num_iterations = 1000
 
     c4_simulations = [
+        {
+            "name": "Connect4 - Human VS Human",
+            "player1": HumanConnect4Player("Human"),
+            "player2": HumanConnect4Player("Human")            
+        },
         # uncomment to play as human
         {
             "name": "Connect4 - Human VS Random",

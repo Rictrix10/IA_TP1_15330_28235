@@ -96,7 +96,7 @@ def get_user_choice():
 
 
 if __name__ == "__main__":
-    #main()
+    main()
 
 
 

@@ -94,10 +94,7 @@ class Piece:
                     raise ValueError("Invalid piece definition")
             print("")
 
-    
-
-                
-                 
+                          
 
 
    
@@ -144,3 +141,94 @@ class Piece:
         return True
     
 
+    def criar_peca(row, column):
+        peca1 = [[(row, column)]]
+
+        peca2 = [[(row, column), (row, column+1)]]
+
+        peca3 = [[(row, column), (row, column+1), (row, column+2)]]
+
+        peca4 = [[(row, column), (row, column+1), (row-1, column+1)]]
+
+        peca5 = [[(row, column), (row, column+1), (row, column+2), (row, column+3)]]
+
+        peca6 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+2)]]
+
+        peca7 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+1)]]
+
+        peca8 = [[(row, column), (row, column+1), (row-1, column+1), (row-1, column+2)]]
+
+        peca9 = [[(row, column), (row, column+1), (row-1, column), (row-1, column+1)]]
+
+        peca10 = [[(row, column), (row, column+1), (row, column+2), (row, column+3), (row, column+4)]]
+
+        peca11 = [[(row, column), (row, column+1), (row, column+2), (row, column+3), (row-1, column+3)]]
+
+        peca12 = [[(row, column), (row, column+1), (row, column+2), (row, column+3), (row-1, column+2)]]
+
+        peca13 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+1), (row-2, column+2)]]
+
+        peca14 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+2), (row-1, column+3)]]
+
+        peca15 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+2), (row-2, column+2)]]
+
+        peca16 = [[(row, column), (row, column+1), (row-1, column+1), (row-2, column+1), (row-2, column+2)]]
+
+        peca17 = [[(row, column), (row, column+1), (row-1, column+1), (row-2, column+1), (row-2, column)]]
+
+        peca18 = [[(row, column), (row, column+1), (row-1, column+1), (row-1, column+2), (row-2, column+2)]]
+
+        peca19 = [[(row, column), (row, column+1), (row, column+2), (row+1, column+1), (row-1, column+1)]]
+
+        peca20 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+1), (row-2, column+1)]]
+
+        peca21 = [[(row, column), (row, column+1), (row-1, column+1), (row-2, column+1), (row-1, column+2)]]
+
+        return [peca1, peca2, peca3, peca4, peca5, peca6, peca7, peca8, peca9, peca10,
+                        peca11, peca12, peca13, peca14, peca15, peca16, peca17, peca18, peca19, peca20, peca21]
+
+    def criar_diagonal(row, column):
+
+        PECA1 = [[(row-1, column-1), (row+1, column-1), (row-1, column+1), (row+1, column+1)]]
+
+        PECA2 = [[(row-1, column-1), (row+1, column-1), (row+1, column+2), (row-1, column+2)]]
+
+        PECA3 = [[(row-1, column-1), (row+1, column-1), (row-1, column+3), (row+1, column+3)]]
+
+        PECA4 = [[(row-1, column-1), (row+1, column-1), (row-2, column), (row-2, column+2), (row+1, column+2)]]
+        
+        PECA5 = [[(row-1, column-1), (row+1, column-1), (row- 1, column +4), (row+1, column+4)]]
+    
+        PECA6 = [[(row-1, column-1), (row+1, column-1), (row-2, column + 1), (row-2, column+3), (row+1, column+3)]]
+
+        PECA7 = [[(row-1, column-1), (row+1, column-1), (row-2, column), (row-2, column+2), (row-1, column+3), (row+1, column+3)]]
+
+        PECA8 = [[(row-1, column-1), (row+1, column-1), (row-2, column), (row-2, column+3), (row+1, column+2), (row, column+3)]]
+
+        PECA9 = [[(row-2, column-1), (row+1, column-1), (row-2, column+2), (row+1, column+2)]]
+
+        PECA10 = [[(row-1, column-1), (row+1, column-1), (row-1, column+5), (row+1, column+5)]]
+
+        PECA11 = [[(row-1, column-1), (row+1, column-1), (row-2, column+2), (row-2, column+4), (row+1, column+4)]]
+
+        PECA12 = [[(row-1, column-1), (row+1, column-1), (row-2, column+1), (row-2, column+3), (row-1, column+4), (row+1, column+4)]]
+
+        PECA13 = [[(row-1, column-1), (row+1, column-1), (row-2, column), (row-2, column+3), (row+1, column+3)]]
+
+        PECA14 = [[(row-1, column-1), (row+1, column-1), (row-2, column+1), (row-2, column+4), (row+1, column+3), (row, column+4)]]
+
+        PECA15 = [[(row-1, column-1), (row+1, column-1), (row-3, column+1), (row-3, column+3), (row+1, column+3)]]
+
+        PECA16 = [[(row-1, column-1), (row+1, column-1), (row-3, column), (row-3, column+3), (row-1, column+3), (row+1, column+2)]]
+
+        PECA17 = [[(row-1, column-1), (row+1, column-1), (row-3, column-1), (row-3, column+2), (row+1, column+2)]]
+
+        PECA18 = [[(row-1, column-1), (row+1, column-1), (row-2, column), (row-3, column+1), (row-3, column+3), (row, column+3), (row+1, column+2)]]
+
+        PECA19 = [[(row-1, column-1), (row+1, column-1), (row-2, column), (row-2, column+2), (row-1, column+3), (row+1, column+3), (row+2, column), (row+2, column+2)]]
+
+        PECA20 = [[(row-1, column-1), (row+1, column-1), (row-3, column), (row-3, column+2), (row+1, column+3)]]
+
+        PECA21 = [[(row-1, column-1), (row+1, column-1), (row-3, column), (row-3, column+2), (row-2, column+3), (row, column+3), (row+1, column+2)]]
+
+        return [PECA1, PECA2, PECA3, PECA4, PECA5, PECA6, PECA7, PECA8, PECA9, PECA10, PECA11, PECA12, PECA13, PECA14, PECA15, PECA16, PECA17, PECA18, PECA19, PECA20, PECA21]

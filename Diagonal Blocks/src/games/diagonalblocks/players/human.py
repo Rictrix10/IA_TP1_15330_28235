@@ -1,6 +1,7 @@
 from games.diagonalblocks.action import DiagonalBlocksAction
 from games.diagonalblocks.player import DiagonalBlocksPlayer
 from games.diagonalblocks.state import DiagonalBlocksState
+from games.diagonalblocks.piece import Piece
 
 
 class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
@@ -15,7 +16,14 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
             try:
                 row = (int(input(f"Player {state.get_acting_player()}, choose a row: ")))
                 column = (int(input(f"Player {state.get_acting_player()}, choose a column: ")))
-                return DiagonalBlocksAction(column, row)
+                piece = (int(input(f"Player {state.get_acting_player()}, choose a piece: ")))
+                peca_selecionada = Piece.criar_peca(row, column)
+                print("Peça: ", peca_selecionada[piece])
+                diagonais = Piece.criar_diagonal(row, column)
+                print("Diagonais: ", diagonais[piece])
+                print("\n")
+
+                return DiagonalBlocksAction(row, column, piece)
             except Exception:
                 continue
 

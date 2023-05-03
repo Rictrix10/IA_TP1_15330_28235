@@ -1,5 +1,4 @@
 import itertools
-import pygame
 from typing import Optional
 
 from games.diagonalblocks.action import DiagonalBlocksAction
@@ -10,12 +9,21 @@ from games.state import State
 class DiagonalBlocksState(State):
     EMPTY_CELL = -1
 
-    def __init__(self, size: int = 20):
+    '''
+    def __init__(self, num_rows: int = 20, num_cols: int = 20):
         super().__init__()
 
-        if size < 20:
+        if num_rows < 20:
             raise Exception("the number of rows must be 20")
+        if num_cols < 20:
+            raise Exception("the number of rows must be 20")
+    '''
 
+    def __init__(self, size: int = 3):
+        super().__init__()
+
+        if size < 3:
+            raise Exception("the number of rows must be 20")
 
         """
         the dimensions of the board
@@ -27,6 +35,7 @@ class DiagonalBlocksState(State):
         """
         the grid
         """
+        
        
 
         self.grid = [[DiagonalBlocksState.EMPTY_CELL for _i in range(self.num_cols)] for _j in range(self.num_rows)]
@@ -83,6 +92,7 @@ class DiagonalBlocksState(State):
     def validate_action(self, action: DiagonalBlocksAction) -> bool:
         col = action.get_col()
         row = action.get_row()
+        piece = action.get_piece()
 
 
         # valid column
@@ -102,6 +112,7 @@ class DiagonalBlocksState(State):
     def update(self, action: DiagonalBlocksAction):
         col = action.get_col()
         row = action.get_row()
+        piece = action.get_piece()
 
         # player play
         self.grid[row][col] = self.__acting_player
@@ -121,28 +132,39 @@ class DiagonalBlocksState(State):
                   DiagonalBlocksState.EMPTY_CELL: ' '
               }[self.grid[row][col]], end="")
 
+    '''
+    def __display_cell(self, row, col, peca_selecionada, diagonais):
+        for coordenada in peca_selecionada:
+                row = coordenada[0]
+                column = coordenada[1]
+                self.grid[row][column] = 'R'
+        for diagonal in diagonais:
+                row = diagonal[0]
+                column = diagonal[1]
+                self.grid[row][column] = 'o'
+    '''
     
     def __display_numbers(self):
         for col in range(0, self.num_cols):
             if col < 20:
-                print(' ', end="")
+                print(' ', end=" ")
             print(col, end="")
         print("")
 
     def __display_separator(self):
         for col in range(0, self.num_cols):
-            print("--", end="")
-        print("-")
+            print("---", end="")
+        print("--")
     
     def display(self):
         self.__display_numbers()
         self.__display_separator()
 
         for row in range(0, self.num_rows):
-            print('|', end="")
+            print('|', end=" ")
             for col in range(0, self.num_cols):
                 self.__display_cell(row, col)
-                print('|', end="")
+                print('|', end=" ")
             print("")
             self.__display_separator()
 
