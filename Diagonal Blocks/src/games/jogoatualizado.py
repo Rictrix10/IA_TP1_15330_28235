@@ -181,7 +181,7 @@ def get_user_choice():
         print("4 - Rodar 90º")
         return int(input("Escolha uma opção: "))
 
-def validate_play(num_peca, i, j, pecas_jogadas, round):
+def validate_play(num_peca, i, j, pecas_jogadas, locais, round):
     if not (1 <= num_peca <= 21):
         print("Essa peça não existe")
         return False
@@ -197,6 +197,11 @@ def validate_play(num_peca, i, j, pecas_jogadas, round):
     if not (1 <= j <= 20):
         print("Essa coluna não existe")
         return False
+
+    if round > 1:    
+        if (i, j) not in locais:
+            print("Não é possível jogar aí")
+            return False
     
     return True
 
@@ -215,12 +220,16 @@ def main():
     pecas_jogadas = []
     for round in range(1):
 
-
+        print("Ronda ", round +1)
         global num_peca, i, j
         num_peca = int(input("Escolha uma peça: "))
         i = int(input("Escolha a linha: ")) - 1
         j = int(input("Escolha a coluna: ")) - 1
-        validacao = validate_play(num_peca, i, j, pecas_jogadas, round)
+
+        locais = jogadas_possiveis(tabuleiro)
+        print("Jogadas possíveis: ", locais)
+
+        validacao = validate_play(num_peca, i, j, pecas_jogadas, locais, round)
         print("Jogada permitida: ", validacao)
 
         #'''  Peças e diagonais em listas separadas
@@ -257,9 +266,6 @@ def main():
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = '1'
-            
-            locais = jogadas_possiveis(tabuleiro)
-            print("Jogadas possíveis: ", locais)
     
             
         else:                 # jogador 2    - falta adaptar para aqui
