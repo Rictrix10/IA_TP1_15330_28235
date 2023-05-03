@@ -205,12 +205,16 @@ def validate_play(num_peca, i, j, pecas_jogadas, locais, round):
     
     return True
 
-def jogadas_possiveis(tabuleiro):
+def jogadas_possiveis(tabuleiro, round):
     places = []
     for x in range(20):
         for y in range(20):
-            if tabuleiro[x][y] == '1':
-                places.append((x,y))
+            if round % 2 == 0:
+                if tabuleiro[x][y] == '1':
+                    places.append((x,y))
+            else:
+                if tabuleiro[x][y] == '2':
+                    places.append((x,y))
     return places
 
 
@@ -226,7 +230,7 @@ def main():
         i = int(input("Escolha a linha: ")) - 1
         j = int(input("Escolha a coluna: ")) - 1
 
-        locais = jogadas_possiveis(tabuleiro)
+        locais = jogadas_possiveis(tabuleiro, round)
         print("Jogadas possíveis: ", locais)
 
         validacao = validate_play(num_peca, i, j, pecas_jogadas, locais, round)
