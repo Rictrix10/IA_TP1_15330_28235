@@ -4,6 +4,7 @@ from typing import Optional
 from games.diagonalblocks.action import DiagonalBlocksAction
 from games.diagonalblocks.result import DiagonalBlocksResult
 from games.state import State
+from games.diagonalblocks.piece import Piece
 
 
 class DiagonalBlocksState(State):
@@ -125,9 +126,12 @@ class DiagonalBlocksState(State):
 
         self.__turns_count += 1
 
+        
+        
     def __display_cell(self, row, col):
         print({
                   0: 'R',
+
                   1: 'B',
                   DiagonalBlocksState.EMPTY_CELL: ' '
               }[self.grid[row][col]], end="")
