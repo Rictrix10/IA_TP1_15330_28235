@@ -232,12 +232,13 @@ def validate_play(lista_pecas1, num_peca, i, j, pecas_jogadas, locais, vazios, r
         print("Essa coluna não existe")
         return False
 
-    #if round > 1:        
-    if (i, j) not in locais:
+    if round > 1:        
+        if (i, j) not in locais:
             print("Não é possível jogar aí")
             return False
     
     # verificar se cada bloco da peça fica dentro da tabela
+    '''
     erro = 0
     for x in range(len(lista_pecas1[num_peca-1])):
         if lista_pecas1[num_peca-1][x] not in vazios:
@@ -245,6 +246,7 @@ def validate_play(lista_pecas1, num_peca, i, j, pecas_jogadas, locais, vazios, r
     if erro > 0:
         print("Não é possível a peça ser jogada aqui")
         return False
+    '''
 
     return True
 
@@ -279,11 +281,16 @@ def main():
         num_peca = int(input("Escolha uma peça: "))
         i = int(input("Escolha a linha: ")) - 1
         j = int(input("Escolha a coluna: ")) - 1
+        lista_pecas1 = criar_peca(i,j)
+        diagonais1 = criar_diagonal(i, j)
 
         locais = jogadas_possiveis(tabuleiro, round)
         #print("Jogadas possíveis: ", locais)
 
-        validacao = validate_play(num_peca, i, j, pecas_jogadas, locais, round)
+        vazios = locais_vazios(tabuleiro)
+
+
+        validacao = validate_play(lista_pecas1, num_peca, i, j, pecas_jogadas, locais, vazios, round)
         print("Jogada permitida: ", validacao)
 
         while validacao == False:
@@ -301,8 +308,7 @@ def main():
 
         
         if round % 2 == 0 :   # jogador 1
-            lista_pecas1 = criar_peca(i,j)
-            diagonais1 = criar_diagonal(i, j)
+
 
             peca_selecionada = lista_pecas1[num_peca-1][0]
             diagonais_peca = diagonais1[num_peca-1][0]  
