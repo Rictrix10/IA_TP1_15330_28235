@@ -117,7 +117,7 @@ def criar_diagonal(i, j):
 
     PECA21 = [[(i-1, j-1), (i+1, j-1), (i-3, j), (i-3, j+2), (i-2, j+3), (i, j+3), (i+1, j+2)]]
 
-    return [PECA1, PECA2, PECA3, PECA4]
+    return [PECA1, PECA2, PECA3, PECA4, PECA5, PECA6, PECA7, PECA8, PECA9, PECA10, PECA11, PECA12, PECA13, PECA14, PECA15, PECA16, PECA17, PECA18, PECA19, PECA20, PECA21]
 
 
 def atualizar_tabuleiro(screen, cordenadas, diagonais_peca, round):
