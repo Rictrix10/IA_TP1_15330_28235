@@ -181,7 +181,7 @@ def get_user_choice():
         print("4 - Rodar 90º")
         return int(input("Escolha uma opção: "))
 
-def validate_play(num_peca, i, j, pecas_jogadas, locais, round):
+def validate_play(lista_pecas1, num_peca, i, j, pecas_jogadas, locais, vazios, round):
     if not (1 <= num_peca <= 21):
         print("Essa peça não existe")
         return False
@@ -198,11 +198,20 @@ def validate_play(num_peca, i, j, pecas_jogadas, locais, round):
         print("Essa coluna não existe")
         return False
 
-    if round > 1:    
-        if (i, j) not in locais:
+    #if round > 1:        
+    if (i, j) not in locais:
             print("Não é possível jogar aí")
             return False
     
+    # verificar se cada bloco da peça fica dentro da tabela
+    erro = 0
+    for x in range(len(lista_pecas1[num_peca-1])):
+        if lista_pecas1[num_peca-1][x] not in vazios:
+            erro = erro + 1
+    if erro > 0:
+        print("Não é possível a peça ser jogada aqui")
+        return False
+
     return True
 
 def jogadas_possiveis(tabuleiro, round):
@@ -217,13 +226,20 @@ def jogadas_possiveis(tabuleiro, round):
                     places.append((x,y))
     return places
 
-
+def locais_vazios(tabuleiro):
+    freeplaces = []
+    for x in range(20):
+        for y in range(20):
+            if tabuleiro[x][y] != 'R' or tabuleiro[x][y] != 'B':
+                freeplaces.append((x,y))
+    return freeplaces
+    
 def main():
     screen = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     printTabuleiro()
     pecas_jogadas = []
     for round in range(1):
-
+        
         print("Ronda ", round +1)
         global num_peca, i, j
         num_peca = int(input("Escolha uma peça: "))
@@ -231,12 +247,25 @@ def main():
         j = int(input("Escolha a coluna: ")) - 1
 
         locais = jogadas_possiveis(tabuleiro, round)
-        print("Jogadas possíveis: ", locais)
+        #print("Jogadas possíveis: ", locais)
 
         validacao = validate_play(num_peca, i, j, pecas_jogadas, locais, round)
         print("Jogada permitida: ", validacao)
 
-        #'''  Peças e diagonais em listas separadas
+        while validacao == False:
+            num_peca = int(input("Escolha uma peça: "))
+            i = int(input("Escolha a linha: ")) - 1
+            j = int(input("Escolha a coluna: ")) - 1
+
+            locais = jogadas_possiveis(tabuleiro, round)
+            #print("Jogadas possíveis: ", locais)
+
+            vazios = locais_vazios(tabuleiro)
+
+            validacao = validate_play(lista_pecas1, num_peca, i, j, pecas_jogadas, locais, vazios, round)
+            print("Jogada permitida: ", validacao) 
+
+        
         if round % 2 == 0 :   # jogador 1
             lista_pecas1 = criar_peca(i,j)
             diagonais1 = criar_diagonal(i, j)
@@ -261,6 +290,7 @@ def main():
             atualizar_tabuleiro(screen, cordenadas, diagonais, round)
             pecas_jogadas.append(num_peca)
             print("Peças jogadas: ", pecas_jogadas)
+
 
             for coordenada in cordenadas:
                 i = coordenada[0]
@@ -289,7 +319,7 @@ def main():
                 i = diagonal[0]
                 j = diagonal[1]
                 tabuleiro[i][j] = '2'
-        #'''
+        
         for row in tabuleiro:
             print(row)
 
