@@ -144,14 +144,13 @@ class DiagonalBlocksState(State):
         
     def __display_cell(self, row, col):
         print({
-                  0: 'R',
-                  1: 'B',
-                  DiagonalBlocksState.EMPTY_CELL: ' ',
-                  DiagonalBlocksState.DOT_CELL: '.'
+            0: '\033[91m▩\033[0m',   #  0: 'R',
+            1: '\033[96m▩\033[0m',   #  1: 'B',
+            DiagonalBlocksState.EMPTY_CELL: ' ',
+            DiagonalBlocksState.DOT_CELL: '.'
+        }[self.grid[row][col]], end="")
 
-              }[self.grid[row][col]], end="")
 
-    
     def __display_numbers(self):
         for col in range(0, self.num_cols):
             if col < 20:
