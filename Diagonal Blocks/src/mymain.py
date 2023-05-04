@@ -74,22 +74,14 @@ def select_piece(pieces):
         num_peca = int(input("Escolha uma peça: "))
         return pieces[num_peca - 1]
 
-def select_row(pieces):
-        x = int(input("Escolha uma linha: ")) 
-        return x 
-
-def select_column(pieces):
-    y = int(input("Escolha uma coluna: "))
-    return y
-    
-     
 
 def get_user_choice():
         print("Opções:")
         print("1 - Selecionar peça")
         print("2 - Virar horizontalmente")
         print("3 - Virar verticalmente")
-        print("4 - Rodar 90º")
+        print("4 - Rodar peça para a direita")
+        print("5 - Rodar peça para a esquerda")
         return int(input("Escolha uma opção: "))
 
 
@@ -98,52 +90,13 @@ def get_user_choice():
 if __name__ == "__main__":
     main()
 
-
-
     pieces = Piece.get_all()
     print_all_pieces(pieces)
     place_piece = select_piece(pieces)
-    x = select_row(pieces)
-    y = select_column(pieces)
     print("Peça selecionada:")
     place_piece.print()
 
-    #Board.print()
 
-
-  
-    """
-    
-    while moves_left > 0:
-        print(f"Jogador {current_player}, é a sua vez!")
-        Board.get_all()
-        
-        valid_input = False
-        while not valid_input:
-            coordinates = input("Digite as coordenadas para colocar a peça (no formato linha,coluna): ")
-            coordinates = coordinates.split(",")
-            row, col = int(coordinates[0]), int(coordinates[1])
-            if Board.is_valid_move(place_piece, row, col):
-                Board.draw_piece(place_piece, row, col)
-                player1_pieces.remove_piece(place_piece)
-                valid_input = True
-        
-            if current_player == 1:
-                player1_pieces = pieces.get_all()    
-
-            if current_player == 2:
-                player2_pieces = pieces.get_all()         
-        
-            moves_left -= 1
-        
-            if current_player == 1:
-                current_player = 2
-            else:
-                current_player = 1
-            
-    print("Fim de jogo!")
-
-    """
     while True:
         opcao = get_user_choice()
         if opcao == 1:
@@ -156,38 +109,14 @@ if __name__ == "__main__":
         elif opcao == 3:
             place_piece.flip_ver()
         elif opcao == 4:
-            place_piece.rotate90()
+            place_piece.rotate_direita()
+        elif opcao == 5:
+            place_piece.rotate_esquerda()
         
         print("Peça atual:")
         place_piece.print()
     
     
-    def create_board():
-        board = []
-        for i in range(20):
-            row = []
-            for j in range(21):
-                if i == 0:
-                    if j == 0:
-                        row.append(" ")
-                    else:
-                       
-                        row.append(f"{j:2}")
-                        
-                elif j == 0:
-                    row.append(f"{i:2} ")   
-                    #row.append(f"{chr(i+64):2}")
-                else:
-                    row.append("  ")
-            board.append(row)
-        return board
-
-board = create_board()
-
-for row in board:
-    
-    print("□".join(row))
-
     
    
     

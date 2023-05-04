@@ -96,7 +96,7 @@ class DiagonalBlocksState(State):
         col = action.get_col()
         row = action.get_row()
         piece = action.get_piece()
-
+        option = action.get_option()
 
         # valid column
         if col < 0 or col >= self.num_cols:

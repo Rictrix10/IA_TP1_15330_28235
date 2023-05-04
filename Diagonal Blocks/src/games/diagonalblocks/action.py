@@ -19,7 +19,6 @@ class DiagonalBlocksAction:
     def get_col(self):
         return self.__col
 
-
     def get_piece(self):
         return self.__piece
     

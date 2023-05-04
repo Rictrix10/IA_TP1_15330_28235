@@ -318,8 +318,9 @@ def main():
             diagonais = diagonais_peca
 
             # Rodar
-            #nova_peca = roda_peca_contra_relogio(i, j, peca_selecionada) 
-            #novas_diagonais = roda_diagonais_contra_relogio(i, j, diagonais_peca)
+            nova_peca = roda_peca_contra_relogio(i, j, peca_selecionada) 
+            novas_diagonais = roda_diagonais_contra_relogio(i, j, diagonais_peca)
+            #_____________________________________________________________________
             nova_peca = roda_peca_relogio(i, j, peca_selecionada) 
             novas_diagonais = roda_diagonais_relogio(i, j, diagonais_peca)
             print("Peça rodada: ", nova_peca) 

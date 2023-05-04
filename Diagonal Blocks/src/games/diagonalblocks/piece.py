@@ -43,8 +43,20 @@ class Piece:
 
                 Piece([  
                     [_, X, _],
-                    [X, X, X],    
+                    [X, X, X]    
+                ]),
+                Piece([  
+                    [_, X,X],
+                    [X, X,_]    
+                ]),
+                Piece([  
+                    [X,X],
+                    [X,X]    
+                ]),
+                Piece([  
+                    [X,X,X,X,X],                        
                 ])
+            
             ]
         return Piece.__all_pieces
     
@@ -53,22 +65,6 @@ class Piece:
     
     def __init__(self, cfg):
         self.__cfg = cfg
-
-    def width(self):
-        return len(self.__cfg[0])
-    
-    def height(self):
-        return len(self.__cfg)
-
-    def fit_in_board(self, board, x, y):
-        for i in range(x, x + self.width()):
-            for j in range(y, y + self.height()):
-                if self.__cfg[j][i] == EMPTY_CELL:
-                    continue
-                if not board[j][i] == EMPTY_CELL:
-                    return False
-        return True
-
 
     def print(self):
         for row in self.__cfg:
@@ -83,11 +79,6 @@ class Piece:
         print("\n")
         
 
-                          
-
-
-   
-    
     def flip_hor(self):
         old_cfg = self.__cfg
  
@@ -110,7 +101,7 @@ class Piece:
             self.__cfg.append(new_col)
 
 
-    def rotate90(self):
+    def rotate_direita(self):
         old_cfg = self.__cfg
         n_rows = len(old_cfg)
         n_cols = len(old_cfg[0])
@@ -121,6 +112,19 @@ class Piece:
                 new_cfg[i][j] = old_cfg[n_rows-j-1][i]
 
             self.__cfg = new_cfg
+
+    def rotate_esquerda(self):
+        old_cfg = self.__cfg
+        n_rows = len(old_cfg)
+        n_cols = len(old_cfg[0])
+
+        new_cfg = [[0] * n_rows for _ in range(n_cols)]
+        for i in range(n_cols):
+            for j in range(n_rows):
+                new_cfg[i][j] = old_cfg[j][n_cols-i-1]
+
+        self.__cfg = new_cfg
+
     
     def validar_proxima_jogada(self):
         for linha in self.__cfg:
@@ -221,3 +225,68 @@ class Piece:
         PECA21 = [[(row-1, column-1), (row+1, column-1), (row-3, column), (row-3, column+2), (row-2, column+3), (row, column+3), (row+1, column+2)]]
 
         return [PECA1, PECA2, PECA3, PECA4, PECA5, PECA6, PECA7, PECA8, PECA9, PECA10, PECA11, PECA12, PECA13, PECA14, PECA15, PECA16, PECA17, PECA18, PECA19, PECA20, PECA21]
+    
+    def roda_peca_esquerda(row, col, peca_selecionada):
+        nova_peca = []
+        for coord in peca_selecionada:
+            x, y = coord
+        # Rotaciona a peça em 90 graus
+            nova_x = -y
+            nova_y = x
+            nova_peca.append((nova_x, nova_y))
+    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+        min_x = min(x for x, y in nova_peca)
+        min_y = min(y for x, y in nova_peca)
+        nova_peca = [(x - min_x + row, y - min_y + col) for x, y in nova_peca]
+    # Ordena a lista de coordenadas para que a ordem seja consistente
+        nova_peca = sorted(nova_peca)
+        return nova_peca
+
+    def roda_diagonais_esquerda(row, col, diagonais_peca):
+        nova_peca = []
+        for coord in diagonais_peca:
+            x, y = coord
+            # Rotaciona a peça em 90 graus
+            nova_x = -y
+            nova_y = x
+            nova_peca.append((nova_x, nova_y))
+        # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+        min_x = min(x for x, y in nova_peca)
+        min_y = min(y for x, y in nova_peca)
+        nova_peca = [(x - min_x + row-1, y - min_y + col-1) for x, y in nova_peca]
+        # Ordena a lista de coordenadas para que a ordem seja consistente
+        nova_peca = sorted(nova_peca)
+        return nova_peca
+
+    def roda_peca_direita(row, col, peca_selecionada):
+        nova_peca = []
+        for coord in peca_selecionada:
+            x, y = coord
+            # Rotaciona a peça em 90 graus no sentido contrário
+            nova_x = y
+            nova_y = -x
+            nova_peca.append((nova_x, nova_y))
+        # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+        min_x = min(x for x, y in nova_peca)
+        min_y = min(y for x, y in nova_peca)
+        nova_peca = [(x - min_x + row, y - min_y + col) for x, y in nova_peca]
+        # Ordena a lista de coordenadas para que a ordem seja consistente
+        nova_peca = sorted(nova_peca)
+        return nova_peca
+
+
+    def roda_diagonais_direita(row, col, diagonais_peca):
+        nova_peca = []
+        for coord in diagonais_peca:
+            x, y = coord
+            # Rotaciona a peça em 90 graus no sentido contrário
+            nova_x = y
+            nova_y = -x
+            nova_peca.append((nova_x, nova_y))
+        # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+        min_x = min(x for x, y in nova_peca)
+        min_y = min(y for x, y in nova_peca)
+        nova_peca = [(x - min_x + row-1, y - min_y + col-1) for x, y in nova_peca]
+        # Ordena a lista de coordenadas para que a ordem seja consistente
+        nova_peca = sorted(nova_peca)
+        return nova_peca
