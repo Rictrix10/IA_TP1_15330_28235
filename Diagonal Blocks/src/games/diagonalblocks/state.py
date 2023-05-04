@@ -151,8 +151,8 @@ class DiagonalBlocksState(State):
             0: '\033[91m▩\033[0m',   #  0: 'R',
             1: '\033[96m▩\033[0m',   #  1: 'B',
             DiagonalBlocksState.EMPTY_CELL: ' ',
-            DiagonalBlocksState.DOT_CELLR: '\033[91m▪\033[0m',
-            DiagonalBlocksState.DOT_CELLB: '\033[96m▪\033[0m'
+            DiagonalBlocksState.DOT_CELLR: '\033[91m○\033[0m',
+            DiagonalBlocksState.DOT_CELLB: '\033[96m○\033[0m'
         }[self.grid[row][col]], end="")
 
 
