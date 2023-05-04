@@ -9,7 +9,8 @@ from games.diagonalblocks.piece import Piece
 
 class DiagonalBlocksState(State):
     EMPTY_CELL = -1
-    DOT_CELL = -2
+    DOT_CELLR = -2
+    DOT_CELLB = -3
 
     '''
     def __init__(self, num_rows: int = 20, num_cols: int = 20):
@@ -131,7 +132,10 @@ class DiagonalBlocksState(State):
         for x in range(len(diagonais_selecionadas)):
             row = diagonais_selecionadas[x][0]
             col = diagonais_selecionadas[x][1]
-            self.grid[row][col] = DiagonalBlocksState.DOT_CELL
+            if self.__acting_player == 0:
+                self.grid[row][col] = DiagonalBlocksState.DOT_CELLR
+            else:
+                self.grid[row][col] = DiagonalBlocksState.DOT_CELLB
         # determine if there is a winner
         self.__has_winner = self.__check_winner(self.__acting_player)
 
@@ -147,7 +151,8 @@ class DiagonalBlocksState(State):
             0: '\033[91m▩\033[0m',   #  0: 'R',
             1: '\033[96m▩\033[0m',   #  1: 'B',
             DiagonalBlocksState.EMPTY_CELL: ' ',
-            DiagonalBlocksState.DOT_CELL: '.'
+            DiagonalBlocksState.DOT_CELLR: '\033[91m▪\033[0m',
+            DiagonalBlocksState.DOT_CELLB: '\033[96m▪\033[0m'
         }[self.grid[row][col]], end="")
 
 
