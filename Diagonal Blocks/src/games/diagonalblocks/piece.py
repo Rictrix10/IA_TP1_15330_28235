@@ -12,51 +12,38 @@ class Piece:
             _ = EMPTY_CELL
             o = CONNECTING_CELL
             X = PLAYANLE_CELL
-            Y = FIXED_CELL
             
             Piece.__all_pieces = [
+                Piece([  
+                    [X] 
+                    ]),      
+                    
                 Piece([
-                    [o, _, o],
-                    [_, Y, _],
-                    [o, _, o]
-                ]),
+                    [ X, X ]
+                    ]),
+
                 Piece([
-                    [o, _, _, o],
-                    [_, Y, X, _],
-                    [o, _, _, o]
+                    [X, X, X],
                 ]),
 
                 Piece([
-                    [o, _, _, _, o],
-                    [_, Y, X, X, _],
-                    [o, _, _, _, o]
+                    [ _, X],
+                    [ X, X]
+                    
                 ]),
 
                 Piece([
-                    [_, o, _, o],
-                    [o, _, X, _],
-                    [_, Y, X, _],
-                    [o, _, _, o]
+                    [X, X, X, X]
                 ]),
 
-                Piece([
-                    [o, _, _, _, _, o],
-                    [_, Y, X, X, X, _],
-                    [o, _, _, _, _, o]
+                Piece([  
+                    [_, _, X],
+                    [X, X, X]   
                 ]),
 
-                Piece([
-                    [_, _, o, _, o],
-                    [o, _, _, X, _],
-                    [_, Y, X, X, _],
-                    [o, _, _, _, o]
-                ]),
-
-                Piece([
-                    [_, o, _, o, _],
-                    [o, _, X, _, o],
-                    [_, Y, X, X, _],
-                    [o, _, _, _, o]
+                Piece([  
+                    [_, X, _],
+                    [X, X, X],    
                 ])
             ]
         return Piece.__all_pieces
@@ -88,11 +75,13 @@ class Piece:
             for place in row:
                 if place == EMPTY_CELL or place == CONNECTING_CELL:
                     print(" ", end="")
-                elif place == PLAYANLE_CELL or place == FIXED_CELL:
+                elif place == PLAYANLE_CELL:
                     print("■", end="")
                 else:
                     raise ValueError("Invalid piece definition")
             print("")
+        print("\n")
+        
 
                           
 
@@ -166,7 +155,7 @@ class Piece:
 
         peca12 = [[(row, column), (row, column+1), (row, column+2), (row, column+3), (row-1, column+2)]]
 
-        peca13 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+1), (row-2, column+2)]]
+        peca13 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+1), (row-1, column+2)]]
 
         peca14 = [[(row, column), (row, column+1), (row, column+2), (row-1, column+2), (row-1, column+3)]]
 

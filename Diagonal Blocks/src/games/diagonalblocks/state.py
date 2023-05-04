@@ -9,6 +9,7 @@ from games.diagonalblocks.piece import Piece
 
 class DiagonalBlocksState(State):
     EMPTY_CELL = -1
+    DOT_CELL = -2
 
     '''
     def __init__(self, num_rows: int = 20, num_cols: int = 20):
@@ -108,16 +109,29 @@ class DiagonalBlocksState(State):
         if self.grid[row][col] != DiagonalBlocksState.EMPTY_CELL:
             return False
 
+        if piece < 0 or piece > 20:
+            return False
+        
         return True
 
     def update(self, action: DiagonalBlocksAction):
         col = action.get_col()
         row = action.get_row()
         piece = action.get_piece()
+        peca = Piece.criar_peca(row, col)
+        peca_selecionada = peca[piece][0]
+        diagonais = Piece.criar_diagonal(row, col)
+        diagonais_selecionadas = diagonais[piece][0]
+        # player 
+        for x in range(len(peca_selecionada)):
+            row = peca_selecionada[x][0]
+            col = peca_selecionada[x][1]
+            self.grid[row][col] = self.__acting_player
 
-        # player play
-        self.grid[row][col] = self.__acting_player
-
+        for x in range(len(diagonais_selecionadas)):
+            row = diagonais_selecionadas[x][0]
+            col = diagonais_selecionadas[x][1]
+            self.grid[row][col] = DiagonalBlocksState.DOT_CELL
         # determine if there is a winner
         self.__has_winner = self.__check_winner(self.__acting_player)
 
@@ -131,33 +145,32 @@ class DiagonalBlocksState(State):
     def __display_cell(self, row, col):
         print({
                   0: 'R',
-
                   1: 'B',
-                  DiagonalBlocksState.EMPTY_CELL: ' '
+                  DiagonalBlocksState.EMPTY_CELL: ' ',
+                  DiagonalBlocksState.DOT_CELL: '.'
+
               }[self.grid[row][col]], end="")
 
-    '''
-    def __display_cell(self, row, col, peca_selecionada, diagonais):
-        for coordenada in peca_selecionada:
-                row = coordenada[0]
-                column = coordenada[1]
-                self.grid[row][column] = 'R'
-        for diagonal in diagonais:
-                row = diagonal[0]
-                column = diagonal[1]
-                self.grid[row][column] = 'o'
-    '''
     
     def __display_numbers(self):
         for col in range(0, self.num_cols):
             if col < 20:
-                print(' ', end=" ")
-            print(col, end="")
+                if col < 10:
+                    print('', end="  ")
+                else: 
+                    print('', end=" ")
+            print(col, end=" ")
         print("")
+
+        #for row in range(0, self.num_rows):
+         #   if row < 20:
+          #      print(' ', end=" ")
+           # print(row, end="")
+        #print("")
 
     def __display_separator(self):
         for col in range(0, self.num_cols):
-            print("---", end="")
+            print("----", end="")
         print("--")
     
     def display(self):
@@ -168,7 +181,7 @@ class DiagonalBlocksState(State):
             print('|', end=" ")
             for col in range(0, self.num_cols):
                 self.__display_cell(row, col)
-                print('|', end=" ")
+                print(' | ', end="")
             print("")
             self.__display_separator()
 

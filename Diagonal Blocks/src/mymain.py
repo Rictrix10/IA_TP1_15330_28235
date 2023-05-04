@@ -30,22 +30,22 @@ def main():
 
     diagonalblocks_simulations = [
         {
-            "name": "TicTacToe - Human VS Human",
+            "name": "Diagonal Blocks - Human VS Human",
             "player1": HumanDiagonalBlocksPlayer("Human"),
             "player2": HumanDiagonalBlocksPlayer("Human")
         },
         {
-            "name": "TicTacToe - Human VS Random",
+            "name": "Diagonal Blocks - Human VS Random",
             "player1": HumanDiagonalBlocksPlayer("Human"),
             "player2": DefensiveMinimaxPlayer("Minimax")
         },
         {
-            "name": "TicTacToe - Random VS Random",
+            "name": "Diagonal Blocks - Random VS Random",
             "player1": RandomDiagonalBlocksPlayer("Random 1"),
             "player2": RandomDiagonalBlocksPlayer("Random 2")
         },
         {
-            "name": "TicTacToe - Greedy VS Random",
+            "name": "Diagonal Blocks - Greedy VS Random",
             "player1": OffensiveGreedyPlayer("Greedy"),
             "player2": RandomDiagonalBlocksPlayer("Random")
         },

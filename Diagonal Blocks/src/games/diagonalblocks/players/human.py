@@ -17,13 +17,9 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 row = (int(input(f"Player {state.get_acting_player()}, choose a row: ")))
                 column = (int(input(f"Player {state.get_acting_player()}, choose a column: ")))
                 piece = (int(input(f"Player {state.get_acting_player()}, choose a piece: ")))
-                peca_selecionada = Piece.criar_peca(row, column)
-                print("Peça: ", peca_selecionada[piece])
-                diagonais = Piece.criar_diagonal(row, column)
-                print("Diagonais: ", diagonais[piece])
-                print("\n")
+                option = (int(input(f"Player {state.get_acting_player()}, choose a option: ")))
 
-                return DiagonalBlocksAction(row, column, piece)
+                return DiagonalBlocksAction(row, column, piece, option)
             except Exception:
                 continue
 

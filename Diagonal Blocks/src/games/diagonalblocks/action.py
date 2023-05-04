@@ -5,11 +5,13 @@ class DiagonalBlocksAction:
     __col: int
     __row: int
     __piece: int
+    __option: int
 
-    def __init__(self, col: int, row: int, piece: int):
+    def __init__(self, col: int, row: int, piece: int, option: int):
         self.__col = col
         self.__row = row
         self.__piece = piece
+        self.__option = option
 
     def get_col(self):
         return self.__col
@@ -19,3 +21,6 @@ class DiagonalBlocksAction:
 
     def get_piece(self):
         return self.__piece
+    
+    def get_option(self):
+        return self.__option
