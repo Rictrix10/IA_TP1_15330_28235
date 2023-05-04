@@ -19,10 +19,9 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 for pecas1 in pieces:
                     pecas1.print()
                 
-                
+                piece = (int(input(f"Player {state.get_acting_player()}, choose a piece: ")))
                 row = (int(input(f"Player {state.get_acting_player()}, choose a row: ")))
                 column = (int(input(f"Player {state.get_acting_player()}, choose a column: ")))
-                piece = (int(input(f"Player {state.get_acting_player()}, choose a piece: ")))
                 place_piece = pieces[piece]
                 print("Peça selecionada:")
                 place_piece.print()
