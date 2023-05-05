@@ -11,14 +11,18 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
 
     def get_action(self, state: DiagonalBlocksState):
         state.display()
-        
+
         while True:
             # noinspection PyBroadException
             try:
                 pieces = Piece.get_all()
+                num = 0
                 for pecas1 in pieces:
+                    print("Peça - ", num)
                     pecas1.print()
-                
+                    num += 1
+
+
                 piece = (int(input(f"Player {state.get_acting_player()}, choose a piece: ")))
                 row = (int(input(f"Player {state.get_acting_player()}, choose a row: ")))
                 column = (int(input(f"Player {state.get_acting_player()}, choose a column: ")))
@@ -28,9 +32,7 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 peca_selecionada = peca[piece][0]
                 diagonais = Piece.criar_diagonal(row, column)
                 diagonais_selecionadas = diagonais[piece][0]
-
-
-
+                
                 print("Peça selecionada:")
                 place_piece.print()
                 while True:
