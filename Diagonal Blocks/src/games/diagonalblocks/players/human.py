@@ -23,6 +23,14 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 row = (int(input(f"Player {state.get_acting_player()}, choose a row: ")))
                 column = (int(input(f"Player {state.get_acting_player()}, choose a column: ")))
                 place_piece = pieces[piece]
+
+                peca = Piece.criar_peca(row, column)
+                peca_selecionada = peca[piece][0]
+                diagonais = Piece.criar_diagonal(row, column)
+                diagonais_selecionadas = diagonais[piece][0]
+
+
+
                 print("Peça selecionada:")
                 place_piece.print()
                 while True:
@@ -31,13 +39,15 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                     if option == 1:
                         break
                     elif option == 2:
+                        peca_selecionada = Piece.roda_peca_direita(row, column, peca_selecionada)
+                        diagonais_selecionadas = Piece.roda_diagonais_direita(row, column, diagonais_selecionadas)
                         place_piece.rotate_direita()
                     elif option == 3:
+                        peca_selecionada = Piece.roda_peca_esquerda(row, column, peca_selecionada)
+                        diagonais_selecionadas = Piece.roda_diagonais_esquerda(row, column, diagonais_selecionadas)
                         place_piece.rotate_esquerda()
-
-                    print("Peça atual:")
+                    print("Peça atual: ")
                     place_piece.print()
-
 
                 return DiagonalBlocksAction(row, column, piece, option)
             except Exception:

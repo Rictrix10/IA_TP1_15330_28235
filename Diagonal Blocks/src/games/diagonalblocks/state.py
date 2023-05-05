@@ -119,11 +119,14 @@ class DiagonalBlocksState(State):
         col = action.get_col()
         row = action.get_row()
         piece = action.get_piece()
+
+        #'''
         peca = Piece.criar_peca(row, col)
         peca_selecionada = peca[piece][0]
         diagonais = Piece.criar_diagonal(row, col)
         diagonais_selecionadas = diagonais[piece][0]
-        # player 
+        #'''
+        
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
             col = peca_selecionada[x][1]
