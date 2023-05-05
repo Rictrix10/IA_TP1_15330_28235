@@ -24,7 +24,7 @@ class DiagonalBlocksPlayer(Player, ABC):
     def print_stats(self):
         num_wins = self.__stats[DiagonalBlocksResult.WIN]
         print(
-            f"Player {self.get_name()}: {num_wins}/{self.__num_games} wins ({num_wins * 100.0 / self.__num_games} win "
+            f"Player {self.get_name() +1}: {num_wins}/{self.__num_games} wins ({num_wins * 100.0 / self.__num_games} win "
             f"rate)")
 
     def event_new_game(self):

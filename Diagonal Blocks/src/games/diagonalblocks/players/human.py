@@ -11,6 +11,7 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
 
     def get_action(self, state: DiagonalBlocksState):
         state.display()
+        
 
         while True:
             # noinspection PyBroadException
@@ -25,7 +26,7 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 '''
 
                 pieces = Piece.get_all()
-                piece = (int(input(f"Player {state.get_acting_player()}, choose a piece: ")))
+                piece = (int(input(f"Player {state.get_acting_player()}, choose a piece:")))
                 row = (int(input(f"Player {state.get_acting_player()}, choose a row: ")))
                 column = (int(input(f"Player {state.get_acting_player()}, choose a column: ")))
                 place_piece = pieces[piece]
@@ -39,7 +40,8 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 place_piece.print()
                 while True:
                     print("Escolha uma opção: \n 1 - Confirmar peça selecionada\n 2 - Rodar peça para a direita\n 3 - Rodar peça para a esquerda\n")
-                    option = (int(input(f"Player {state.get_acting_player()}, choose a option: ")))
+                    
+                    option = (int(input(f"Player {state.get_acting_player()}, choose a option:")))
                     if option == 1:
                         break
                     elif option == 2:

@@ -22,21 +22,16 @@ class Piece:
                 ]),
 
                 Piece([
-                    [X, X, X],
-                ]),
-
-                Piece([
-                    [X, X, X, X]
-                ]),
-
-                Piece([
-                    [X, X, X, X, X],
+                    [X, X, X]
                 ]),
 
                 Piece([
                     [_, X],
                     [X, X]
+                ]),
 
+                Piece([
+                    [X, X, X, X]
                 ]),
 
                 Piece([
@@ -48,6 +43,7 @@ class Piece:
                     [_, X, _],
                     [X, X, X]
                 ]),
+
                 Piece([
                     [_, X, X],
                     [X, X, _]
@@ -56,6 +52,10 @@ class Piece:
                     [X, X],
                     [X, X]
                 ]),
+                Piece([
+                    [X, X, X, X, X]
+                ]),
+
                 Piece([
                     [_, _, _, X],
                     [X, X, X, X]
@@ -82,7 +82,7 @@ class Piece:
                 Piece([
                     [_, X, X,],
                     [_, X, _,],
-                    [X, X, _,],
+                    [X, X, _,]
                 ]),
                 Piece([
                     [X, X],
