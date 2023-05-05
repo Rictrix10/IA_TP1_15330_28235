@@ -119,8 +119,10 @@ class DiagonalBlocksState(State):
         col = action.get_col()
         row = action.get_row()
         piece = action.get_piece()
+        peca_selecionada = action.get_peca()
+        diagonais_selecionadas = action.get_diagonais()
 
-        #'''
+        '''
         peca = Piece.criar_peca(row, col)
         peca_selecionada = peca[piece][0]
         diagonais = Piece.criar_diagonal(row, col)

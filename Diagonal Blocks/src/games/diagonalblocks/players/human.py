@@ -49,7 +49,7 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                     print("Peça atual: ")
                     place_piece.print()
 
-                return DiagonalBlocksAction(row, column, piece, option)
+                return DiagonalBlocksAction(row, column, piece, option, peca_selecionada, diagonais_selecionadas)
             except Exception:
                 continue
 
