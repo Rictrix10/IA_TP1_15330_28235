@@ -55,8 +55,61 @@ class Piece:
                 ]),
                 Piece([  
                     [X,X,X,X,X],                        
+                ]),
+                Piece([
+                    [_, _, _, X],
+                    [X, X, X, X]
+                ]),
+
+                Piece([
+                    [_, _, X, _],
+                    [X, X, X, X]
+                ]),
+
+                Piece([
+                    [_, X, X],
+                    [X, X, X]
+                ]),
+                Piece([
+                    [_,_,X,X],
+                    [X,X,X,_]
+                ]), 
+                Piece([
+                    [_,_,X],
+                    [_,_,X],
+                    [X,X,X]
+                ]),
+                Piece([
+                    [_,X,X,],
+                    [_,X,_,],
+                    [X,X,_,],
+                ]), 
+                Piece([
+                    [X,X],
+                    [_,X],
+                    [X,X]
+                ]),
+                Piece([
+                    [_,_,X],
+                    [_,X,X],
+                    [X,X,_]
+                ]),
+                Piece([
+                    [_,X,_],
+                    [X,X,X],
+                    [_,X,_]
+                ]),
+                Piece([
+                    [_,X,_],
+                    [_,X,_],
+                    [X,X,X]
+                ]),
+                Piece([
+                    [_,X,_],
+                    [_,X,X],
+                    [X,X,_]
                 ])
-            
+         
             ]
         return Piece.__all_pieces
     
