@@ -1,6 +1,6 @@
 EMPTY_CELL = -1
 PLAYANLE_CELL = 0
-
+from games.state import State
 
 class Piece:
 
@@ -118,6 +118,10 @@ class Piece:
 
     def __init__(self, cfg):
         self.__cfg = cfg
+
+    def show_pieces(self):
+        self.grid = [[Piece.EMPTY_CELL for _i in range(self.num_cols)] for _j in range(self.num_rows)]
+        
 
     def print(self):
         for row in self.__cfg:
