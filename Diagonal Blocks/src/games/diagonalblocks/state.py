@@ -149,7 +149,7 @@ class DiagonalBlocksState(State):
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
             col = peca_selecionada[x][1] 
-            if self.grid[row][col] == 0 or self.grid[row][col] == 1 or row < 0 or col < 0 or row >= 20 or row >= 20:
+            if self.grid[row][col] == 0 or self.grid[row][col] == 1:
                 erro += 1
         if erro > 0:
             print("Não pode jogar aí, peças não se podem sobrepor")
