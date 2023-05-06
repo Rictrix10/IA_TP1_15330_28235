@@ -20,6 +20,7 @@ class DiagonalBlocksState(State):
     EMPTY_CELL = -1
     DOT_CELLR = -2
     DOT_CELLB = -3
+    DOT_CELLRB = -4
 
 
     '''
@@ -110,10 +111,10 @@ class DiagonalBlocksState(State):
         for row in range(self.num_rows):
             for col in range(self.num_cols):
                 if self.__acting_player == 0:
-                    if self.grid[row][col] == DiagonalBlocksState.DOT_CELLR:
+                    if self.grid[row][col] == DiagonalBlocksState.DOT_CELLR or self.grid[row][col] == DiagonalBlocksState.DOT_CELLRB:
                         diagonais.append((row,col))
                 else:
-                    if self.grid[row][col] == DiagonalBlocksState.DOT_CELLB:
+                    if self.grid[row][col] == DiagonalBlocksState.DOT_CELLB or self.grid[row][col] == DiagonalBlocksState.DOT_CELLRB:
                         diagonais.append((row,col))
         return diagonais
     
@@ -123,19 +124,7 @@ class DiagonalBlocksState(State):
         piece = action.get_piece()
         option = action.get_option()
         peca_selecionada = action.get_peca()
-        
-        '''
-        for x in range(self.num_rows):
-            for y in range(self.num_cols):
-                #if self.__acting_player == 0:
-                        self.grid[x][y] == DiagonalBlocksState.DOT_CELLR
-                        diagonais.append((x,y))
-                #else:
-                    #if self.grid[x][y] == DiagonalBlocksState.DOT_CELLB:
-                        #diagonais.append((x,y))
-
-        '''
-        
+          
         # valid piece
         if piece < 0 or piece > 20:
             return False
@@ -148,6 +137,17 @@ class DiagonalBlocksState(State):
         if row < 0 or row >= self.num_rows:
             return False
         
+        # free pieces
+        erro = 0
+        for x in range(len(peca_selecionada)):
+            row = peca_selecionada[x][0]
+            col = peca_selecionada[x][1] 
+            if self.grid[row][col] == 0 or self.grid[row][col] == 1:
+                erro += 1
+        if erro > 0:
+            print("Não pode jogar aí, peças não se podem sobrepor")
+            return False
+
         # non-repeating play
         if self.__acting_player == 0:
             if piece in self.__pieceNorepeatP0:
@@ -158,19 +158,13 @@ class DiagonalBlocksState(State):
                 print("Essa peça já foi jogada, não pode jogar")
                 return False 
 
+        # play in diagonal
         coordenadas = self.__save_diagonais()
-        # valid place
-        
-        '''
-        if self.__turns_count > 2:
-            if (row,col) not in coordenadas:
-                print("Não pode jogar aí, tem que jogar numa diagonal de uma das suas peças")
-                print(coordenadas)
-                
-            return False
-        '''
+
         encontrou = 0
         if self.__turns_count > 2:
+            row = peca_selecionada[0][0]
+            col = peca_selecionada[0][1]
             if (row,col) in coordenadas:
                 encontrou += 1
             if encontrou == 0:
@@ -189,17 +183,12 @@ class DiagonalBlocksState(State):
         peca_selecionada = action.get_peca()
         diagonais_selecionadas = action.get_diagonais()
 
-        '''
-        peca = Piece.criar_peca(row, col)
-        peca_selecionada = peca[piece][0]
-        diagonais = Piece.criar_diagonal(row, col)
-        diagonais_selecionadas = diagonais[piece][0]
-        #'''
         
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
             col = peca_selecionada[x][1]
             self.grid[row][col] = self.__acting_player
+
         if  self.__acting_player == 0:
             self.__resultP0 += len(peca_selecionada)
             self.__pieceNorepeatP0.append(piece)                           
@@ -215,9 +204,18 @@ class DiagonalBlocksState(State):
             row = diagonais_selecionadas[x][0]
             col = diagonais_selecionadas[x][1]
             if self.__acting_player == 0:
-                self.grid[row][col] = DiagonalBlocksState.DOT_CELLR
+                if self.grid[row][col] == DiagonalBlocksState.DOT_CELLR or self.grid[row][col] == DiagonalBlocksState.EMPTY_CELL:
+                    self.grid[row][col] = DiagonalBlocksState.DOT_CELLR
+
+                if self.grid[row][col] == DiagonalBlocksState.DOT_CELLB:
+                    self.grid[row][col] = DiagonalBlocksState.DOT_CELLRB
             else:
-                self.grid[row][col] = DiagonalBlocksState.DOT_CELLB
+                if self.grid[row][col] == DiagonalBlocksState.DOT_CELLB or self.grid[row][col] == DiagonalBlocksState.EMPTY_CELL:
+                    self.grid[row][col] = DiagonalBlocksState.DOT_CELLB
+
+                if self.grid[row][col] == DiagonalBlocksState.DOT_CELLR:
+                   self.grid[row][col] = DiagonalBlocksState.DOT_CELLRB
+
         # determine if there is a winner
         self.__has_winner = self.__check_winner(self.__acting_player)
 
@@ -233,8 +231,9 @@ class DiagonalBlocksState(State):
             0: '\033[91m▩\033[0m',   #  0: 'R',
             1: '\033[96m▩\033[0m',   #  1: 'B',
             DiagonalBlocksState.EMPTY_CELL: ' ',
-            DiagonalBlocksState.DOT_CELLR: '\033[91m○\033[0m',
-            DiagonalBlocksState.DOT_CELLB: '\033[96m○\033[0m'
+            DiagonalBlocksState.DOT_CELLR: '\033[91m.\033[0m',
+            DiagonalBlocksState.DOT_CELLB: '\033[96m.\033[0m',     
+            DiagonalBlocksState.DOT_CELLRB: '\033[95m.\033[0m'
         }[self.grid[row][col]], end="")
 
 
