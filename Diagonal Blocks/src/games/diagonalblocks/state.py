@@ -107,18 +107,17 @@ class DiagonalBlocksState(State):
     
     def __save_diagonais(self):
         diagonais = []
-        for x in range(self.num_rows):
-            for y in range(self.num_cols):
-                #if self.__acting_player == 0:
-                        if self.grid[x][y] == DiagonalBlocksState.DOT_CELLR:
-                            diagonais.append((x,y))
-                                #else:
-                    #if self.grid[x][y] == DiagonalBlocksState.DOT_CELLB:
-                        #diagonais.append((x,y))
+        for row in range(self.num_rows):
+            for col in range(self.num_cols):
+                if self.__acting_player == 0:
+                    if self.grid[row][col] == DiagonalBlocksState.DOT_CELLR:
+                        diagonais.append((row,col))
+                else:
+                    if self.grid[row][col] == DiagonalBlocksState.DOT_CELLB:
+                        diagonais.append((row,col))
         return diagonais
     
     def validate_action(self, action: DiagonalBlocksAction) -> bool:
-        diagonais = []
         row = action.get_row()
         col = action.get_col()
         piece = action.get_piece()
@@ -137,7 +136,6 @@ class DiagonalBlocksState(State):
 
         '''
         
-
         # valid piece
         if piece < 0 or piece > 20:
             return False
@@ -149,38 +147,38 @@ class DiagonalBlocksState(State):
         # valid row
         if row < 0 or row >= self.num_rows:
             return False
+        
+        # non-repeating play
+        if self.__acting_player == 0:
+            if piece in self.__pieceNorepeatP0:
+                print("Essa peça já foi jogada, não pode jogar")
+                return False
+        else:
+            if piece in self.__pieceNorepeatP1:
+                print("Essa peça já foi jogada, não pode jogar")
+                return False 
 
-        # valid option
-        if option < 1 or option > 3:
-            return False
-
-        DIAGONAIS = self.__save_diagonais()
+        coordenadas = self.__save_diagonais()
         # valid place
+        
         '''
         if self.__turns_count > 2:
-            if (row,col) not in DIAGONAIS:
-                print("Não pode jogar aí")
+            if (row,col) not in coordenadas:
+                print("Não pode jogar aí, tem que jogar numa diagonal de uma das suas peças")
+                print(coordenadas)
+                
             return False
         '''
+        encontrou = 0
+        if self.__turns_count > 2:
+            if (row,col) in coordenadas:
+                encontrou += 1
+            if encontrou == 0:
+                print("Não pode jogar aí, tem que jogar numa diagonal de uma das suas peças")
+                print(coordenadas)
+                return False
+            return True
         
-        
-
-        # full column
-        if self.grid[row][col] != DiagonalBlocksState.EMPTY_CELL:
-            return False
-
-        # non-repeating play
-        if piece in self.__pieceNorepeatP0:
-            print("Essa peça já foi jogada, não pode jogar")
-            return False
-        
-        
-        if piece in self.__pieceNorepeatP1:
-            print("Essa peça já foi jogada, não pode jogar")
-            return False 
-        
-
-                
 
         return True
 
@@ -263,7 +261,7 @@ class DiagonalBlocksState(State):
     
     
     def display(self):
-        
+
         self.__display_numbers()
         self.__display_separator()
     

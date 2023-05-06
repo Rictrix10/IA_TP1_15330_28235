@@ -54,6 +54,8 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                         place_piece.rotate_esquerda()
                     print("Peça atual: ")
                     place_piece.print()
+                    coordenadas = DiagonalBlocksState.__save_diagonais()
+                    print(coordenadas)
 
                 return DiagonalBlocksAction(row, column, piece, option, peca_selecionada, diagonais_selecionadas)
             except Exception:
