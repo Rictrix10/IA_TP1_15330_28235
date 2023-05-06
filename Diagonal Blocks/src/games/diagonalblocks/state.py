@@ -106,6 +106,13 @@ class DiagonalBlocksState(State):
     def get_num_players(self):
         return 2
     
+    def out_of_board(self, action: DiagonalBlocksAction) -> bool:
+        peca_selecionada = action.get_peca()
+        for x in range(len(peca_selecionada)):
+            row = peca_selecionada[x][0]
+            col = peca_selecionada[x][1]
+        return True
+    
     def __save_diagonais(self):
         diagonais = []
         for row in range(self.num_rows):
@@ -142,7 +149,7 @@ class DiagonalBlocksState(State):
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
             col = peca_selecionada[x][1] 
-            if self.grid[row][col] == 0 or self.grid[row][col] == 1:
+            if self.grid[row][col] == 0 or self.grid[row][col] == 1 or row < 0 or col < 0 or row >= 20 or row >= 20:
                 erro += 1
         if erro > 0:
             print("Não pode jogar aí, peças não se podem sobrepor")
@@ -151,11 +158,11 @@ class DiagonalBlocksState(State):
         # non-repeating play
         if self.__acting_player == 0:
             if piece in self.__pieceNorepeatP0:
-                print("Essa peça já foi jogada, não pode jogar")
+                print("Essa peça já foi jogada, jogue outra")
                 return False
         else:
             if piece in self.__pieceNorepeatP1:
-                print("Essa peça já foi jogada, não pode jogar")
+                print("Essa peça já foi jogada, jogue outra")
                 return False 
 
         # play in diagonal
@@ -171,9 +178,22 @@ class DiagonalBlocksState(State):
                 print("Não pode jogar aí, tem que jogar numa diagonal de uma das suas peças")
                 print(coordenadas)
                 return False
-            return True
+            #return True
         
-
+        #play in board
+        
+        saiu = 0
+        for x in range(len(peca_selecionada)):
+            row = peca_selecionada[x][0]
+            col = peca_selecionada[x][1]
+            if row < 0 or row >= self.num_rows:
+                saiu += 1
+            if col < 0 or col >= self.num_cols:
+                saiu += 1
+        if saiu > 0:
+            print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
+            return False
+        
         return True
 
     def update(self, action: DiagonalBlocksAction):

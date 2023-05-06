@@ -1,5 +1,7 @@
 EMPTY_CELL = -1
 PLAYANLE_CELL = 0
+CONNECT_CELL = 1
+
 from games.state import State
 
 class Piece:
@@ -11,103 +13,104 @@ class Piece:
         except AttributeError:
             _ = EMPTY_CELL
             X = PLAYANLE_CELL
+            x = CONNECT_CELL
 
             Piece.__all_pieces = [
                 Piece([
-                    [X]
+                    [x]
                 ]),
 
                 Piece([
-                    [X, X]
+                    [x, X]
                 ]),
 
                 Piece([
-                    [X, X, X]
+                    [x, X, X]
                 ]),
 
                 Piece([
                     [_, X],
-                    [X, X]
+                    [x, X]
                 ]),
 
                 Piece([
-                    [X, X, X, X]
+                    [x, X, X, X]
                 ]),
 
                 Piece([
                     [_, _, X],
-                    [X, X, X]
+                    [x, X, X]
                 ]),
 
                 Piece([
                     [_, X, _],
-                    [X, X, X]
+                    [x, X, X]
                 ]),
 
                 Piece([
                     [_, X, X],
-                    [X, X, _]
+                    [x, X, _]
                 ]),
                 Piece([
                     [X, X],
-                    [X, X]
+                    [x, X]
                 ]),
                 Piece([
-                    [X, X, X, X, X]
+                    [x, X, X, X, X]
                 ]),
 
                 Piece([
                     [_, _, _, X],
-                    [X, X, X, X]
+                    [x, X, X, X]
                 ]),
 
                 Piece([
                     [_, _, X, _],
-                    [X, X, X, X]
+                    [x, X, X, X]
                 ]),
 
                 Piece([
                     [_, X, X],
-                    [X, X, X]
+                    [x, X, X]
                 ]),
                 Piece([
                     [_, _, X, X],
-                    [X, X, X, _]
+                    [x, X, X, _]
                 ]),
                 Piece([
                     [_, _, X],
                     [_, _, X],
-                    [X, X, X]
+                    [x, X, X]
                 ]),
                 Piece([
                     [_, X, X,],
                     [_, X, _,],
-                    [X, X, _,]
+                    [x, X, _,]
                 ]),
                 Piece([
                     [X, X],
                     [_, X],
-                    [X, X]
+                    [x, X]
                 ]),
                 Piece([
                     [_, _, X],
                     [_, X, X],
-                    [X, X, _]
+                    [x, X, _]
                 ]),
                 Piece([
                     [_, X, _],
-                    [X, X, X],
+                    [x, X, X],
                     [_, X, _]
                 ]),
                 Piece([
                     [_, X, _],
                     [_, X, _],
-                    [X, X, X]
+                    [x, X, X]
                 ]),
                 Piece([
                     [_, X, _],
                     [_, X, X],
-                    [X, X, _]
+                    [x, X, _]
                 ])
 
             ]
@@ -129,7 +132,9 @@ class Piece:
                 if place == EMPTY_CELL:
                     print(" ", end="")
                 elif place == PLAYANLE_CELL:
-                    print("■", end="")
+                    print("◼", end="")
+                if place == CONNECT_CELL:
+                    print("◻",  end="") 
             print("")
         print("\t")
 
@@ -239,7 +244,7 @@ class Piece:
                    (row+1, column+1), (row-1, column+1)]]
 
         peca20 = [[(row, column), (row, column+1), (row, column+2),
-                   (row-1, column+1), (row-2, column+1)]]
+                   (row-1, column+1), (row+1, column+1)]]
 
         peca21 = [[(row, column), (row, column+1), (row-1, column+1),
                    (row-2, column+1), (row-1, column+2)]]
