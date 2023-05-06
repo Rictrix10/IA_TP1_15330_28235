@@ -49,8 +49,6 @@ class DiagonalBlocksState(State):
         the grid
         """
         
-       
-
         self.grid = [[DiagonalBlocksState.EMPTY_CELL for _i in range(self.num_cols)] for _j in range(self.num_rows)]
 
         """
@@ -58,14 +56,10 @@ class DiagonalBlocksState(State):
         """
         self.__turns_count = 1
 
-        """
-        the index of the current acting player
-        """
+        #the index of the current acting player
         self.__acting_player = 0
 
-        """
-        determine if a winner was found already 
-        """
+        #determine if a winner was found already 
         self.__has_winner = False
 
 
@@ -112,13 +106,26 @@ class DiagonalBlocksState(State):
         return 2
 
     def validate_action(self, action: DiagonalBlocksAction) -> bool:
-        col = action.get_col()
+        diagonais = []
         row = action.get_row()
+        col = action.get_col()
         piece = action.get_piece()
         option = action.get_option()
         peca_selecionada = action.get_peca()
         
+        for x in range(self.num_rows):
+            for y in range(self.num_cols):
+                if self.__acting_player == 0:
+                    if self.grid[x][y] == DiagonalBlocksState.DOT_CELLR:
+                        diagonais.append((x,y))
+                else:
+                    if self.grid[x][y] == DiagonalBlocksState.DOT_CELLB:
+                        diagonais.append((x,y))
 
+        # valid piece
+        if piece < 0 or piece > 20:
+            return False
+        
         # valid column
         if col < 0 or col >= self.num_cols:
             return False
@@ -127,22 +134,31 @@ class DiagonalBlocksState(State):
         if row < 0 or row >= self.num_rows:
             return False
 
+        # valid option
+        if option < 1 or option > 3:
+            return False
+
+        
+        # valid place
+        if self.__turns_count > 2:
+            #if self.__acting_player == 0:
+            if (row, col) not in diagonais:
+                return False
+        
+
         # full column
         if self.grid[row][col] != DiagonalBlocksState.EMPTY_CELL:
             return False
 
-        if piece < 0 or piece > 20:
-            return False
-
-        
-        if peca_selecionada in  self.__pieceNorepeatP0:
-            print("Essa peça já foi jogada, não pode jogar")
-            return False
-
-        
-        if peca_selecionada in  self.__pieceNorepeatP1:
-            print("Essa peça já foi jogada, não pode jogar")
-            return False
+        # non-repeating play
+        if self.__acting_player == 0:
+            if peca_selecionada in  self.__pieceNorepeatP0:
+                print("Essa peça já foi jogada, não pode jogar")
+                return False
+        else:
+            if peca_selecionada in  self.__pieceNorepeatP1:
+                print("Essa peça já foi jogada, não pode jogar")
+                return False 
 
                 
 
