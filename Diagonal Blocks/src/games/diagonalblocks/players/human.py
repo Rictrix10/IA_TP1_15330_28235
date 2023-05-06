@@ -58,7 +58,8 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 return DiagonalBlocksAction(row, column, piece, option, peca_selecionada, diagonais_selecionadas)
             except Exception:
                 continue
-
+    
+    
     def event_action(self, pos: int, action, new_state: DiagonalBlocksState):
         # ignore
         pass

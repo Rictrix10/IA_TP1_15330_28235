@@ -104,7 +104,19 @@ class DiagonalBlocksState(State):
 
     def get_num_players(self):
         return 2
-
+    
+    def __save_diagonais(self):
+        diagonais = []
+        for x in range(self.num_rows):
+            for y in range(self.num_cols):
+                #if self.__acting_player == 0:
+                        if self.grid[x][y] == DiagonalBlocksState.DOT_CELLR:
+                            diagonais.append((x,y))
+                                #else:
+                    #if self.grid[x][y] == DiagonalBlocksState.DOT_CELLB:
+                        #diagonais.append((x,y))
+        return diagonais
+    
     def validate_action(self, action: DiagonalBlocksAction) -> bool:
         diagonais = []
         row = action.get_row()
@@ -113,14 +125,18 @@ class DiagonalBlocksState(State):
         option = action.get_option()
         peca_selecionada = action.get_peca()
         
+        '''
         for x in range(self.num_rows):
             for y in range(self.num_cols):
-                if self.__acting_player == 0:
-                    if self.grid[x][y] == DiagonalBlocksState.DOT_CELLR:
+                #if self.__acting_player == 0:
+                        self.grid[x][y] == DiagonalBlocksState.DOT_CELLR
                         diagonais.append((x,y))
-                else:
-                    if self.grid[x][y] == DiagonalBlocksState.DOT_CELLB:
-                        diagonais.append((x,y))
+                #else:
+                    #if self.grid[x][y] == DiagonalBlocksState.DOT_CELLB:
+                        #diagonais.append((x,y))
+
+        '''
+        
 
         # valid piece
         if piece < 0 or piece > 20:
@@ -138,12 +154,15 @@ class DiagonalBlocksState(State):
         if option < 1 or option > 3:
             return False
 
-        
+        DIAGONAIS = self.__save_diagonais()
         # valid place
+        '''
         if self.__turns_count > 2:
-            #if self.__acting_player == 0:
-            if (row, col) not in diagonais:
-                return False
+            if (row,col) not in DIAGONAIS:
+                print("Não pode jogar aí")
+            return False
+        '''
+        
         
 
         # full column
@@ -151,14 +170,15 @@ class DiagonalBlocksState(State):
             return False
 
         # non-repeating play
-        if self.__acting_player == 0:
-            if peca_selecionada in  self.__pieceNorepeatP0:
-                print("Essa peça já foi jogada, não pode jogar")
-                return False
-        else:
-            if peca_selecionada in  self.__pieceNorepeatP1:
-                print("Essa peça já foi jogada, não pode jogar")
-                return False 
+        if piece in self.__pieceNorepeatP0:
+            print("Essa peça já foi jogada, não pode jogar")
+            return False
+        
+        
+        if piece in self.__pieceNorepeatP1:
+            print("Essa peça já foi jogada, não pode jogar")
+            return False 
+        
 
                 
 
@@ -184,14 +204,14 @@ class DiagonalBlocksState(State):
             self.grid[row][col] = self.__acting_player
         if  self.__acting_player == 0:
             self.__resultP0 += len(peca_selecionada)
-            self.__pieceNorepeatP0.append(peca_selecionada)                           
-            #print("Total de pontos acumulado do Jogador 0 é :", self.__resultP0)
+            self.__pieceNorepeatP0.append(piece)                           
+        
         if self.__acting_player == 1:
             self.__resultP1 += len(peca_selecionada)
-            self.__pieceNorepeatP1.append(peca_selecionada)
-            #print("Total de pontos acumulado do Jogador 1 é :",  self.__resultP1)
+            self.__pieceNorepeatP1.append(piece)
+            
 
-        print("\n\t\t\tPlayer 0 [",  self.__resultP0, "-", self.__resultP1, "] Player 1\n")
+        print("\n\t\t\tTurno", self.__turns_count, " - Player 0 [",  self.__resultP0, "-", self.__resultP1, "] Player 1\n")
 
         for x in range(len(diagonais_selecionadas)):
             row = diagonais_selecionadas[x][0]
@@ -243,7 +263,6 @@ class DiagonalBlocksState(State):
     
     
     def display(self):
-        
         
         self.__display_numbers()
         self.__display_separator()
