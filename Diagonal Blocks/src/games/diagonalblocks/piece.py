@@ -1,6 +1,6 @@
 EMPTY_CELL = -1
 PLAYANLE_CELL = 0
-CONNECT_CELL = 1
+
 
 from games.state import State
 
@@ -13,104 +13,103 @@ class Piece:
         except AttributeError:
             _ = EMPTY_CELL
             X = PLAYANLE_CELL
-            x = CONNECT_CELL
 
             Piece.__all_pieces = [
                 Piece([
-                    [x]
+                    [X]
                 ]),
 
                 Piece([
-                    [x, X]
+                    [X, X]
                 ]),
 
                 Piece([
-                    [x, X, X]
+                    [X, X, X]
                 ]),
 
                 Piece([
                     [_, X],
-                    [x, X]
+                    [X, X]
                 ]),
 
                 Piece([
-                    [x, X, X, X]
+                    [X, X, X, X]
                 ]),
 
                 Piece([
                     [_, _, X],
-                    [x, X, X]
+                    [X, X, X]
                 ]),
 
                 Piece([
                     [_, X, _],
-                    [x, X, X]
+                    [X, X, X]
                 ]),
 
                 Piece([
                     [_, X, X],
-                    [x, X, _]
+                    [X, X, _]
                 ]),
                 Piece([
                     [X, X],
-                    [x, X]
+                    [X, X]
                 ]),
                 Piece([
-                    [x, X, X, X, X]
+                    [X, X, X, X, X]
                 ]),
 
                 Piece([
                     [_, _, _, X],
-                    [x, X, X, X]
+                    [X, X, X, X]
                 ]),
 
                 Piece([
                     [_, _, X, _],
-                    [x, X, X, X]
+                    [X, X, X, X]
                 ]),
 
                 Piece([
                     [_, X, X],
-                    [x, X, X]
+                    [X, X, X]
                 ]),
                 Piece([
                     [_, _, X, X],
-                    [x, X, X, _]
+                    [X, X, X, _]
                 ]),
                 Piece([
                     [_, _, X],
                     [_, _, X],
-                    [x, X, X]
+                    [X, X, X]
                 ]),
                 Piece([
                     [_, X, X,],
                     [_, X, _,],
-                    [x, X, _,]
+                    [X, X, _,]
                 ]),
                 Piece([
                     [X, X],
                     [_, X],
-                    [x, X]
+                    [X, X]
                 ]),
                 Piece([
                     [_, _, X],
                     [_, X, X],
-                    [x, X, _]
+                    [X, X, _]
                 ]),
                 Piece([
                     [_, X, _],
-                    [x, X, X],
+                    [X, X, X],
                     [_, X, _]
                 ]),
                 Piece([
                     [_, X, _],
                     [_, X, _],
-                    [x, X, X]
+                    [X, X, X]
                 ]),
                 Piece([
                     [_, X, _],
                     [_, X, X],
-                    [x, X, _]
+                    [X, X, _]
                 ])
 
             ]
@@ -134,8 +133,6 @@ class Piece:
                     print(" ", end="")
                 elif place == PLAYANLE_CELL:
                     print("◼", end="")
-                if place == CONNECT_CELL:
-                    print("◻",  end="") 
             print("")
         print("\t")
 
@@ -316,7 +313,7 @@ class Piece:
 
         return [PECA1, PECA2, PECA3, PECA4, PECA5, PECA6, PECA7, PECA8, PECA9, PECA10, PECA11, PECA12, PECA13, PECA14, PECA15, PECA16, PECA17, PECA18, PECA19, PECA20, PECA21]
     
-    ''' funcao antiga
+    
     def roda_peca_esquerda(row, col, peca_selecionada):
         nova_peca = []
         for coord in peca_selecionada:
@@ -332,9 +329,9 @@ class Piece:
     # Ordena a lista de coordenadas para que a ordem seja consistente
         #nova_peca = sorted(nova_peca)
         return nova_peca
-    '''
+    
 
-    ''' funcao antiga´
+    
     def roda_diagonais_esquerda(row, col, diagonais_peca):
         nova_peca = []
         for coord in diagonais_peca:
@@ -351,8 +348,43 @@ class Piece:
         #nova_peca = sorted(nova_peca)
         return nova_peca
     
-        '''
+    def roda_peca_direita(row, col, peca_selecionada):
+        nova_peca = []
+        for coord in peca_selecionada:
+            x, y = coord
+        # Rotaciona a peça em 90 graus
+            nova_x = y
+            nova_y = -x
+            nova_peca.append((nova_x, nova_y))
+    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+        min_x = min(x for x, y in nova_peca)
+        min_y = min(y for x, y in nova_peca)
+        nova_peca = [(x - min_x + row, y - min_y + col) for x, y in nova_peca]
+    # Ordena a lista de coordenadas para que a ordem seja consistente
+        #nova_peca = sorted(nova_peca)
+        return nova_peca
+    
 
+    
+    def roda_diagonais_direita(row, col, diagonais_peca):
+        nova_peca = []
+        for coord in diagonais_peca:
+            x, y = coord
+        # Rotaciona a peça em 90 graus
+            nova_x = y
+            nova_y = -x
+            nova_peca.append((nova_x, nova_y))
+    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+        min_x = min(x for x, y in nova_peca)
+        min_y = min(y for x, y in nova_peca)
+        nova_peca = [(x - min_x + row-1, y - min_y + col-1) for x, y in nova_peca]
+    # Ordena a lista de coordenadas para que a ordem seja consistente
+        #nova_peca = sorted(nova_peca)
+        return nova_peca
+    
+    
+
+    '''
     def roda_peca_esquerda(row, col, peca_selecionada):
         nova_peca = []
         for coord in peca_selecionada:
@@ -373,23 +405,28 @@ class Piece:
         #nova_peca = sorted(nova_peca)
         return nova_peca
 
+    '''
+
+    '''
     def roda_diagonais_esquerda(row, col, diagonais_peca):
         nova_peca = []
         for coord in diagonais_peca:
             x, y = coord
-        # Rotaciona a peça em 90 graus
+            # Rotaciona a peça em 90 graus no sentido contrário
             nova_x = -y
             nova_y = x
             nova_peca.append((nova_x, nova_y))
-    # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+        # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
         min_x = min(x for x, y in nova_peca)
         min_y = min(y for x, y in nova_peca)
-        nova_peca = [(x - min_x + row-1, y - min_y + col-1) for x, y in nova_peca]
-    # Ordena a lista de coordenadas para que a ordem seja consistente
-        #nova_peca = sorted(nova_peca)
+        nova_peca = [(x - min_x + row-1, y - min_y + col-1)
+                     for x, y in nova_peca]
+        # Ordena a lista de coordenadas para que a ordem seja consistente
+        nova_peca = sorted(nova_peca)
         return nova_peca
+    '''
     
-
+    '''
     def roda_peca_direita(row, col, peca_selecionada):
         nova_peca = []
         for coord in peca_selecionada:
@@ -426,3 +463,5 @@ class Piece:
         # Ordena a lista de coordenadas para que a ordem seja consistente
         nova_peca = sorted(nova_peca)
         return nova_peca
+
+    '''

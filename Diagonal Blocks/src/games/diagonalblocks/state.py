@@ -21,6 +21,7 @@ class DiagonalBlocksState(State):
     DOT_CELLR = -2
     DOT_CELLB = -3
     DOT_CELLRB = -4
+    
 
 
     '''
@@ -33,10 +34,10 @@ class DiagonalBlocksState(State):
             raise Exception("the number of rows must be 20")
     '''
 
-    def __init__(self, size: int = 3):
+    def __init__(self, size: int = 20):
         super().__init__()
 
-        if size < 3:
+        if size < 20:
             raise Exception("the number of rows must be 20")
 
         """
@@ -63,6 +64,7 @@ class DiagonalBlocksState(State):
         #determine if a winner was found already 
         self.__has_winner = False
 
+        self.__total_pieces = 2
 
         self.__resultP0 = 0
 
@@ -106,12 +108,6 @@ class DiagonalBlocksState(State):
     def get_num_players(self):
         return 2
     
-    def out_of_board(self, action: DiagonalBlocksAction) -> bool:
-        peca_selecionada = action.get_peca()
-        for x in range(len(peca_selecionada)):
-            row = peca_selecionada[x][0]
-            col = peca_selecionada[x][1]
-        return True
     
     def __save_diagonais(self):
         diagonais = []
@@ -145,6 +141,7 @@ class DiagonalBlocksState(State):
             return False
         
         # free pieces
+        
         erro = 0
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
@@ -154,7 +151,7 @@ class DiagonalBlocksState(State):
         if erro > 0:
             print("Não pode jogar aí, peças não se podem sobrepor")
             return False
-
+        
         # non-repeating play
         if self.__acting_player == 0:
             if piece in self.__pieceNorepeatP0:
@@ -302,7 +299,10 @@ class DiagonalBlocksState(State):
             print()
     
     def __is_full(self):
-        return self.__turns_count > (self.num_cols * self.num_rows)
+        
+        return self.__turns_count > self.__total_pieces
+    
+
 
     def is_finished(self) -> bool:
         return self.__has_winner or self.__is_full()
