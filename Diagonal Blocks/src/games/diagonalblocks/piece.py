@@ -244,7 +244,7 @@ class Piece:
                    (row+1, column+1), (row-1, column+1)]]
 
         peca20 = [[(row, column), (row, column+1), (row, column+2),
-                   (row-1, column+1), (row+1, column+1)]]
+                   (row-1, column+1), (row-2, column+1)]]
 
         peca21 = [[(row, column), (row, column+1), (row-1, column+1),
                    (row-2, column+1), (row-1, column+2)]]
@@ -312,7 +312,7 @@ class Piece:
                    (row-1, column+3), (row+1, column+3), (row+2, column), (row+2, column+2)]]
 
         PECA20 = [[(row-1, column-1), (row+1, column-1),
-                   (row-3, column), (row-3, column+2), (row+1, column+3)]]
+                   (row-3, column), (row-3, column+2), (row+1, column+3), (row-1, column+3)]]
 
         PECA21 = [[(row-1, column-1), (row+1, column-1), (row-3, column),
                    (row-3, column+2), (row-2, column+3), (row, column+3), (row+1, column+2)]]
@@ -332,7 +332,7 @@ class Piece:
         min_y = min(y for x, y in nova_peca)
         nova_peca = [(x - min_x + row, y - min_y + col) for x, y in nova_peca]
     # Ordena a lista de coordenadas para que a ordem seja consistente
-        nova_peca = sorted(nova_peca)
+        #nova_peca = sorted(nova_peca)
         return nova_peca
 
     def roda_diagonais_esquerda(row, col, diagonais_peca):
@@ -365,7 +365,7 @@ class Piece:
         min_y = min(y for x, y in nova_peca)
         nova_peca = [(x - min_x + row, y - min_y + col) for x, y in nova_peca]
         # Ordena a lista de coordenadas para que a ordem seja consistente
-        nova_peca = sorted(nova_peca)
+        #nova_peca = sorted(nova_peca)
         return nova_peca
 
     def roda_diagonais_direita(row, col, diagonais_peca):
