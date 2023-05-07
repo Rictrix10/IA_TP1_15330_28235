@@ -120,6 +120,7 @@ class Piece:
    # player2_pieces = get_all()
 
     def __init__(self, cfg):
+        self.__original_cfg = cfg
         self.__cfg = cfg
 
     def show_pieces(self):
@@ -182,12 +183,8 @@ class Piece:
 
         self.__cfg = new_cfg
 
-    def validar_proxima_jogada(self):
-        for linha in self.__cfg:
-            for caractere in linha:
-                if caractere != 'o':
-                    return False
-        return True
+    def reset(self):
+        self.__cfg = self.__original_cfg
 
     def criar_peca(row, column):
         peca1 = [[(row, column)]]
