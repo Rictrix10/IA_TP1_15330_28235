@@ -353,8 +353,9 @@ class Piece:
         # Ordena a lista de coordenadas para que a ordem seja consistente
         #nova_peca = sorted(nova_peca)
         return nova_peca
+       
     
-
+    #''' funcao antiga´
     def roda_diagonais_esquerda(row, col, diagonais_peca):
         nova_peca = []
         for coord in diagonais_peca:
@@ -369,9 +370,11 @@ class Piece:
         nova_peca = [(x - min_x + row-1, y - min_y + col-1)
                      for x, y in nova_peca]
         # Ordena a lista de coordenadas para que a ordem seja consistente
-        nova_peca = sorted(nova_peca)
+        #nova_peca = sorted(nova_peca)
         return nova_peca
-
+    
+        #'''
+    
 
     def roda_peca_direita(row, col, peca_selecionada):
         nova_peca = []
