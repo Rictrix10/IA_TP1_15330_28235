@@ -315,7 +315,8 @@ class Piece:
                    (row-3, column+2), (row-2, column+3), (row, column+3), (row+1, column+2)]]
 
         return [PECA1, PECA2, PECA3, PECA4, PECA5, PECA6, PECA7, PECA8, PECA9, PECA10, PECA11, PECA12, PECA13, PECA14, PECA15, PECA16, PECA17, PECA18, PECA19, PECA20, PECA21]
-
+    
+    ''' funcao antiga
     def roda_peca_esquerda(row, col, peca_selecionada):
         nova_peca = []
         for coord in peca_selecionada:
@@ -331,6 +332,28 @@ class Piece:
     # Ordena a lista de coordenadas para que a ordem seja consistente
         #nova_peca = sorted(nova_peca)
         return nova_peca
+    '''
+
+    def roda_peca_esquerda(row, col, peca_selecionada):
+        nova_peca = []
+        for coord in peca_selecionada:
+            x, y = coord
+            # Rotaciona a peça em 90 graus
+            nova_x = -y
+            nova_y = x
+            nova_peca.append((nova_x, nova_y))
+        # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
+        min_x = min(x for x, y in nova_peca)
+        min_y = min(y for x, y in nova_peca)
+        nova_peca = [(x - min_x, y - min_y) for x, y in nova_peca]
+        # Desloca a peça para que a coordenada (0, 0) seja a primeira coordenada da peça inicial
+        desloc_x = peca_selecionada[0][0] - nova_peca[0][0]
+        desloc_y = peca_selecionada[0][1] - nova_peca[0][1]
+        nova_peca = [(x + desloc_x, y + desloc_y) for x, y in nova_peca]
+        # Ordena a lista de coordenadas para que a ordem seja consistente
+        #nova_peca = sorted(nova_peca)
+        return nova_peca
+    
 
     def roda_diagonais_esquerda(row, col, diagonais_peca):
         nova_peca = []
@@ -349,18 +372,23 @@ class Piece:
         nova_peca = sorted(nova_peca)
         return nova_peca
 
+
     def roda_peca_direita(row, col, peca_selecionada):
         nova_peca = []
         for coord in peca_selecionada:
             x, y = coord
-            # Rotaciona a peça em 90 graus no sentido contrário
+            # Rotaciona a peça em 90 graus
             nova_x = y
             nova_y = -x
             nova_peca.append((nova_x, nova_y))
         # Translada a peça para que sua coordenada superior esquerda seja (0, 0)
         min_x = min(x for x, y in nova_peca)
         min_y = min(y for x, y in nova_peca)
-        nova_peca = [(x - min_x + row, y - min_y + col) for x, y in nova_peca]
+        nova_peca = [(x - min_x, y - min_y) for x, y in nova_peca]
+        # Desloca a peça para que a coordenada (0, 0) seja a primeira coordenada da peça inicial
+        desloc_x = peca_selecionada[0][0] - nova_peca[0][0]
+        desloc_y = peca_selecionada[0][1] - nova_peca[0][1]
+        nova_peca = [(x + desloc_x, y + desloc_y) for x, y in nova_peca]
         # Ordena a lista de coordenadas para que a ordem seja consistente
         #nova_peca = sorted(nova_peca)
         return nova_peca
