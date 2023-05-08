@@ -256,6 +256,11 @@ class DiagonalBlocksState(State):
 
         self.__turns_count += 1
 
+    def pecas_disponiveis(self):
+        if self.__acting_player == 0:
+            return self.__pecasP0
+        else:
+            return self.__pecasP1
     
     def possible_actions(self):
         col: int
@@ -263,7 +268,8 @@ class DiagonalBlocksState(State):
         piece: int
         jogadas = []
         pecas_disponiveis = []
-
+        
+        
         if self.__acting_player == 0:
             #pecas_disponiveis = list(self.__pecasP0)
             pecas_disponiveis = (self.__pecasP0).copy()
@@ -271,13 +277,20 @@ class DiagonalBlocksState(State):
         else:
             #pecas_disponiveis = list(self.__pecasP1)
             pecas_disponiveis = (self.__pecasP1).copy()
+        
+        #pecas_disponiveis = self.pecas_disponiveis()
+
+        
         for x in range(len(pecas_disponiveis)):
+        #for x in range(len(self.__pecasP0)):
                 for y in range(self.num_rows):
                     for z in range(self.num_cols):             
                             erro = 0
                             n = pecas_disponiveis[x]
+                            #n = self.__pecasP0[x]
                             peca = Piece.criar_peca(y, z)
                             peca_selecionada = peca[n][0]
+
                             # free pieces
 
                             '''
@@ -288,12 +301,14 @@ class DiagonalBlocksState(State):
                                     erro += 1
                             '''
 
+                            if n not in self.__pecasP0:
+                                erro += 1
 
                             coordenadas = self.__save_diagonais()
                             if self.__turns_count > 2:
                                 row = peca_selecionada[0][0]
                                 col = peca_selecionada[0][1]
-                                if (row,col) in coordenadas:
+                                if (row,col) not in coordenadas:
                                     erro += 1
 
                             
@@ -309,8 +324,16 @@ class DiagonalBlocksState(State):
                             
                            
         return jogadas
+    
                             
-        
+    def get_possible_actions(self):
+        return list(filter(
+            lambda action: self.validate_action(action),
+            map(
+                lambda position: DiagonalBlocksAction(position[0], position[1]),
+                itertools.product(range(0, self.get_num_rows()),
+                                  range(0, self.get_num_cols())))
+        ))    
             
 
     def __display_cell(self, row, col):
@@ -352,7 +375,19 @@ class DiagonalBlocksState(State):
 
     
     def display(self):
-        
+            '''
+            if self.__acting_player == 0:
+                #print(self.__pecasP0)
+                print(self.__pieceNorepeatP0)
+            else:
+                #print(self.__pecasP1)
+                print(self.__pieceNorepeatP1)
+            print("\n")
+            '''
+            pecas_disponiveis = self.pecas_disponiveis()
+            print(pecas_disponiveis)
+
+            print(self.__pieceNorepeatP0)
             P0 = self.possible_actions()
             print(P0)
             print("\n")
@@ -420,6 +455,7 @@ class DiagonalBlocksState(State):
     def before_results(self):
         pass
 
+    '''
     def get_possible_actions(self):
         return list(filter(
             lambda action: self.validate_action(action),
@@ -428,6 +464,7 @@ class DiagonalBlocksState(State):
                 itertools.product(range(0, self.get_num_rows()),
                                   range(0, self.get_num_cols())))
         ))
+    '''
 
     def sim_play(self, action):
         new_state = self.clone()
