@@ -23,6 +23,7 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
 
 
 def main():
+    
     print("Diagonal Blocks")
 
 
@@ -88,6 +89,7 @@ def get_user_choice():
 
 
 if __name__ == "__main__":
+    
     main()
 
     pieces = Piece.get_all()

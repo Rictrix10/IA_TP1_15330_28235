@@ -74,9 +74,13 @@ class DiagonalBlocksState(State):
 
         self.__pieceNorepeatP1 = []
 
-        self.__pecasP0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        #self.__pecasP0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
-        self.__pecasP1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        #self.__pecasP1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+        self.__pecasP0 = [0, 2]
+
+        self.__pecasP1 = [1, 2]
 
         self.__possible_movesP0 = []
 
@@ -252,115 +256,131 @@ class DiagonalBlocksState(State):
 
         self.__turns_count += 1
 
+    
     def possible_actions(self):
         col: int
         row: int
         piece: int
-        pieces = Piece.get_all()
-        
+        jogadas = []
+        pecas_disponiveis = []
+
         if self.__acting_player == 0:
-            for w in len(self.__pecasP0):
-                for x in self.num_rows:
-                    for y in self.num_cols:
-                        for z in range(3):
+            #pecas_disponiveis = list(self.__pecasP0)
+            pecas_disponiveis = (self.__pecasP0).copy()
+
+        else:
+            #pecas_disponiveis = list(self.__pecasP1)
+            pecas_disponiveis = (self.__pecasP1).copy()
+        for x in range(len(pecas_disponiveis)):
+                for y in range(self.num_rows):
+                    for z in range(self.num_cols):             
                             erro = 0
-                            peca_selecionada = pieces[self.__pecasP0[w]]
+                            n = pecas_disponiveis[x]
+                            peca = Piece.criar_peca(y, z)
+                            peca_selecionada = peca[n][0]
                             # free pieces
 
-                            for a in range(len(peca_selecionada)):
-                                row = peca_selecionada[a][0]
+                            '''
+                            for a in range(len(peca_selecionada)):                  
+                                row = peca_selecionada[a][0]                        
                                 col = peca_selecionada[a][1] 
                                 if self.grid[row][col] == 0 or self.grid[row][col] == 1:
                                     erro += 1
+                            '''
 
-                            # CONTINUAR A PARTIR DAQUI 
 
-                            # play in diagonal
                             coordenadas = self.__save_diagonais()
-
-                            encontrou = 0
                             if self.__turns_count > 2:
                                 row = peca_selecionada[0][0]
                                 col = peca_selecionada[0][1]
                                 if (row,col) in coordenadas:
-                                    encontrou += 1
-                                if encontrou == 0:
-                                    print("Não pode jogar aí, tem que jogar numa diagonal de uma das suas peças")
-                                    print(coordenadas)
-                                    return False
+                                    erro += 1
 
                             
-                            saiu = 0
-                            for x in range(len(peca_selecionada)):
-                                row = peca_selecionada[x][0]
-                                col = peca_selecionada[x][1]
+                            for b in range(len(peca_selecionada)):
+                                row = peca_selecionada[b][0]
+                                col = peca_selecionada[b][1]
                                 if row < 0 or row >= self.num_rows:
-                                    saiu += 1
+                                    erro += 1
                                 if col < 0 or col >= self.num_cols:
-                                    saiu += 1
-                            if saiu > 0:
-                                print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
-                                return False
+                                    erro += 1
+                            if erro == 0:
+                                jogadas.append([n, y, z])
                             
-                            return True
+                           
+        return jogadas
                             
         
             
 
     def __display_cell(self, row, col):
-        print({
-            0: '\033[91m▩\033[0m',   #  0: 'R',
-            1: '\033[96m▩\033[0m',   #  1: 'B',
-            DiagonalBlocksState.EMPTY_CELL: ' ',
-            DiagonalBlocksState.DOT_CELLR: '\033[91m▫\033[0m',
-            DiagonalBlocksState.DOT_CELLB: '\033[96m▫\033[0m',     
-            DiagonalBlocksState.DOT_CELLRB: '\033[95m▫\033[0m'
-        }[self.grid[row][col]], end="")
+            print({
+                0: '\033[91m▩\033[0m',   #  0: 'R',
+                1: '\033[96m▩\033[0m',   #  1: 'B',
+                DiagonalBlocksState.EMPTY_CELL: ' ',
+                DiagonalBlocksState.DOT_CELLR: '\033[91m▫\033[0m',
+                DiagonalBlocksState.DOT_CELLB: '\033[96m▫\033[0m',     
+                DiagonalBlocksState.DOT_CELLRB: '\033[95m▫\033[0m'
+            }[self.grid[row][col]], end="")
 
 
+
+    
     def __display_numbers(self):
-        for col in range(0, self.num_cols):
-            if col < 20:
-                if col < 10:
-                    print('', end="  ")
-                else: 
-                    print('', end=" ")
-            print(col, end=" ")
-        print("")
+        # exibir números das colunas
+            max_digits = len(str(self.num_cols-1))
+            for col in range(0, self.num_cols):
+                if col == 0:
+                    print(' '*(2+max_digits-1), end="")
+                if col < 20:
+                    if col < 10:
+                        print(' '*(max_digits-1), end=" ")
+                    else: 
+                        print(''*(max_digits-2), end=" ")
+                print(col, end=" ")
+            print("")
 
-        #for row in range(0, self.num_rows):
-         #   if row < 20:
-          #      print(' ', end=" ")
-           # print(row, end="")
-        #print("")
+
+
+      
 
     def __display_separator(self):
-        for col in range(0, self.num_cols):
-            print("----", end="") 
-        print("--")
-    
+            for col in range(0, self.num_cols):
+                print("----", end="") 
+            print("--")
+            
+
     
     def display(self):
+        
+            P0 = self.possible_actions()
+            print(P0)
+            print("\n")
+            print(len(P0))
+            print("\n")
+            
 
-        self.__display_numbers()
-        self.__display_separator()
-    
 
-        for row in range(0, self.num_rows):
-            print('|', end=" ")
-            for col in range(0, self.num_cols):
-                self.__display_cell(row, col)
-                print(' | ', end="")
+
+            self.__display_numbers()
+                # exibir números das linhas e células
+            for row in range(self.num_rows):
+                print('', end=" ")
+                print('{:<2d}'.format(row), end=" ")
+                for col in range(self.num_cols):
+                    self.__display_cell(row, col)
+                    print(' | ', end="")
+                print("")
+                self.__display_separator()
+
+            self.__display_numbers()
             print("")
-            self.__display_separator()
 
-        self.__display_numbers()
-        print("")
-
-        for i in game_pieces:
-            for j in i:
-                print(j, end="")
-            print()
+            for i in game_pieces:
+                for j in i:
+                    print(j, end="")
+                print()
+            
     
     def __is_full(self):
         
