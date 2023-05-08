@@ -64,7 +64,7 @@ class DiagonalBlocksState(State):
         #determine if a winner was found already 
         self.__has_winner = False
 
-        self.__total_pieces = 2
+        self.__total_pieces = 42
 
         self.__resultP0 = 0
 
