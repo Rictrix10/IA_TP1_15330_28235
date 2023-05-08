@@ -74,6 +74,14 @@ class DiagonalBlocksState(State):
 
         self.__pieceNorepeatP1 = []
 
+        self.__pecasP0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+        self.__pecasP1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+        self.__possible_movesP0 = []
+
+        self.__possible_movesP1 = []
+
     def __check_winner(self, player):
 
             # check for horizontal win
@@ -154,11 +162,13 @@ class DiagonalBlocksState(State):
         
         # non-repeating play
         if self.__acting_player == 0:
-            if piece in self.__pieceNorepeatP0:
+            #if piece in self.__pieceNorepeatP0:
+            if piece not in self.__pecasP0:
                 print("Essa peça já foi jogada, jogue outra")
                 return False
         else:
-            if piece in self.__pieceNorepeatP1:
+            #if piece in self.__pieceNorepeatP1:
+            if piece not in self.__pecasP1:
                 print("Essa peça já foi jogada, jogue outra")
                 return False 
 
@@ -208,12 +218,13 @@ class DiagonalBlocksState(State):
 
         if  self.__acting_player == 0:
             self.__resultP0 += len(peca_selecionada)
-            self.__pieceNorepeatP0.append(piece)                           
+            self.__pieceNorepeatP0.append(piece)
+            self.__pecasP0.remove(piece)                           
         
         if self.__acting_player == 1:
             self.__resultP1 += len(peca_selecionada)
             self.__pieceNorepeatP1.append(piece)
-            
+            self.__pecasP1.remove(piece)    
 
         print("\n\t\t\tTurno", self.__turns_count, " - Player 0 [",  self.__resultP0, "-", self.__resultP1, "] Player 1\n")
 
@@ -241,8 +252,61 @@ class DiagonalBlocksState(State):
 
         self.__turns_count += 1
 
+    def possible_actions(self):
+        col: int
+        row: int
+        piece: int
+        pieces = Piece.get_all()
         
+        if self.__acting_player == 0:
+            for w in len(self.__pecasP0):
+                for x in self.num_rows:
+                    for y in self.num_cols:
+                        for z in range(3):
+                            erro = 0
+                            peca_selecionada = pieces[self.__pecasP0[w]]
+                            # free pieces
+
+                            for a in range(len(peca_selecionada)):
+                                row = peca_selecionada[a][0]
+                                col = peca_selecionada[a][1] 
+                                if self.grid[row][col] == 0 or self.grid[row][col] == 1:
+                                    erro += 1
+
+                            # CONTINUAR A PARTIR DAQUI 
+
+                            # play in diagonal
+                            coordenadas = self.__save_diagonais()
+
+                            encontrou = 0
+                            if self.__turns_count > 2:
+                                row = peca_selecionada[0][0]
+                                col = peca_selecionada[0][1]
+                                if (row,col) in coordenadas:
+                                    encontrou += 1
+                                if encontrou == 0:
+                                    print("Não pode jogar aí, tem que jogar numa diagonal de uma das suas peças")
+                                    print(coordenadas)
+                                    return False
+
+                            
+                            saiu = 0
+                            for x in range(len(peca_selecionada)):
+                                row = peca_selecionada[x][0]
+                                col = peca_selecionada[x][1]
+                                if row < 0 or row >= self.num_rows:
+                                    saiu += 1
+                                if col < 0 or col >= self.num_cols:
+                                    saiu += 1
+                            if saiu > 0:
+                                print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
+                                return False
+                            
+                            return True
+                            
         
+            
+
     def __display_cell(self, row, col):
         print({
             0: '\033[91m▩\033[0m',   #  0: 'R',
