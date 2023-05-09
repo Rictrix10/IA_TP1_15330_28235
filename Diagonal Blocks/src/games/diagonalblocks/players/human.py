@@ -27,9 +27,9 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                     num += 1
                 '''
                 pieces = Piece.get_all()
-                piece = (int(input(f"Player {state.get_acting_player()}, choose a piece:")))
-                row = (int(input(f"Player {state.get_acting_player()}, choose a row: ")))
-                column = (int(input(f"Player {state.get_acting_player()}, choose a column: ")))
+                piece = (int(input(f"Player {state.get_acting_player()}, Escolha uma peça: ")))
+                row = (int(input(f"Player {state.get_acting_player()}, Escolha uma linha: ")))
+                column = (int(input(f"Player {state.get_acting_player()}, Escolha uma coluna: ")))
                 place_piece = pieces[piece]
                 peca = Piece.criar_peca(row, column)
                 peca_selecionada = peca[piece][0]
@@ -42,7 +42,7 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 while True:
                     print("Escolha uma opção: \n 1 - Confirmar peça selecionada\n 2 - Rodar peça para a direita\n 3 - Rodar peça para a esquerda\n")
                     
-                    option = (int(input(f"Player {state.get_acting_player()}, choose a option:")))
+                    option = (int(input(f"Player {state.get_acting_player()}, Escolha uma opção: ")))
                     if option == 1:
                         break
                     elif option == 2:

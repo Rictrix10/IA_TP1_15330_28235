@@ -28,12 +28,11 @@ def main():
 
     diagonalblocks_simulations = [
 
-        
-        #{
-        #    "name": "Diagonal Blocks - Human VS Human",
-        #    "player1": HumanDiagonalBlocksPlayer("Human"),
-        #    "player2": HumanDiagonalBlocksPlayer("Human")
-        #},
+        {
+            "name": "Diagonal Blocks - Human VS Human",
+           "player1": HumanDiagonalBlocksPlayer("Human"),
+            "player2": HumanDiagonalBlocksPlayer("Human")
+        },
         
         
         {
