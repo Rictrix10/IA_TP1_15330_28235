@@ -78,13 +78,16 @@ class DiagonalBlocksState(State):
 
         #self.__pecasP1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
-        self.__pecasP0 = [0, 2]
+        self.__pecasP0 = [0, 1, 2]
 
-        self.__pecasP1 = [1, 2]
+        self.__pecasP1 = [0, 1, 2]
 
         self.__possible_movesP0 = []
 
         self.__possible_movesP1 = []
+
+        self.__jogadas = []
+
 
     def __check_winner(self, player):
 
@@ -139,6 +142,7 @@ class DiagonalBlocksState(State):
         piece = action.get_piece()
         option = action.get_option()
         peca_selecionada = action.get_peca()
+
           
         # valid piece
         if piece < 0 or piece > 20:
@@ -153,7 +157,7 @@ class DiagonalBlocksState(State):
             return False
         
         # free pieces
-        
+
         erro = 0
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
@@ -205,6 +209,7 @@ class DiagonalBlocksState(State):
             print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
             return False
         
+        #self.possible_actions()
         return True
 
     def update(self, action: DiagonalBlocksAction):
@@ -213,6 +218,7 @@ class DiagonalBlocksState(State):
         piece = action.get_piece()
         peca_selecionada = action.get_peca()
         diagonais_selecionadas = action.get_diagonais()
+
 
         
         for x in range(len(peca_selecionada)):
@@ -223,12 +229,16 @@ class DiagonalBlocksState(State):
         if  self.__acting_player == 0:
             self.__resultP0 += len(peca_selecionada)
             self.__pieceNorepeatP0.append(piece)
-            self.__pecasP0.remove(piece)                           
+            #self.__pecasP0.remove(piece)
+            self.__pecasP0.remove(action.get_piece())
+                          
         
         if self.__acting_player == 1:
             self.__resultP1 += len(peca_selecionada)
             self.__pieceNorepeatP1.append(piece)
-            self.__pecasP1.remove(piece)    
+            #self.__pecasP1.remove(piece) 
+            self.__pecasP1.remove(action.get_piece())
+ 
 
         print("\n\t\t\tTurno", self.__turns_count, " - Player 0 [",  self.__resultP0, "-", self.__resultP1, "] Player 1\n")
 
@@ -256,27 +266,20 @@ class DiagonalBlocksState(State):
 
         self.__turns_count += 1
 
-    def pecas_disponiveis(self):
-        if self.__acting_player == 0:
-            return self.__pecasP0
-        else:
-            return self.__pecasP1
-    
-    def possible_actions(self):
-        col: int
-        row: int
-        piece: int
+        #--------------------------------------------------------------------------------------------------------------------------------
+
         jogadas = []
         pecas_disponiveis = []
+        diagonais = self.__save_diagonais()
         
         
         if self.__acting_player == 0:
             #pecas_disponiveis = list(self.__pecasP0)
-            pecas_disponiveis = (self.__pecasP0).copy()
+            pecas_disponiveis = self.__pecasP0
 
-        else:
+        else :
             #pecas_disponiveis = list(self.__pecasP1)
-            pecas_disponiveis = (self.__pecasP1).copy()
+            pecas_disponiveis = self.__pecasP1
         
         #pecas_disponiveis = self.pecas_disponiveis()
 
@@ -304,11 +307,89 @@ class DiagonalBlocksState(State):
                             if n not in self.__pecasP0:
                                 erro += 1
 
-                            coordenadas = self.__save_diagonais()
+                            
                             if self.__turns_count > 2:
                                 row = peca_selecionada[0][0]
                                 col = peca_selecionada[0][1]
-                                if (row,col) not in coordenadas:
+                                if (row,col) not in diagonais:
+                                    erro += 1
+
+                            
+                            for b in range(len(peca_selecionada)):
+                                row = peca_selecionada[b][0]
+                                col = peca_selecionada[b][1]
+                                if row < 0 or row >= self.num_rows:
+                                    erro += 1
+                                if col < 0 or col >= self.num_cols:
+                                    erro += 1
+                            if erro == 0:
+                                #jogadas.append([n, y, z])
+                                self.__jogadas.append([n, y, z])
+                                #self.__possible_movesP0.append([n, y, z])
+                            
+                           
+
+        # -----------------------------------------------------------------------------------------------------------------------------------------------------
+    
+
+    def pecas_disponiveis(self):
+        if self.__acting_player == 0:
+            return self.__pecasP0
+        else:
+            return self.__pecasP1 
+        
+
+    def _possible_actions(self):
+        return self.__jogadas
+    
+    def possible_actions(self):
+        col: int
+        row: int
+        piece: int
+        jogadas = []
+        #pecas_disponiveis = []
+        diagonais = self.__save_diagonais()
+        
+        
+        if self.__acting_player == 0:
+            pecas_disponiveis = list(self.__pecasP0)
+            #pecas_disponiveis = self.__pecasP0
+
+        else :
+            pecas_disponiveis = list(self.__pecasP1)
+            #pecas_disponiveis = self.__pecasP1
+        
+        #pecas_disponiveis = self.pecas_disponiveis()
+
+        
+        for x in range(len(pecas_disponiveis)):
+        #for x in range(len(self.__pecasP0)):
+                for y in range(self.num_rows):
+                    for z in range(self.num_cols):             
+                            erro = 0
+                            n = pecas_disponiveis[x]
+                            #n = self.__pecasP0[x]
+                            peca = Piece.criar_peca(y, z)
+                            peca_selecionada = peca[n][0]
+
+                            # free pieces
+
+                            '''
+                            for a in range(len(peca_selecionada)):                  
+                                row = peca_selecionada[a][0]                        
+                                col = peca_selecionada[a][1] 
+                                if self.grid[row][col] == 0 or self.grid[row][col] == 1:
+                                    erro += 1
+                            '''
+
+                            if n not in self.__pecasP0:
+                                erro += 1
+
+                            
+                            if self.__turns_count > 2:
+                                row = peca_selecionada[0][0]
+                                col = peca_selecionada[0][1]
+                                if (row,col) not in diagonais:
                                     erro += 1
 
                             
@@ -321,9 +402,11 @@ class DiagonalBlocksState(State):
                                     erro += 1
                             if erro == 0:
                                 jogadas.append([n, y, z])
+                                #self.__possible_movesP0.append([n, y, z])
                             
                            
         return jogadas
+        #return self.__possible_movesP0
     
                             
     def get_possible_actions(self):
@@ -384,16 +467,20 @@ class DiagonalBlocksState(State):
                 print(self.__pieceNorepeatP1)
             print("\n")
             '''
+            '''
             pecas_disponiveis = self.pecas_disponiveis()
-            print(pecas_disponiveis)
-
-            print(self.__pieceNorepeatP0)
+            print("Peças disponivies: ", pecas_disponiveis)
+            print("Peças jogadas: ", self.__pieceNorepeatP0)
+            '''
+            
+            
             P0 = self.possible_actions()
             print(P0)
             print("\n")
             print(len(P0))
             print("\n")
-            
+
+                       
 
 
 
