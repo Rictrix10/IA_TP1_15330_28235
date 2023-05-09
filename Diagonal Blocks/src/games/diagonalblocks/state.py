@@ -24,16 +24,6 @@ class DiagonalBlocksState(State):
     
 
 
-    '''
-    def __init__(self, num_rows: int = 20, num_cols: int = 20):
-        super().__init__()
-
-        if num_rows < 20:
-            raise Exception("the number of rows must be 20")
-        if num_cols < 20:
-            raise Exception("the number of rows must be 20")
-    '''
-
     def __init__(self, size: int = 20):
         super().__init__()
 
@@ -78,27 +68,11 @@ class DiagonalBlocksState(State):
 
         self.__pecasP1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
-
         self.__possible_movesP0 = []
 
         self.__possible_movesP1 = []
 
 
-
-    '''
-    def __check_winner(self, action: DiagonalBlocksAction) -> bool:
-            result = self.validate_action(action)
-            if result != 2:
-                return False
-            return True
-    '''
-
-    '''      
-    def __check_winner(self, player):
-            verifica = self.validate_action()
-            if verifica != 2:
-                return False
-    '''
 
     def __check_winner(self, action: DiagonalBlocksAction) -> bool:
         return False
@@ -326,8 +300,7 @@ class DiagonalBlocksState(State):
         else :
             pecas_disponiveis = list(self.__pecasP1)
             #pecas_disponiveis = self.__pecasP1
-        
-        
+           
         #pecas_disponiveis = self.pecas_disponiveis()
 
         
@@ -340,18 +313,6 @@ class DiagonalBlocksState(State):
                             #n = self.__pecasP0[x]
                             peca = Piece.criar_peca(y, z)
                             peca_selecionada = peca[n][0]
-
-                            # free pieces
-
-                            '''
-                            for a in range(len(peca_selecionada)):                  
-                                row = peca_selecionada[a][0]                        
-                                col = peca_selecionada[a][1] 
-                                if self.grid[row][col] == 0 or self.grid[row][col] == 1:
-                                    erro += 1
-                            '''
-
-
                             
                             if self.__turns_count > 2:
                                 row = peca_selecionada[0][0]
@@ -375,22 +336,12 @@ class DiagonalBlocksState(State):
         return jogadas
         #return self.__possible_movesP0
     
-    '''                      
-    def get_possible_actions(self):
-        return list(filter(
-            lambda action: self.validate_action(action),
-            map(
-                lambda position: DiagonalBlocksAction(position[0], position[1]),
-                itertools.product(range(0, self.get_num_rows()),
-                                  range(0, self.get_num_cols())))
-        ))  
-    '''  
             
 
     def __display_cell(self, row, col):
             print({
-                0: '\033[91m▩\033[0m',   #  0: 'R',
-                1: '\033[96m▩\033[0m',   #  1: 'B',
+                0: '\033[91m▩\033[0m',   
+                1: '\033[96m▩\033[0m',   
                 DiagonalBlocksState.EMPTY_CELL: ' ',
                 DiagonalBlocksState.DOT_CELLR: '\033[91m▫\033[0m',
                 DiagonalBlocksState.DOT_CELLB: '\033[96m▫\033[0m',     

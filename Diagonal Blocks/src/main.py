@@ -1,9 +1,10 @@
-from games.connect4.players.greedy import GreedyConnect4Player
-from games.connect4.players.minimax import MinimaxConnect4Player
-from games.connect4.players.random import RandomConnect4Player
-from games.connect4.players.human import HumanConnect4Player
-from games.connect4.simulator import Connect4Simulator
+
+from games.diagonalblocks.players.minimax import OffensiveMinimaxPlayer
+from games.diagonalblocks.players.human import HumanDiagonalBlocksPlayer
+from games.diagonalblocks.players.random import RandomDiagonalBlocksPlayer
+from games.diagonalblocks.simulator import DiagonalBlocksSimulator
 from games.game_simulator import GameSimulator
+from games.diagonalblocks.piece import Piece
 
 
 
@@ -14,55 +15,49 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
         simulator.change_player_positions()
         simulator.run_simulation()
 
-    print("Results for the game:")
-    simulator.print_stats()
+        print("Results for the game:")
+        simulator.print_stats()
 
 
 def main():
-    print("ESTG IA Games Simulator")
+    
+    print("Diagonal Blocks\n")
 
-    num_iterations = 1000
 
-    c4_simulations = [
+    num_iterations = 2
+
+    diagonalblocks_simulations = [
+
         {
-            "name": "Connect4 - Human VS Human",
-            "player1": HumanConnect4Player("Human"),
-            "player2": HumanConnect4Player("Human")            
+            "name": "Diagonal Blocks - Human VS Human",
+           "player1": HumanDiagonalBlocksPlayer("Human"),
+            "player2": HumanDiagonalBlocksPlayer("Human")
         },
-        # uncomment to play as human
+        
         {
-            "name": "Connect4 - Human VS Random",
-            "player1": HumanConnect4Player("Human"),
-            "player2": RandomConnect4Player("Random")
-        },
-        {
-            "name": "Connect4 - Random VS Random",
-            "player1": RandomConnect4Player("Random 1"),
-            "player2": RandomConnect4Player("Random 2")
+            "name": "Diagonal Blocks - Human VS Random",
+            "player1": HumanDiagonalBlocksPlayer("Human"),
+            "player2": RandomDiagonalBlocksPlayer("Random 1")
         },
         {
-            "name": "Connect4 - Greedy VS Random",
-            "player1": GreedyConnect4Player("Greedy"),
-            "player2": RandomConnect4Player("Random")
+            "name": "Diagonal Blocks - Random VS Random",
+            "player1": RandomDiagonalBlocksPlayer("Random 1"),
+            "player2": RandomDiagonalBlocksPlayer("Random 2")
         },
-        {
-            "name": "Minimax VS Random",
-            "player1": MinimaxConnect4Player("Minimax"),
-            "player2": RandomConnect4Player("Random")
-        },
-        {
-            "name": "Minimax VS Greedy",
-            "player1": MinimaxConnect4Player("Minimax"),
-            "player2": GreedyConnect4Player("Greedy")
-        }
+
+
     ]
 
- 
+    for sim in diagonalblocks_simulations:
+        run_simulation(sim["name"], DiagonalBlocksSimulator(sim["player1"], sim["player2"], 20), num_iterations)
 
-    for sim in c4_simulations:
-        run_simulation(sim["name"], Connect4Simulator(sim["player1"], sim["player2"]), num_iterations)
+
 
 
 
 if __name__ == "__main__":
+    
     main()
+
+
+

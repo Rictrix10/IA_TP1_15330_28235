@@ -18,14 +18,7 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
             # noinspection PyBroadException
 
             try:
-                '''
-                pieces = Piece.get_all()
-                num = 0
-                for pecas1 in pieces:
-                    print("Peça - ", num)
-                    pecas1.print()
-                    num += 1
-                '''
+
                 pieces = Piece.get_all()
                 piece = (int(input(f"Player {state.get_acting_player()}, Escolha uma peça: ")))
                 row = (int(input(f"Player {state.get_acting_player()}, Escolha uma linha: ")))
