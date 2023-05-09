@@ -66,6 +66,8 @@ class DiagonalBlocksState(State):
 
         self.__total_pieces = 42
 
+        self.__pieces_player = 21
+
         self.__resultP0 = 0
 
         self.__resultP1 = 0
@@ -90,38 +92,6 @@ class DiagonalBlocksState(State):
             if self.validate_action(action) != 2:
                 return False
             
-    def __check_winner(self, player):
-            
-                
-            
-            
-            '''
-
-            # check for horizontal win
-            for row in range(self.num_rows):
-                for col in range(self.num_cols - (self.size - 1)):
-                    if all(self.grid[row][col + i] == player for i in range(self.size)):
-                        return True
-
-            # check for vertical win
-            for row in range(self.num_rows - (self.size - 1)):
-                for col in range(self.num_cols):
-                    if all(self.grid[row + i][col] == player for i in range(self.size)):
-                        return True
-
-            # check for diagonal win (top-left to bottom-right)
-            for row in range(self.num_rows - (self.size - 1)):
-                for col in range(self.num_cols - (self.size - 1)):
-                    if all(self.grid[row + i][col + i] == player for i in range(self.size)):
-                        return True
-
-            # check for diagonal win (bottom-left to top-right)
-            for row in range(self.size - 1, self.num_rows):
-                for col in range(self.num_cols - (self.size - 1)):
-                    if all(self.grid[row - i][col + i] == player for i in range(self.size)):
-                        return True
-        '''
-            return False
 
     def get_grid(self):
         return self.grid
@@ -567,6 +537,9 @@ class DiagonalBlocksState(State):
 
     def get_num_cols(self):
         return self.num_cols
+    
+    def get_num_pieces(self):
+        return self.__pieces_player
 
     def before_results(self):
         pass

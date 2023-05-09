@@ -13,7 +13,7 @@ class RandomDiagonalBlocksPlayer(DiagonalBlocksPlayer):
 
     def get_action(self, state: DiagonalBlocksState):
 
-        return DiagonalBlocksAction(randint(0, state.get_num_rows()), randint(0, state.get_num_cols()))
+        return DiagonalBlocksAction(randint(0, state.get_num_pieces), randint(0, state.get_num_rows()), randint(0, state.get_num_cols()))
 
     def event_action(self, pos: int, action, new_state: State):
         # ignore
