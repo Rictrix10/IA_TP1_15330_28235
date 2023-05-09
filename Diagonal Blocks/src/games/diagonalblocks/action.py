@@ -6,6 +6,8 @@ class DiagonalBlocksAction:
     __col: int
     __piece: int
     __option: int
+ 
+
     
 
     def __init__(self, row: int, col: int,  piece: int, option: int, peca, diagonais):
@@ -16,6 +18,8 @@ class DiagonalBlocksAction:
 
         self.__peca = peca
         self.__diagonais = diagonais
+
+
 
     def get_row(self):
         return self.__row
@@ -34,3 +38,9 @@ class DiagonalBlocksAction:
     
     def get_diagonais(self):
         return self.__diagonais
+    
+
+
+    
+    
+    

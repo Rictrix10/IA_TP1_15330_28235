@@ -13,8 +13,10 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
         state.display()
         
 
+        
         while True:
             # noinspection PyBroadException
+
             try:
                 '''
                 pieces = Piece.get_all()
@@ -29,11 +31,11 @@ class HumanDiagonalBlocksPlayer(DiagonalBlocksPlayer):
                 row = (int(input(f"Player {state.get_acting_player()}, choose a row: ")))
                 column = (int(input(f"Player {state.get_acting_player()}, choose a column: ")))
                 place_piece = pieces[piece]
-
                 peca = Piece.criar_peca(row, column)
                 peca_selecionada = peca[piece][0]
                 diagonais = Piece.criar_diagonal(row, column)
                 diagonais_selecionadas = diagonais[piece][0]
+
                 
                 print("Peça selecionada:")
                 place_piece.print()
