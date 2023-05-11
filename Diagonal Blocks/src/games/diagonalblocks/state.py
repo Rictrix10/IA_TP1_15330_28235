@@ -56,22 +56,20 @@ class DiagonalBlocksState(State):
 
         self.__total_pieces = 42
 
-        self.__resultP0 = 0
+        self.__result = {
+            0: 0,
+            1: 0
+        }
 
-        self.__resultP1 = 0
+        self.__pieceNorepeat = {
+            0: [],
+            1: []
+        }
 
-        self.__pieceNorepeatP0 = []
-
-        self.__pieceNorepeatP1 = []
-
-        self.__pecasP0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-
-        self.__pecasP1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-
-        self.__possible_movesP0 = []
-
-        self.__possible_movesP1 = []
-
+        self.__remainPieces = {
+            0:  [i for i in range(21)],
+            1:  [i for i in range(21)]
+        }
 
 
     def __check_winner(self, action: DiagonalBlocksAction) -> bool:
@@ -96,7 +94,7 @@ class DiagonalBlocksState(State):
                         diagonais.append((row,col))
         return diagonais
     
-    def validate_action(self, action: DiagonalBlocksAction) -> int:
+    def validate_action(self, action: DiagonalBlocksAction) -> bool:
         row = action.get_row()
         col = action.get_col()
         piece = action.get_piece()
@@ -110,60 +108,19 @@ class DiagonalBlocksState(State):
         coluna: int
         diagonais = self.__save_diagonais()
         
-        for x in range(len(pecas_disponiveis)):
-        #for x in range(len(self.__pecasP0)):
-                for y in range(self.num_rows):
-                    for z in range(self.num_cols):             
-                            problema = 0
-                            n = pecas_disponiveis[x]
-                            #n = self.__pecasP0[x]
-                            peca = Piece.criar_peca(y, z)
-                            peca_escolhida = peca[n][0]
-
-                            if self.__acting_player == 0:
-                                if n not in self.__pecasP0:
-                                    problema += 1
-                            else:
-                                if n not in self.__pecasP1:
-                                    problema += 1
-                            
-                            if self.__turns_count > 2:
-                                linha = peca_escolhida[0][0]
-                                coluna = peca_escolhida[0][1]
-                                if (linha,coluna) not in diagonais:
-                                    problema += 1
-
-                            
-                            for b in range(len(peca_escolhida)):
-                                linha = peca_escolhida[b][0]
-                                coluna = peca_escolhida[b][1]
-                                if linha < 0 or linha >= self.num_rows:
-                                    problema += 1
-                                if coluna < 0 or coluna >= self.num_cols:
-                                    problema += 1
-                            if problema == 0:
-                                all_actions.append([n, y, z])
-                                #self.__possible_movesP0.append([n, y, z])
-                            
-        #print("Jogadas que eram possíveis neste turno :", all_actions)                 
-
-        #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         # valid piece
         if piece < 0 or piece > 20:
-            #return False
-            return 0
+            return False
         
         # valid column
         if col < 0 or col >= self.num_cols:
-            #return False
-            return 0
-        
+            return False
+            
         # valid row
         if row < 0 or row >= self.num_rows:
-            #return False
-            return 0
-        
+            return False
+            
         # free pieces
         erro = 0
         for x in range(len(peca_selecionada)):
@@ -173,22 +130,13 @@ class DiagonalBlocksState(State):
                 erro += 1
         if erro > 0:
             print("Não pode jogar aí, peças não se podem sobrepor")
-            #return False
-            return 0
-        
+            return False
+            
         # non-repeating play
-        if self.__acting_player == 0:
-            if piece not in self.__pecasP0:
-                print("Essa peça já foi jogada, jogue outra")
-                print(self.__pecasP0)
-                #return False
-                return 0
-        else:
-            if piece not in self.__pecasP1:
-                print("Essa peça já foi jogada, jogue outra")
-                print(self.__pecasP1)
-                #return False 
-                return 0
+        if piece not in self.__remainPieces[self.__acting_player]:
+            print("Essa peça já foi jogada, jogue outra")
+            print(self.__remainPieces[self.__acting_player])
+            return False
 
         # play in diagonal
         coordenadas = self.__save_diagonais()
@@ -202,9 +150,8 @@ class DiagonalBlocksState(State):
             if encontrou == 0:
                 print("Não pode jogar aí, tem que jogar numa diagonal de uma das suas peças")
                 print(coordenadas)
-                #return False
-                return 0
-            #return True
+                return False
+            return True
         
         #play in board
         
@@ -218,20 +165,14 @@ class DiagonalBlocksState(State):
                 saiu += 1
         if saiu > 0:
             print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
-            #return False
+            return False
         
-        if self.__acting_player == 0:
-            if len(all_actions) == 0 and self.__pecasP0 != 0:
+        if len(all_actions) == 0 and self.__remainPieces[self.__acting_player] != 0:
             #if len(all_actions) == 0:
-                return 2
-        else:
-            if len(all_actions) == 0 and self.__pecasP1 != 0:
-            #if len(all_actions) == 0:
-                return 2
+            return True
         #self.possible_actions()
         
-        #return True
-        return 1
+        return True
 
 
     def update(self, action: DiagonalBlocksAction):
@@ -248,18 +189,11 @@ class DiagonalBlocksState(State):
             col = peca_selecionada[x][1]
             self.grid[row][col] = self.__acting_player
 
-        if  self.__acting_player == 0:
-            self.__resultP0 += len(peca_selecionada)
-            self.__pieceNorepeatP0.append(piece)
-            #self.__pecasP0.remove(piece)
-            self.__pecasP0.remove(action.get_piece())                         
-        
-        if self.__acting_player == 1:
-            self.__resultP1 += len(peca_selecionada)
-            self.__pieceNorepeatP1.append(piece)
-            #self.__pecasP1.remove(piece) 
-            self.__pecasP1.remove(action.get_piece())
-        print("\n\t\t\tTurno", self.__turns_count, " - Player 0 [",  self.__resultP0, "-", self.__resultP1, "] Player 1\n")
+        self.__result[self.__acting_player] += len(peca_selecionada)
+        self.__pieceNorepeat[self.__acting_player].append(piece)
+        self.__remainPieces[self.__acting_player].remove(action.get_piece())    
+
+        print("\n\t\t\tTurno", self.__turns_count, " - Player 0 [",  self.__result[0], "-", self.__result[1], "] Player 1\n")
 
         for x in range(len(diagonais_selecionadas)):
             row = diagonais_selecionadas[x][0]
@@ -293,48 +227,47 @@ class DiagonalBlocksState(State):
         diagonais = self.__save_diagonais()
         
         
-        if self.__acting_player == 0:
-            pecas_disponiveis = list(self.__pecasP0)
-            #pecas_disponiveis = self.__pecasP0
-
-        else :
-            pecas_disponiveis = list(self.__pecasP1)
-            #pecas_disponiveis = self.__pecasP1
-           
+        pecas_disponiveis = self.__remainPieces[self.__acting_player]
         #pecas_disponiveis = self.pecas_disponiveis()
 
-        
         for x in range(len(pecas_disponiveis)):
         #for x in range(len(self.__pecasP0)):
-                for y in range(self.num_rows):
-                    for z in range(self.num_cols):             
-                            erro = 0
-                            n = pecas_disponiveis[x]
-                            #n = self.__pecasP0[x]
-                            peca = Piece.criar_peca(y, z)
-                            peca_selecionada = peca[n][0]
-                            
-                            if self.__turns_count > 2:
-                                row = peca_selecionada[0][0]
-                                col = peca_selecionada[0][1]
-                                if (row,col) not in diagonais:
-                                    erro += 1
+            for y in range(self.num_rows):
+                for z in range(self.num_cols):             
+                    erro = 0
+                    n = pecas_disponiveis[x]
+                    peca = Piece.criar_peca(y, z)
+                    peca_selecionada = peca[n][0]
+                    
+                    if self.__turns_count > 2:
+                        row = peca_selecionada[0][0]
+                        col = peca_selecionada[0][1]
+                        if (row,col) not in diagonais:
+                            erro += 1
+                    '''
+                    for a in range(len(peca_selecionada)):
+                        row = peca_selecionada[a][0]
+                        col = peca_selecionada[a][1] 
+                        if self.grid[row][col] == 0 or self.grid[row][col] == 1:
+                            erro += 1
+                    '''
 
-                            
-                            for b in range(len(peca_selecionada)):
-                                row = peca_selecionada[b][0]
-                                col = peca_selecionada[b][1]
-                                if row < 0 or row >= self.num_rows:
-                                    erro += 1
-                                if col < 0 or col >= self.num_cols:
-                                    erro += 1
-                            if erro == 0:
-                                jogadas.append([n, y, z])
-                                #self.__possible_movesP0.append([n, y, z])
+                    
+                    for b in range(len(peca_selecionada)):
+                        row = peca_selecionada[b][0]
+                        col = peca_selecionada[b][1]
+                        if row < 0 or row >= self.num_rows:
+                            erro += 1
+                        if col < 0 or col >= self.num_cols:
+                            erro += 1
+                
+                    if erro == 0:
+                        jogadas.append([n, y, z])
+                        #self.__possible_movesP0.append([n, y, z])
                             
                            
         return jogadas
-        #return self.__possible_movesP0
+
     
             
 
@@ -368,6 +301,11 @@ class DiagonalBlocksState(State):
             print("--")
                 
     def display(self):
+            print("Jogadas possíveis:\n")
+            jogadas_possiveis = self.possible_actions() 
+            print(jogadas_possiveis, "\n")
+
+
             self.__display_numbers()
                 # exibir números das linhas e células
             for row in range(self.num_rows):
@@ -405,6 +343,8 @@ class DiagonalBlocksState(State):
         cloned_state.__turns_count = self.__turns_count
         cloned_state.__acting_player = self.__acting_player
         cloned_state.__has_winner = self.__has_winner
+        cloned_state.__remainPieces[0] = list(self.__remainPieces[0])
+        cloned_state.__remainPieces[1] = list(self.__remainPieces[1])
         for row in range(0, self.num_rows):
             for col in range(0, self.num_cols):
                 cloned_state.grid[row][col] = self.grid[row][col]
