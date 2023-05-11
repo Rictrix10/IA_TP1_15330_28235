@@ -1,0 +1,3 @@
+
+percorre cada coordenada da peça, e a cada ciclo vai verificando se a linha ou coluna é igual a 0 ou a 19,
+e se houver ainda mais linhas ou colunas, não permite continuar

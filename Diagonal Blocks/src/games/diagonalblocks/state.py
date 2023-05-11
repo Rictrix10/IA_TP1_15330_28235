@@ -184,6 +184,7 @@ class DiagonalBlocksState(State):
 
         print()
         
+
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
             col = peca_selecionada[x][1]
@@ -267,7 +268,6 @@ class DiagonalBlocksState(State):
                             
                            
         return jogadas
-
     
             
 
