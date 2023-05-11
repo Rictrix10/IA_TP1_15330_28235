@@ -120,6 +120,20 @@ class DiagonalBlocksState(State):
         # valid row
         if row < 0 or row >= self.num_rows:
             return False
+        
+        #play on board
+        saiu = 0
+        for x in range(len(peca_selecionada)):
+            if peca_selecionada[x][0] < 0 or peca_selecionada[x][0] > 20:
+                saiu += 1
+                break
+            if peca_selecionada[x][1] < 0 or peca_selecionada[x][1] > 20:
+                saiu += 1
+                break
+            
+        if saiu > 0:
+            print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
+            return False
             
         # free pieces
         erro = 0
@@ -152,25 +166,6 @@ class DiagonalBlocksState(State):
                 print(coordenadas)
                 return False
             return True
-        
-        #play in board
-        
-        saiu = 0
-        for x in range(len(peca_selecionada)):
-            row = peca_selecionada[x][0]
-            col = peca_selecionada[x][1]
-            if row < 0 or row >= self.num_rows:
-                saiu += 1
-            if col < 0 or col >= self.num_cols:
-                saiu += 1
-        if saiu > 0:
-            print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
-            return False
-        
-        if len(all_actions) == 0 and self.__remainPieces[self.__acting_player] != 0:
-            #if len(all_actions) == 0:
-            return True
-        #self.possible_actions()
         
         return True
 
@@ -264,7 +259,6 @@ class DiagonalBlocksState(State):
                 
                     if erro == 0:
                         jogadas.append([n, y, z])
-                        #self.__possible_movesP0.append([n, y, z])
                             
                            
         return jogadas
@@ -304,6 +298,7 @@ class DiagonalBlocksState(State):
             print("Jogadas possíveis:\n")
             jogadas_possiveis = self.possible_actions() 
             print(jogadas_possiveis, "\n")
+            print("Nº jogadas possíveis: ", len(jogadas_possiveis))
 
 
             self.__display_numbers()
