@@ -84,9 +84,9 @@ class DiagonalBlocksState(State):
 
     def __check_winner(self):
         jogadas_possiveis = self.possible_actions() 
-        if len(jogadas_possiveis) > 0:
-            return False
-        return True
+        if len(jogadas_possiveis) == 0:
+            return True
+        return False
 
     def get_grid(self):
         return self.grid
