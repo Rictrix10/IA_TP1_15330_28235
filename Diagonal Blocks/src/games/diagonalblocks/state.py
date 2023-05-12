@@ -82,8 +82,11 @@ class DiagonalBlocksState(State):
         }
 
 
-    def __check_winner(self, action: DiagonalBlocksAction) -> bool:
-        return False
+    def __check_winner(self):
+        jogadas_possiveis = self.possible_actions() 
+        if len(jogadas_possiveis) > 0:
+            return False
+        return True
 
     def get_grid(self):
         return self.grid
@@ -226,7 +229,11 @@ class DiagonalBlocksState(State):
                    self.grid[row][col] = DiagonalBlocksState.DOT_CELLRB
         # determine if there is a winner
         
-        self.__has_winner = self.__check_winner(action)
+        self.__has_winner = self.__check_winner()
+
+
+
+        
         # switch to next player
         self.__acting_player = 1 if self.__acting_player == 0 else 0
         self.__turns_count += 1
@@ -326,9 +333,7 @@ class DiagonalBlocksState(State):
             jogadas_possiveis = self.possible_actions() 
             print(jogadas_possiveis, "\n")
             print("Nº jogadas possíveis: ", len(jogadas_possiveis), "\n")
-        
             
-
 
             self.__display_numbers()
                 # exibir números das linhas e células
@@ -349,13 +354,12 @@ class DiagonalBlocksState(State):
                     print(j, end="")
                 print()
             
+
     
     def __is_full(self):
         
         return self.__turns_count > self.__total_pieces
     
-
-
     def is_finished(self) -> bool:
         return self.__has_winner or self.__is_full()
 
@@ -380,6 +384,7 @@ class DiagonalBlocksState(State):
         if self.__is_full():
             return DiagonalBlocksResult.DRAW
         return None
+    
 
     def get_num_rows(self):
         return self.num_rows
