@@ -125,8 +125,9 @@ class DiagonalBlocksState(State):
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
             col = peca_selecionada[x][1]
-            if row < 0 or row > 19 or col < 0 or col > 19:
+            if row < 0 or row >= self.num_rows or col < 0 or col >= self.num_cols:
                 raise IndexError("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro") 
+            print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
             return False
             
         # free pieces
@@ -229,6 +230,7 @@ class DiagonalBlocksState(State):
                     peca = Piece.criar_peca(y, z)
                     peca_selecionada = peca[n][0]
                     
+                    
                     if self.__turns_count > 2:
                         row = peca_selecionada[0][0]
                         col = peca_selecionada[0][1]
@@ -240,9 +242,7 @@ class DiagonalBlocksState(State):
                         col = peca_selecionada[a][1] 
                         if self.grid[row][col] == 0 or self.grid[row][col] == 1:
                             erro += 1
-                    '''
-
-                    
+                    '''        
                     for b in range(len(peca_selecionada)):
                         row = peca_selecionada[b][0]
                         col = peca_selecionada[b][1]
@@ -289,12 +289,12 @@ class DiagonalBlocksState(State):
             print("--")
                 
     def display(self):
-            '''
+            
             print("Jogadas possíveis:\n")
             jogadas_possiveis = self.possible_actions() 
             print(jogadas_possiveis, "\n")
             print("Nº jogadas possíveis: ", len(jogadas_possiveis))
-            '''
+            
 
 
             self.__display_numbers()
