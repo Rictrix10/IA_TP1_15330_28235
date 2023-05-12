@@ -122,17 +122,11 @@ class DiagonalBlocksState(State):
             return False
         
         #play on board
-        saiu = 0
         for x in range(len(peca_selecionada)):
-            if peca_selecionada[x][0] < 0 or peca_selecionada[x][0] > 20:
-                saiu += 1
-                break
-            if peca_selecionada[x][1] < 0 or peca_selecionada[x][1] > 20:
-                saiu += 1
-                break
-            
-        if saiu > 0:
-            print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
+            row = peca_selecionada[x][0]
+            col = peca_selecionada[x][1]
+            if row < 0 or row > 19 or col < 0 or col > 19:
+                raise IndexError("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro") 
             return False
             
         # free pieces
@@ -295,10 +289,12 @@ class DiagonalBlocksState(State):
             print("--")
                 
     def display(self):
+            '''
             print("Jogadas possíveis:\n")
             jogadas_possiveis = self.possible_actions() 
             print(jogadas_possiveis, "\n")
             print("Nº jogadas possíveis: ", len(jogadas_possiveis))
+            '''
 
 
             self.__display_numbers()
