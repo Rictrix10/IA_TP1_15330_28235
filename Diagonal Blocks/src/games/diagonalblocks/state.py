@@ -210,6 +210,8 @@ class DiagonalBlocksState(State):
         for x in range(len(diagonais_selecionadas)):
             row = diagonais_selecionadas[x][0]
             col = diagonais_selecionadas[x][1]
+            if row < 0 or row >= self.num_rows or col < 0 or col >= self.num_cols:
+                continue
             if self.__acting_player == 0:
                 if self.grid[row][col] == DiagonalBlocksState.DOT_CELLR or self.grid[row][col] == DiagonalBlocksState.EMPTY_CELL:
                     self.grid[row][col] = DiagonalBlocksState.DOT_CELLR
