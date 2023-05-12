@@ -61,6 +61,16 @@ class DiagonalBlocksState(State):
             1: 0
         }
 
+        self.__places = {
+            0: [],
+            1: []
+        }
+
+        self.__jogadas = {
+            0: [],
+            1: []
+        }
+
         self.__pieceNorepeat = {
             0: [],
             1: []
@@ -94,19 +104,29 @@ class DiagonalBlocksState(State):
                         diagonais.append((row,col))
         return diagonais
     
+    def __free_places(self):
+        places = []
+        for row in range(self.num_rows):
+            for col in range(self.num_cols):
+                '''
+                if self.__acting_player == 0:
+                    if self.grid[row][col] != 0 and self.grid[row][col] != 1:
+                        places.append((row,col))
+                else:
+                    if self.grid[row][col] == DiagonalBlocksState.DOT_CELLB or self.grid[row][col] == DiagonalBlocksState.DOT_CELLRB:
+                        places.append((row,col))
+                '''
+                if self.grid[row][col] != 0 and self.grid[row][col] != 1:
+                     self.__places[self.__acting_player].append((row,col))
+                    
+        return places
+
     def validate_action(self, action: DiagonalBlocksAction) -> bool:
         row = action.get_row()
         col = action.get_col()
         piece = action.get_piece()
         option = action.get_option()
-        peca_selecionada = action.get_peca()
-
-        all_actions = []        
-       
-        pecas_disponiveis = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-        linha: int
-        coluna: int
-        diagonais = self.__save_diagonais()
+        peca_selecionada = action.get_peca() 
         
 
         # valid piece
@@ -121,14 +141,14 @@ class DiagonalBlocksState(State):
         if row < 0 or row >= self.num_rows:
             return False
         
-        #play on board
+        saiu = 0
         for x in range(len(peca_selecionada)):
             row = peca_selecionada[x][0]
             col = peca_selecionada[x][1]
             if row < 0 or row >= self.num_rows or col < 0 or col >= self.num_cols:
-                raise IndexError("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro") 
-            print("Não pode jogar aí, a peça tem de ser jogada dentro da tabuleiro")
-            return False
+                saiu += 1
+                print("Não pode jogar aí, a peça tem de ser jogada dentro do tabuleiro")
+                return False
             
         # free pieces
         erro = 0
@@ -213,13 +233,13 @@ class DiagonalBlocksState(State):
     
     def possible_actions(self) -> list:
  
+        places = self.__free_places()
+        
         jogadas = []
-        #pecas_disponiveis = []
+
         diagonais = self.__save_diagonais()
         
-        
         pecas_disponiveis = self.__remainPieces[self.__acting_player]
-        #pecas_disponiveis = self.pecas_disponiveis()
 
         for x in range(len(pecas_disponiveis)):
         #for x in range(len(self.__pecasP0)):
@@ -236,13 +256,20 @@ class DiagonalBlocksState(State):
                         col = peca_selecionada[0][1]
                         if (row,col) not in diagonais:
                             erro += 1
+                    if self.__turns_count > 2:
+                        for a in range(len(peca_selecionada)):
+                            row = peca_selecionada[a][0]
+                            col = peca_selecionada[a][1] 
+                            if(row,col) not in places:
+                                erro += 1
+                                break
+                    
+
                     '''
-                    for a in range(len(peca_selecionada)):
-                        row = peca_selecionada[a][0]
-                        col = peca_selecionada[a][1] 
                         if self.grid[row][col] == 0 or self.grid[row][col] == 1:
                             erro += 1
-                    '''        
+                        '''
+                            
                     for b in range(len(peca_selecionada)):
                         row = peca_selecionada[b][0]
                         col = peca_selecionada[b][1]
@@ -252,10 +279,10 @@ class DiagonalBlocksState(State):
                             erro += 1
                 
                     if erro == 0:
-                        jogadas.append([n, y, z])
+                        self.__jogadas[self.__acting_player].append([n, y, z])
                             
                            
-        return jogadas
+        return self.__jogadas[self.__acting_player]
     
             
 
@@ -289,11 +316,12 @@ class DiagonalBlocksState(State):
             print("--")
                 
     def display(self):
-            
+            '''
             print("Jogadas possíveis:\n")
             jogadas_possiveis = self.possible_actions() 
             print(jogadas_possiveis, "\n")
             print("Nº jogadas possíveis: ", len(jogadas_possiveis))
+            '''
             
 
 
