@@ -111,14 +111,7 @@ class DiagonalBlocksState(State):
         places = []
         for row in range(self.num_rows):
             for col in range(self.num_cols):
-                '''
-                if self.__acting_player == 0:
-                    if self.grid[row][col] != 0 and self.grid[row][col] != 1:
-                        places.append((row,col))
-                else:
-                    if self.grid[row][col] == DiagonalBlocksState.DOT_CELLB or self.grid[row][col] == DiagonalBlocksState.DOT_CELLRB:
-                        places.append((row,col))
-                '''
+
                 if self.grid[row][col] == DiagonalBlocksState.DOT_CELLR or self.grid[row][col] == DiagonalBlocksState.DOT_CELLB or self.grid[row][col] == DiagonalBlocksState.DOT_CELLRB or self.grid[row][col] == DiagonalBlocksState.EMPTY_CELL:
                     #self.__places[self.__acting_player].append((row,col))
                     places.append((row,col))
@@ -132,7 +125,7 @@ class DiagonalBlocksState(State):
         option = action.get_option()
         peca_selecionada = action.get_peca() 
         
-
+         
         # valid piece
         if piece < 0 or piece > 20:
             return False
@@ -231,12 +224,10 @@ class DiagonalBlocksState(State):
         
         self.__has_winner = self.__check_winner()
 
-
-
-        
         # switch to next player
         self.__acting_player = 1 if self.__acting_player == 0 else 0
         self.__turns_count += 1
+
 
     
 
@@ -333,7 +324,6 @@ class DiagonalBlocksState(State):
             jogadas_possiveis = self.possible_actions() 
             print(jogadas_possiveis, "\n")
             print("Nº jogadas possíveis: ", len(jogadas_possiveis), "\n")
-            
 
             self.__display_numbers()
                 # exibir números das linhas e células
